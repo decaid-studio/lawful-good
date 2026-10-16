@@ -5,88 +5,194 @@
   "description": "Machine-readable representation of a provision of law. Legal text is reproduced from official sources; editorial additions are marked as such.",
   "type": "object",
   "properties": {
-    "schema_version": { "const": "0.1" },
-    "kind": { "const": "regulation" },
-    "id": { "$ref": "common.schema.json#/$defs/id" },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "kind": {
+      "const": "regulation"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
     "source": {
       "type": "object",
       "properties": {
-        "title": { "$ref": "common.schema.json#/$defs/i18n" },
-        "short_name": { "type": "string" },
-        "celex": { "type": "string" },
-        "consolidated_version": { "type": "string" },
-        "amended_by": { "type": "array", "items": { "type": "string" } },
+        "title": {
+          "$ref": "common.schema.json#/$defs/i18n"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "celex": {
+          "type": "string"
+        },
+        "consolidated_version": {
+          "type": "string"
+        },
+        "amended_by": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "urls": {
           "type": "object",
           "properties": {
-            "de": { "type": "string", "format": "uri" },
-            "en": { "type": "string", "format": "uri" }
+            "de": {
+              "type": "string",
+              "format": "uri"
+            },
+            "en": {
+              "type": "string",
+              "format": "uri"
+            }
           },
           "additionalProperties": false
         },
-        "retrieved": { "$ref": "common.schema.json#/$defs/date" },
-        "authentic_text_note": { "type": "string" },
-        "reuse_note": { "type": "string" }
+        "retrieved": {
+          "$ref": "common.schema.json#/$defs/date"
+        },
+        "authentic_text_note": {
+          "type": "string"
+        },
+        "reuse_note": {
+          "type": "string"
+        }
       },
-      "required": ["title", "celex", "urls", "retrieved"],
+      "required": [
+        "title",
+        "celex",
+        "urls",
+        "retrieved"
+      ],
       "additionalProperties": false
     },
-    "article": { "type": "string" },
-    "title": { "$ref": "common.schema.json#/$defs/i18n" },
+    "article": {
+      "type": "string"
+    },
+    "title": {
+      "$ref": "common.schema.json#/$defs/i18n"
+    },
     "addressees": {
       "type": "array",
-      "items": { "enum": ["provider", "deployer", "importer", "distributor", "authorised-representative"] }
+      "items": {
+        "enum": [
+          "provider",
+          "deployer",
+          "importer",
+          "distributor",
+          "authorised-representative"
+        ]
+      }
     },
-    "scope": { "$ref": "common.schema.json#/$defs/i18n" },
+    "scope": {
+      "$ref": "common.schema.json#/$defs/i18n"
+    },
     "application": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "applies_to": { "$ref": "common.schema.json#/$defs/i18n" },
-          "from": { "$ref": "common.schema.json#/$defs/date" }
+          "applies_to": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          },
+          "from": {
+            "$ref": "common.schema.json#/$defs/date"
+          }
         },
-        "required": ["applies_to", "from"],
+        "required": [
+          "applies_to",
+          "from"
+        ],
         "additionalProperties": false
       }
     },
-    "verification": { "$ref": "common.schema.json#/$defs/verification" },
+    "verification": {
+      "$ref": "common.schema.json#/$defs/verification"
+    },
     "requirements": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/requirement" }
+      "items": {
+        "$ref": "#/$defs/requirement"
+      }
     }
   },
-  "required": ["schema_version", "kind", "id", "source", "article", "title", "requirements", "verification"],
+  "required": [
+    "schema_version",
+    "kind",
+    "id",
+    "source",
+    "article",
+    "title",
+    "requirements",
+    "verification"
+  ],
   "additionalProperties": false,
   "$defs": {
     "requirement": {
       "type": "object",
       "properties": {
-        "id": { "$ref": "common.schema.json#/$defs/id" },
-        "ref": { "type": "string", "description": "Human citation, e.g. 'Art. 17(1)(a)'." },
-        "type": { "enum": ["obligation", "condition", "proportionality", "derogation", "chapeau"] },
-        "text": { "$ref": "common.schema.json#/$defs/i18n" },
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "ref": {
+          "type": "string",
+          "description": "Human citation, e.g. 'Art. 17(1)(a)'."
+        },
+        "type": {
+          "enum": [
+            "obligation",
+            "condition",
+            "proportionality",
+            "derogation",
+            "chapeau"
+          ]
+        },
+        "text": {
+          "$ref": "common.schema.json#/$defs/i18n"
+        },
         "summary": {
           "description": "Editorial plain-language summary. Not legal text.",
           "$ref": "common.schema.json#/$defs/i18n"
         },
-        "related_articles": { "type": "array", "items": { "type": "string" } },
+        "related_articles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "amended": {
           "type": "object",
           "properties": {
-            "by": { "type": "string" },
-            "note": { "type": "string" }
+            "by": {
+              "type": "string"
+            },
+            "note": {
+              "type": "string"
+            }
           },
-          "required": ["by"],
+          "required": [
+            "by"
+          ],
           "additionalProperties": false
         },
         "assessment_questions": {
           "type": "array",
-          "items": { "$ref": "common.schema.json#/$defs/assessment_question" }
+          "items": {
+            "$ref": "common.schema.json#/$defs/assessment_question"
+          }
+        },
+        "verification": {
+          "$ref": "common.schema.json#/$defs/verification"
         }
       },
-      "required": ["id", "ref", "type", "text"],
+      "required": [
+        "id",
+        "ref",
+        "type",
+        "text"
+      ],
       "additionalProperties": false
     }
   }

@@ -1,0 +1,19 @@
+# --- Never commit purchased standards or other licensed documents ---
+*.pdf
+*.PDF
+private/
+**/private/
+
+# Build output
+dist/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

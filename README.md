@@ -39,6 +39,24 @@ python tools/lg.py validate      # schema + reference checks
 python tools/lg.py build         # dist/lawful-good.json (public content only)
 ```
 
+## Roadmap
+
+`lawful-good` grows with the harmonised standards for the EU AI Act. Status per public
+sources as of October 2026; check [jtc21.eu](https://jtc21.eu/) for the latest.
+
+| Standard | Topic | AI Act | Status | lawful-good |
+|---|---|---|---|---|
+| EN 18286 | Quality management system | Art. 17 | Harmonised (Implementing Decision (EU) 2026/2274, since 14 Oct 2026) | v0.1: Art. 17 catalog, crosswalk pending legal review |
+| prEN 18228 | AI risk management | Art. 9 | Draft, public enquiry closed | v0.2: Art. 9 catalog |
+| prEN 18282 | Cybersecurity for AI systems | Art. 15 | Draft, public enquiry closed | v0.2: Art. 15 catalog, mapping to agent isolation controls |
+| prEN 18229-1 | Logging | Art. 12 | Draft, public enquiry closed | v0.2: Art. 12 catalog, mapping to machine identity and audit trail |
+| EN 18284 | Quality and governance of datasets | Art. 10 | In preparation | later |
+| EN 18229-2 | Accuracy and robustness | Art. 15 | In preparation | later |
+| ISO/IEC 42001 | AI management system (all organisations) | – (not harmonised) | Published | planned: crosswalk for non-high-risk use |
+
+Also planned: OSCAL export, an example agent that checks a repository against the
+controls, and an MCP server so agents can query the catalog directly.
+
 ## Licenses
 
 | What | License |
@@ -69,5 +87,14 @@ Governance-Tools brauchen die Anforderungen als strukturierte Daten. `lawful-goo
 
 Die Nutzung dieses Repositorys begründet **keine Konformitätsvermutung** und ist keine
 Rechtsberatung. Die Konformitätsvermutung entsteht nur durch Anwendung der Norm selbst.
+
+### Roadmap
+
+`lawful-good` wächst mit den harmonisierten Normen zum AI Act: als Nächstes Art. 9
+(Risikomanagement, prEN 18228), Art. 12 (Logging, prEN 18229-1) und Art. 15
+(Cybersicherheit, prEN 18282), danach Daten (EN 18284) und ein Crosswalk zu ISO/IEC 42001
+für alle, die keine Hochrisiko-KI anbieten. Außerdem geplant: OSCAL-Export, ein
+Beispiel-Agent zur Prüfung von Repositories und ein MCP-Server. Den aktuellen Stand der
+Normen findet ihr auf [jtc21.eu](https://jtc21.eu/).
 
 Lizenzen: Code und Schemas MIT, Inhalte CC BY 4.0, Gesetzestexte © Europäische Union.

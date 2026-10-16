@@ -1,0 +1,463 @@
+# DECAID Agentic Governance Framework
+# Source: Whitepaper 2 "Agentic Governance – Wenn KI handelt statt antwortet" (Draft v2, autumn 2026)
+# Content license: CC BY 4.0 (see LICENSE-CONTENT). © DECAID.
+# German text follows the whitepaper; English is a machine-assisted translation pending review.
+
+schema_version: "0.1"
+kind: framework
+id: decaid.agentic-governance
+title:
+  de: DECAID Agentic Governance Framework
+  en: DECAID Agentic Governance Framework
+version: 0.1.0
+publisher: DECAID
+license: CC-BY-4.0
+source_document:
+  title: "Agentic Governance – Wenn KI handelt statt antwortet (Whitepaper 2)"
+  version: Draft v2, Herbst 2026
+verification:
+  status: unverified
+  date: 2026-10-16
+  note: >-
+    Extracted from the WP2 draft. Open points before release: level naming, role
+    "chief", supplementary practices (DAG-P*) need sign-off by the authors.
+translation_status: machine-assisted-review-needed
+
+roles:
+  - id: team-lead
+    name: { de: Team Lead, en: Team lead }
+  - id: chief
+    name: { de: Chief, en: Chief }
+    description:
+      de: "OFFEN: Im WP2 nicht definiert (Führungskraft? Chief-Agent-Verantwortliche/r?)."
+      en: "OPEN: Not defined in WP2 (executive? person responsible for chief agents?)."
+  - id: product-owner
+    name: { de: Product Owner, en: Product owner }
+  - id: governance-owner
+    name: { de: Governance Owner, en: Governance owner }
+    description:
+      de: Verbindliche Governance-Rolle laut DECAID KI-Richtlinie (August 2026).
+      en: Mandatory governance role under the DECAID AI policy (August 2026).
+  - id: agent-owner
+    name: { de: Agent Owner, en: Agent owner }
+    description:
+      de: Menschliche/r Inhaber/in eines Agenten; Pflicht für jeden Agenten.
+      en: Human owner of an agent; mandatory for every agent.
+  - id: managing-director
+    name: { de: Geschäftsführung (GF), en: Managing director }
+  - id: prohibited
+    name: { de: Verboten, en: Prohibited }
+
+# Security Clearance Framework (WP2, section 3.2)
+levels:
+  - id: level-1
+    rank: 1
+    name: Basic
+    description:
+      de: Reine Dialog-KI, keine externen Tools, keine Systemzugriffe.
+      en: Conversational AI only, no external tools, no system access.
+    approval_roles: [team-lead]
+    capabilities: { external_tools: false, read: none, write: none }
+    allowed: true
+  - id: level-2
+    rank: 2
+    name: Junior
+    description:
+      de: Lesezugriff auf unkritische interne Systeme (z. B. RAG).
+      en: Read access to non-critical internal systems (e.g. RAG).
+    approval_roles: [team-lead]
+    capabilities: { external_tools: true, read: internal-non-critical, write: none }
+    allowed: true
+  - id: level-3
+    rank: 3
+    name: Associate
+    description:
+      de: Lesezugriff Internet / externe Daten, keine schreibenden Aktionen.
+      en: Read access to the internet / external data, no write actions.
+    approval_roles: [chief, product-owner]
+    capabilities: { external_tools: true, read: internal-and-external, write: none }
+    allowed: true
+  - id: level-4
+    rank: 4
+    name: Confidential
+    description:
+      de: Vorbereitung schreibender Aktionen ohne eigenmächtiges Absenden.
+      en: Prepares write actions without sending them on its own.
+    approval_roles: [chief, product-owner]
+    capabilities: { external_tools: true, read: internal-and-external, write: prepare-only }
+    allowed: true
+  - id: level-5
+    rank: 5
+    name: Secret
+    description:
+      de: Schreibzugriff auf externe Systeme, zwingender Human-in-the-Loop.
+      en: Write access to external systems, mandatory human-in-the-loop.
+    approval_roles: [governance-owner]
+    capabilities: { external_tools: true, read: internal-and-external, write: external-with-hitl }
+    allowed: true
+  - id: level-6
+    rank: 6
+    name: Senior
+    description:
+      de: Schreibzugriff auf mehrere kritische Systeme, volle Audit-Trail-Pflicht.
+      en: Write access to multiple critical systems, full audit-trail obligation.
+    approval_roles: [governance-owner]
+    capabilities: { external_tools: true, read: internal-and-external, write: multiple-critical-systems }
+    allowed: true
+  - id: level-7
+    rank: 7
+    name: Top Secret
+    description:
+      de: Chief-Agenten mit weitreichenden Schreibrechten.
+      en: Chief agents with far-reaching write permissions.
+    approval_roles: [governance-owner]
+    capabilities: { external_tools: true, read: internal-and-external, write: broad }
+    allowed: true
+  - id: level-8
+    rank: 8
+    name: Manager
+    description:
+      de: Vollautonome Agenten mit Transaktionsrechten.
+      en: Fully autonomous agents with transaction rights.
+    approval_roles: [managing-director]
+    capabilities: { external_tools: true, read: internal-and-external, write: transactions-autonomous }
+    allowed: true
+  - id: prohibited
+    rank: null
+    name: Inakzeptabel / Unacceptable
+    description:
+      de: Vollautonome Ausführung ohne Abbruchmöglichkeit.
+      en: Fully autonomous execution without any possibility to abort.
+    approval_roles: [prohibited]
+    capabilities: { external_tools: true, read: internal-and-external, write: autonomous-without-abort }
+    allowed: false
+
+controls:
+
+  # ---- The seven binding architectural control principles (WP2, section 3.3) ----
+
+  - id: DAG-C1
+    category: core-control
+    title: { de: Least Privilege, en: Least privilege }
+    statement:
+      de: >-
+        Jeder Agent wird minimalistisch konfiguriert. Er erhält ausschließlich die Skills,
+        Integrationen und Sichtbarkeiten, die für seinen spezifischen Use Case zwingend
+        erforderlich sind. Schreibrechte müssen explizit begründet werden. Lesezugriff ist
+        der Standard, Schreibzugriff die Ausnahme.
+      en: >-
+        Every agent is configured minimally. It receives only the skills, integrations and
+        visibility strictly required for its specific use case. Write permissions must be
+        explicitly justified. Read access is the default, write access the exception.
+    rationale:
+      de: Sichtbarkeit (Privat / Geteilt / Workspace) ist ein Sicherheitsmerkmal, kein Komfort-Setting.
+      en: Visibility (private / shared / workspace) is a security feature, not a convenience setting.
+    enforcement: [configuration, architectural]
+    applies_from_level: 1
+    parameters:
+      default_access: read
+      write_requires: [written-justification, approval]
+    assessment_questions:
+      - id: dag-c1.q1
+        question:
+          de: Ist für jede Schreibberechtigung eine Begründung und Freigabe dokumentiert?
+          en: Is a justification and approval documented for every write permission?
+        evidence:
+          - de: Agenten-Konfiguration mit Liste der Integrationen und Freigabevermerk
+            en: Agent configuration listing integrations, with approval record
+    source_ref: WP2 3.1, 3.3 (Kontrolle 1)
+
+  - id: DAG-C2
+    category: core-control
+    title: { de: Deterministische Tool-Calls, en: Deterministic tool calls }
+    statement:
+      de: >-
+        Wenn Agenten auf externe Systeme zugreifen, erfolgt dies über vordefinierte,
+        deterministische Schnittstellen (z. B. MCP-Gateway oder fixe API-Parameter). Die KI
+        darf Parameter ausfüllen, aber keine grundlegenden Systembefehle umschreiben oder
+        neue Endpunkte eigenständig aufrufen.
+      en: >-
+        When agents access external systems, they do so through predefined, deterministic
+        interfaces (e.g. an MCP gateway or fixed API parameters). The AI may fill in
+        parameters but may not rewrite fundamental system commands or call new endpoints on
+        its own.
+    enforcement: [architectural]
+    applies_from_level: 2
+    parameters:
+      model_may: [fill-parameters]
+      model_may_not: [rewrite-commands, call-unlisted-endpoints]
+    implementation_examples:
+      - tooling: n8n as MCP gateway
+        description:
+          de: Gateway stellt nur freigegebene HTTP-API-Kommandos bereit; Secrets sind für das LLM unsichtbar.
+          en: Gateway exposes only approved HTTP API commands; secrets are invisible to the LLM.
+    assessment_questions:
+      - id: dag-c2.q1
+        question:
+          de: Kann der Agent Endpunkte oder Befehle aufrufen, die nicht explizit definiert sind?
+          en: Can the agent call endpoints or commands that are not explicitly defined?
+    source_ref: WP2 3.3 (Kontrolle 2), 4 (Tool-Whitelisting)
+
+  - id: DAG-C3
+    category: core-control
+    title: { de: "Guardrails auf Tool-Ebene, nicht nur auf Text-Ebene", en: "Guardrails at tool level, not only at text level" }
+    statement:
+      de: >-
+        Sicherheitsmechanismen greifen nicht erst bei der Antwortgenerierung, sondern
+        bereits beim Tool-Aufruf. Kritische Integrationen werden systemseitig auf
+        Lesezugriff (Read-only) beschränkt, sofern kein freigegebener Business Case für
+        Schreibzugriff vorliegt.
+      en: >-
+        Safety mechanisms apply not only when the response is generated but already at the
+        tool call. Critical integrations are restricted to read-only at system level unless
+        an approved business case for write access exists.
+    rationale:
+      de: Weiche Guardrails (Prompt) können durch adversarielle Inputs oder Halluzination umgangen werden, harte (Gateway/Tool) nicht.
+      en: Soft guardrails (prompt) can be bypassed by adversarial input or hallucination; hard ones (gateway/tool) cannot.
+    enforcement: [architectural, configuration]
+    applies_from_level: 2
+    assessment_questions:
+      - id: dag-c3.q1
+        question:
+          de: Werden Berechtigungen im Zielsystem oder Gateway durchgesetzt statt nur im System-Prompt?
+          en: Are permissions enforced in the target system or gateway rather than only in the system prompt?
+    source_ref: WP2 3.3 (Kontrolle 3), 4.1
+
+  - id: DAG-C4
+    category: core-control
+    title: { de: Rekursions- und Abbruchgrenzen, en: Recursion and abort limits }
+    statement:
+      de: >-
+        Für alle Agenten sind systemseitige Limits definiert: maximale Iterationsschritte bei
+        Tool-Aufrufen, Token-Budgets und Timeout-Grenzen. Diese Limits müssen vor der
+        Freigabe eines Agenten konfiguriert sein.
+      en: >-
+        System-level limits are defined for all agents: maximum iteration steps for tool
+        calls, token budgets and timeouts. These limits must be configured before an agent is
+        approved.
+    rationale:
+      de: Verhindert unkontrolliertes Verhalten (Infinite Loops) und ausufernde API-Kosten.
+      en: Prevents uncontrolled behaviour (infinite loops) and runaway API costs.
+    enforcement: [architectural, configuration]
+    applies_from_level: 1
+    parameters:
+      required_settings: [max_tool_iterations, token_budget, timeout]
+      must_be_set_before: approval
+    assessment_questions:
+      - id: dag-c4.q1
+        question:
+          de: Sind Iterationslimit, Token-Budget und Timeout für den Agenten gesetzt?
+          en: Are an iteration limit, token budget and timeout set for the agent?
+    source_ref: WP2 3.3 (Kontrolle 4)
+
+  - id: DAG-C5
+    category: core-control
+    title: { de: "Human-in-the-Loop: gezielt durch Schwellenwerte", en: "Human-in-the-loop: targeted by thresholds" }
+    statement:
+      de: >-
+        Menschliche Freigaben werden risikobasiert gefordert, nicht pauschal. Aktionen ab
+        Level 5 (Secret) erfordern systemseitig eine Bestätigung durch den Nutzer, bevor die
+        Handlung extern wirksam wird.
+      en: >-
+        Human approvals are required based on risk, not across the board. Actions from
+        level 5 (Secret) upwards require a system-enforced confirmation by the user before
+        the action takes external effect.
+    enforcement: [architectural, configuration]
+    applies_from_level: 5
+    parameters:
+      hitl_from_level: 5
+      confirmation: before-external-effect
+    implementation_examples:
+      - tooling: Langdock governance module
+        description:
+          de: Schwellenwerte werden im Governance-Modul konfiguriert.
+          en: Thresholds are configured in the governance module.
+    assessment_questions:
+      - id: dag-c5.q1
+        question:
+          de: Ist die Bestätigung technisch erzwungen, sodass der Agent sie nicht überspringen kann?
+          en: Is the confirmation technically enforced so the agent cannot skip it?
+    source_ref: WP2 3.3 (Kontrolle 5)
+
+  - id: DAG-C6
+    category: core-control
+    title: { de: Kontinuierliches Monitoring und Drift-Erkennung, en: Continuous monitoring and drift detection }
+    statement:
+      de: >-
+        Wird ein freigegebener Agent nachträglich in System-Prompt, Tools oder durch
+        Modelländerungen/Updates verändert (Drift), wird ihm die Freigabe automatisch
+        entzogen, bis eine erneute Prüfung stattgefunden hat. Freigegebene Agenten werden
+        mindestens alle 90 Tage erneut geprüft. Monitoring auf Qualitäts- und
+        Verhaltensebene ist ab Level 3 obligatorisch.
+      en: >-
+        If an approved agent is later changed in its system prompt, tools or through model
+        changes/updates (drift), its approval is revoked automatically until it has been
+        re-reviewed. Approved agents are re-reviewed at least every 90 days. Monitoring of
+        quality and behaviour is mandatory from level 3.
+    enforcement: [monitoring, architectural]
+    applies_from_level: 3
+    parameters:
+      monitoring_from_level: 3
+      review_interval_days_max: 90
+      drift_triggers: [system-prompt-change, tool-change, model-change]
+      on_drift: revoke-approval
+      signals: [token-usage, latency, llm-as-a-judge, error-rate]
+    implementation_examples:
+      - tooling: Langfuse (self-hosted)
+        description:
+          de: Tracing, Token-Verbrauch, Latenz und LLM-as-a-Judge-Bewertungen.
+          en: Tracing, token usage, latency and LLM-as-a-judge evaluations.
+    assessment_questions:
+      - id: dag-c6.q1
+        question:
+          de: Führt eine Änderung an Prompt, Tools oder Modell automatisch zum Entzug der Freigabe?
+          en: Does a change to prompt, tools or model automatically revoke the approval?
+      - id: dag-c6.q2
+        question:
+          de: Liegt die letzte Prüfung weniger als 90 Tage zurück?
+          en: Was the last review less than 90 days ago?
+    source_ref: WP2 3.3 (Kontrolle 6)
+
+  - id: DAG-C7
+    category: core-control
+    title: { de: Regelmäßige Systembereinigung (Agent Cleanup), en: Regular system cleanup (agent cleanup) }
+    statement:
+      de: >-
+        Verwaiste Agenten ohne definierten Agent Owner sowie veraltete Test-Agenten werden
+        archiviert oder gelöscht. Vor jeder Bereinigung wird ein dokumentierter Snapshot des
+        Ist-Zustands erstellt. Folge-Cleanups finden mindestens halbjährlich statt.
+      en: >-
+        Orphaned agents without a defined agent owner and outdated test agents are archived
+        or deleted. A documented snapshot of the current state is taken before every
+        cleanup. Follow-up cleanups take place at least every six months.
+    rationale:
+      de: Vermeidung von Schatten-KI und nicht gewarteten Altlasten.
+      en: Prevents shadow AI and unmaintained legacy agents.
+    enforcement: [organizational]
+    applies_from_level: 1
+    parameters:
+      cleanup_interval_months_max: 6
+      snapshot_before_cleanup: true
+      cleanup_targets: [agents-without-owner, outdated-test-agents]
+    assessment_questions:
+      - id: dag-c7.q1
+        question:
+          de: Gibt es Agenten ohne Owner, und wann war der letzte dokumentierte Cleanup?
+          en: Are there agents without an owner, and when was the last documented cleanup?
+    source_ref: WP2 3.3 (Kontrolle 7), 5.2
+
+  # ---- Supplementary practices (WP2 chapters 4, 5, 8.2) – NOT part of the seven binding controls ----
+
+  - id: DAG-P1
+    category: supplementary-practice
+    title: { de: Mehrschichtige Isolation (Zwiebel-Prinzip), en: Layered isolation (onion principle) }
+    statement:
+      de: >-
+        Agenten, die in der eigenen Infrastruktur laufen, werden auf mehreren Ebenen
+        isoliert: Netzwerk (VLAN, Firewall), Namensauflösung (DNS-Block-/Whitelist),
+        Laufzeitumgebung (Container, VM, rootless) und Werkzeuge (Tool-Whitelisting).
+        Konfigurationsdateien liegen außerhalb des Sichtbereichs des Agenten; Whitelists
+        enthalten keine Befehle, die beliebigen Code ausführen.
+      en: >-
+        Agents running on own infrastructure are isolated on several layers: network (VLAN,
+        firewall), name resolution (DNS block/allow lists), runtime (container, VM,
+        rootless) and tools (tool whitelisting). Configuration files are outside the agent's
+        view; allow lists contain no commands that execute arbitrary code.
+    enforcement: [architectural]
+    parameters:
+      layers: [network, dns, runtime, tools]
+      default_internet_access: false
+    implementation_examples:
+      - tooling: VLAN + VM + container (Docker/Podman); Pi-hole or Technitium
+        description:
+          de: Dreistufige Isolation aus VLAN, VM und Container für Coding Agents.
+          en: Three-layer isolation of VLAN, VM and container for coding agents.
+    source_ref: WP2 4.2, 4.3
+
+  - id: DAG-P2
+    category: supplementary-practice
+    title: { de: Maschinenidentitäten (Responsibility by Design), en: Machine identities (responsibility by design) }
+    statement:
+      de: >-
+        Jede Agenten-Aktion ist im Zielsystem als solche erkennbar: welcher Agent, im
+        Auftrag welcher Person, zu welchem Zeitpunkt. Ab Level 5 erhält jeder Agent einen
+        eigenen, als Bot gekennzeichneten Account mit Least-Privilege-Rechten. Externe
+        Anfragen tragen identifizierende HTTP-Header.
+      en: >-
+        Every agent action is recognisable as such in the target system: which agent, on
+        behalf of which person, at what time. From level 5, every agent gets its own account
+        flagged as a bot with least-privilege rights. External requests carry identifying
+        HTTP headers.
+    enforcement: [architectural, configuration]
+    applies_from_level: 5
+    parameters:
+      dedicated_bot_account_from_level: 5
+      http_headers: [User-Agent, X-Agent-ID, X-Agent-Owner, X-Organization]
+    source_ref: WP2 4 (Maschinenidentitäten)
+
+  - id: DAG-P3
+    category: supplementary-practice
+    title: { de: Audit-Trail und Logging, en: Audit trail and logging }
+    statement:
+      de: >-
+        Jede Agenten-Aktion wird mit Agent, auslösender Person, Tool-Call, Parametern,
+        Ergebnis, Zeitstempel und Zielsystem protokolliert, revisionssicher und eindeutig
+        zuordenbar. Die Aufbewahrung berücksichtigt gesetzliche Mindestfristen und die DSGVO.
+      en: >-
+        Every agent action is logged with agent, triggering person, tool call, parameters,
+        result, timestamp and target system, tamper-evident and unambiguously attributable.
+        Retention respects statutory minimum periods and the GDPR.
+    enforcement: [monitoring, architectural]
+    applies_from_level: 3
+    parameters:
+      log_fields: [agent_id, triggered_by, tool_call, parameters, result, timestamp, target_system]
+      full_audit_trail_from_level: 6
+      retention_min_months_high_risk: 6
+    implementation_examples:
+      - tooling: Langdock audit log + Langfuse
+        description:
+          de: Organisationsebene (wer nutzte welchen Agenten) und technische Ebene (Tool-Call, Parameter, Ergebnis).
+          en: Organisational level (who used which agent) and technical level (tool call, parameters, result).
+    source_ref: WP2 4 (Audit-Trails und Logging)
+
+  - id: DAG-P4
+    category: supplementary-practice
+    title: { de: Agenten-Inventar und Owner-Pflicht, en: Agent inventory and mandatory ownership }
+    statement:
+      de: >-
+        Es gibt ein Inventar aller Agenten. Jeder Agent hat einen menschlichen Agent Owner
+        und ist einem Clearance Level zugeordnet.
+      en: >-
+        There is an inventory of all agents. Every agent has a human agent owner and is
+        assigned a clearance level.
+    enforcement: [organizational]
+    applies_from_level: 1
+    source_ref: WP2 5.4, 8.2
+
+  - id: DAG-P5
+    category: supplementary-practice
+    title: { de: Kill Switch und Incident-Prozess, en: Kill switch and incident process }
+    statement:
+      de: >-
+        Admin oder Agent Owner können die Freigabe eines Agenten sofort entziehen. Jeder
+        Vorfall wird analysiert; Erkenntnisse fließen in Anpassungen ein.
+      en: >-
+        The admin or agent owner can revoke an agent's approval immediately. Every incident
+        is analysed and lessons learned are fed back into adjustments.
+    enforcement: [architectural, organizational]
+    applies_from_level: 1
+    source_ref: WP2 5.2, 8.2
+
+  - id: DAG-P6
+    category: supplementary-practice
+    title: { de: Kennzeichnung von KI-Interaktionen, en: Labelling of AI interactions }
+    statement:
+      de: >-
+        Interaktionen von Agenten mit Menschen werden systemseitig als KI-Interaktion
+        gekennzeichnet.
+      en: >-
+        Interactions between agents and people are labelled as AI interactions at system
+        level.
+    enforcement: [configuration]
+    applies_from_level: 1
+    source_ref: WP2 6.1

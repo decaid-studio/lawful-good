@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/decaid-studio/lawful-good/schema/framework.schema.json",
+  "title": "Governance framework catalog (controls and autonomy levels)",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "kind": {
+      "const": "framework"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "title": {
+      "$ref": "common.schema.json#/$defs/i18n"
+    },
+    "version": {
+      "type": "string"
+    },
+    "publisher": {
+      "type": "string"
+    },
+    "license": {
+      "type": "string"
+    },
+    "source_document": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "additionalProperties": false
+    },
+    "verification": {
+      "$ref": "common.schema.json#/$defs/verification"
+    },
+    "translation_status": {
+      "enum": [
+        "original",
+        "machine-assisted-review-needed",
+        "reviewed"
+      ]
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "name": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          },
+          "description": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "levels": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/level"
+      }
+    },
+    "controls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/control"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "kind",
+    "id",
+    "title",
+    "version",
+    "verification",
+    "controls"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "level": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "rank": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Numeric level; null for the prohibited class."
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "$ref": "common.schema.json#/$defs/i18n"
+        },
+        "capabilities": {
+          "description": "Upper bound of what an agent at this level may do.",
+          "type": "object",
+          "properties": {
+            "external_tools": {
+              "type": "boolean"
+            },
+            "read": {
+              "enum": [
+                "none",
+                "internal-non-critical",
+                "internal-and-external"
+              ]
+            },
+            "write": {
+              "enum": [
+                "none",
+                "prepare-only",
+                "external-with-hitl",
+                "multiple-critical-systems",
+                "broad",
+                "transactions-autonomous",
+                "autonomous-without-abort"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "allowed": {
+          "type": "boolean"
+        },
+        "approval_roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "description": "Role ids that must approve (all of them). Use 'prohibited' for the prohibited class."
+        },
+        "mandatory_controls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Control ids that must be in place before approval at this level (derived from applies_from_level)."
+        }
+      },
+      "required": [
+        "id",
+        "rank",
+        "name",
+        "description",
+        "approval_roles",
+        "allowed"
+      ],
+      "additionalProperties": false
+    },
+    "control": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z]+-[A-Z]?[0-9]+$"
+        },
+        "category": {
+          "enum": [
+            "core-control",
+            "supplementary-practice"
+          ]
+        },
+        "title": {
+          "$ref": "common.schema.json#/$defs/i18n"
+        },
+        "statement": {
+          "description": "The normative requirement of the control.",
+          "$ref": "common.schema.json#/$defs/i18n"
+        },
+        "rationale": {
+          "$ref": "common.schema.json#/$defs/i18n"
+        },
+        "enforcement": {
+          "description": "Where the control is enforced. 'architectural' = outside the LLM layer, not bypassable by the model.",
+          "type": "array",
+          "items": {
+            "enum": [
+              "architectural",
+              "configuration",
+              "organizational",
+              "monitoring"
+            ]
+          }
+        },
+        "applies_from_level": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "parameters": {
+          "description": "Machine-readable thresholds and settings.",
+          "type": "object"
+        },
+        "implementation_examples": {
+          "description": "Vendor-specific examples. Informative, not normative.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tooling": {
+                "type": "string"
+              },
+              "description": {
+                "$ref": "common.schema.json#/$defs/i18n"
+              }
+            },
+            "required": [
+              "description"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "assessment_questions": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/assessment_question"
+          }
+        },
+        "source_ref": {
+          "type": "string",
+          "description": "Section of the source document."
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "title",
+        "statement",
+        "enforcement",
+        "source_ref"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

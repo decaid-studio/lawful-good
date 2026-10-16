@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/decaid-studio/lawful-good/schema/common.schema.json",
+  "title": "lawful-good common definitions",
+  "$defs": {
+    "i18n": {
+      "description": "Text in German and English. Both languages are required.",
+      "type": "object",
+      "properties": {
+        "de": { "type": "string", "minLength": 1 },
+        "en": { "type": "string", "minLength": 1 }
+      },
+      "required": ["de", "en"],
+      "additionalProperties": false
+    },
+    "id": {
+      "description": "Stable, lowercase, dot/dash separated identifier.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+([.-][a-z0-9]+)*$"
+    },
+    "date": { "type": "string", "format": "date" },
+    "verification": {
+      "description": "How far the content has been checked against its authoritative source.",
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": ["unverified", "verified-against-source", "reviewed-by-expert"]
+        },
+        "note": { "type": "string" },
+        "date": { "$ref": "#/$defs/date" }
+      },
+      "required": ["status"],
+      "additionalProperties": false
+    },
+    "assessment_question": {
+      "description": "Editorial question an agent or auditor can ask to check implementation. Not legal text.",
+      "type": "object",
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "question": { "$ref": "#/$defs/i18n" },
+        "evidence": {
+          "description": "Kinds of evidence that would answer the question.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/i18n" }
+        }
+      },
+      "required": ["id", "question"],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,366 @@
+# EU AI Act, Article 17 – Quality management system
+# Legal text: Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744.
+# Only the text published in the Official Journal of the EU is authentic.
+# Fields named "summary" and "assessment_questions" are editorial (DECAID, CC BY 4.0), not legal text.
+
+schema_version: "0.1"
+kind: regulation
+id: eu-ai-act.art-17
+
+source:
+  title:
+    de: Verordnung (EU) 2024/1689 (KI-Verordnung)
+    en: Regulation (EU) 2024/1689 (Artificial Intelligence Act)
+  short_name: EU AI Act
+  celex: "32024R1689"
+  consolidated_version: "02024R1689-20260727"
+  amended_by:
+    - Regulation (EU) 2026/1744 (Digital Omnibus on AI), OJ L, 24.7.2026, in force since 27.7.2026
+  urls:
+    de: https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02024R1689-20260727
+    en: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727
+  retrieved: 2026-10-16
+  authentic_text_note: >-
+    Consolidated texts are documentation tools without legal effect. Only the
+    texts published in the Official Journal of the European Union are authentic.
+  reuse_note: >-
+    EU legislation may be reused with acknowledgement of the source
+    (Commission Decision 2011/833/EU). Source: EUR-Lex, © European Union.
+
+article: "17"
+title:
+  de: Qualitätsmanagementsystem
+  en: Quality management system
+
+addressees: [provider]
+
+scope:
+  de: Anbieter von Hochrisiko-KI-Systemen.
+  en: Providers of high-risk AI systems.
+
+application:
+  - applies_to:
+      de: Hochrisiko-KI-Systeme nach Art. 6 Abs. 2 und Anhang III
+      en: High-risk AI systems under Article 6(2) and Annex III
+    from: 2027-12-02
+  - applies_to:
+      de: Hochrisiko-KI-Systeme nach Art. 6 Abs. 1 und Anhang I
+      en: High-risk AI systems under Article 6(1) and Annex I
+    from: 2028-08-02
+
+verification:
+  status: unverified
+  date: 2026-10-16
+  note: >-
+    Texts taken from secondary sources reproducing the consolidated version
+    (DE: lxgesetze.de, EN: artificialintelligenceact.eu). Must be checked
+    word by word against the EUR-Lex consolidated version 02024R1689-20260727
+    before public release. Application dates per Regulation (EU) 2026/1744.
+
+requirements:
+
+  - id: eu-ai-act.art-17.1
+    ref: "Art. 17(1)"
+    type: chapeau
+    text:
+      de: >-
+        Anbieter von Hochrisiko-KI-Systemen richten ein Qualitätsmanagementsystem ein,
+        das die Einhaltung dieser Verordnung gewährleistet. Dieses System wird systematisch
+        und ordnungsgemäß in Form schriftlicher Regeln, Verfahren und Anweisungen
+        dokumentiert und umfasst mindestens folgende Aspekte:
+      en: >-
+        Providers of high-risk AI systems shall put a quality management system in place
+        that ensures compliance with this Regulation. That system shall be documented in a
+        systematic and orderly manner in the form of written policies, procedures and
+        instructions, and shall include at least the following aspects:
+    summary:
+      de: Ein dokumentiertes QMS (Regeln, Verfahren, Anweisungen) ist Pflicht; die Buchstaben a–m sind der Mindestinhalt.
+      en: A documented QMS (policies, procedures, instructions) is mandatory; points (a)–(m) are the minimum content.
+    assessment_questions:
+      - id: art17-1.q1
+        question:
+          de: Gibt es ein schriftlich dokumentiertes QMS, das alle Buchstaben a–m adressiert?
+          en: Is there a written, documented QMS that addresses every point (a)–(m)?
+        evidence:
+          - de: QMS-Handbuch oder Richtlinie mit Inhaltsverzeichnis und Zuordnung zu Art. 17(1)
+            en: QMS manual or policy with table of contents and mapping to Art. 17(1)
+
+  - id: eu-ai-act.art-17.1.a
+    ref: "Art. 17(1)(a)"
+    type: obligation
+    text:
+      de: >-
+        ein Konzept zur Einhaltung der Regulierungsvorschriften, was die Einhaltung der
+        Konformitätsbewertungsverfahren und der Verfahren für das Management von Änderungen
+        an dem Hochrisiko-KI-System miteinschließt;
+      en: >-
+        a strategy for regulatory compliance, including compliance with conformity
+        assessment procedures and procedures for the management of modifications to the
+        high-risk AI system;
+    related_articles: ["43"]
+    assessment_questions:
+      - id: art17-1-a.q1
+        question:
+          de: Ist festgelegt, welches Konformitätsbewertungsverfahren gilt und wie Änderungen am System bewertet und freigegeben werden?
+          en: Is it defined which conformity assessment procedure applies and how changes to the system are assessed and approved?
+
+  - id: eu-ai-act.art-17.1.b
+    ref: "Art. 17(1)(b)"
+    type: obligation
+    text:
+      de: >-
+        Techniken, Verfahren und systematische Maßnahmen für den Entwurf, die
+        Entwurfskontrolle und die Entwurfsprüfung des Hochrisiko-KI-Systems;
+      en: >-
+        techniques, procedures and systematic actions to be used for the design, design
+        control and design verification of the high-risk AI system;
+    assessment_questions:
+      - id: art17-1-b.q1
+        question:
+          de: Gibt es definierte Design-Reviews mit dokumentierten Ergebnissen?
+          en: Are there defined design reviews with documented results?
+
+  - id: eu-ai-act.art-17.1.c
+    ref: "Art. 17(1)(c)"
+    type: obligation
+    text:
+      de: >-
+        Techniken, Verfahren und systematische Maßnahmen für die Entwicklung,
+        Qualitätskontrolle und Qualitätssicherung des Hochrisiko-KI-Systems;
+      en: >-
+        techniques, procedures and systematic actions to be used for the development,
+        quality control and quality assurance of the high-risk AI system;
+    assessment_questions:
+      - id: art17-1-c.q1
+        question:
+          de: Sind Entwicklungs- und QS-Prozesse (z. B. Code-Review, CI, Freigabe) beschrieben und nachweisbar gelebt?
+          en: Are development and QA processes (e.g. code review, CI, release approval) described and evidenced?
+
+  - id: eu-ai-act.art-17.1.d
+    ref: "Art. 17(1)(d)"
+    type: obligation
+    text:
+      de: >-
+        Untersuchungs-, Test- und Validierungsverfahren, die vor, während und nach der
+        Entwicklung des Hochrisiko-KI-Systems durchzuführen sind, und die Häufigkeit der
+        Durchführung;
+      en: >-
+        examination, test and validation procedures to be carried out before, during and
+        after the development of the high-risk AI system, and the frequency with which they
+        have to be carried out;
+    assessment_questions:
+      - id: art17-1-d.q1
+        question:
+          de: Sind Testpläne, Abnahmekriterien und die Testfrequenz festgelegt?
+          en: Are test plans, acceptance criteria and test frequency defined?
+
+  - id: eu-ai-act.art-17.1.e
+    ref: "Art. 17(1)(e)"
+    type: obligation
+    text:
+      de: >-
+        die technischen Spezifikationen und Normen, die anzuwenden sind und, falls die
+        einschlägigen harmonisierten Normen nicht vollständig angewandt werden oder sie
+        nicht alle relevanten Anforderungen gemäß Abschnitt 2 abdecken, die Mittel, mit
+        denen gewährleistet werden soll, dass das Hochrisiko-KI-System diese Anforderungen
+        erfüllt;
+      en: >-
+        technical specifications, including standards, to be applied and, where the
+        relevant harmonised standards are not applied in full or do not cover all of the
+        relevant requirements set out in Section 2, the means to be used to ensure that the
+        high-risk AI system complies with those requirements;
+    related_articles: ["40", "41"]
+    assessment_questions:
+      - id: art17-1-e.q1
+        question:
+          de: Ist dokumentiert, welche Normen angewendet werden und wie Lücken (nicht abgedeckte Anforderungen) geschlossen werden?
+          en: Is it documented which standards are applied and how gaps (requirements not covered) are closed?
+
+  - id: eu-ai-act.art-17.1.f
+    ref: "Art. 17(1)(f)"
+    type: obligation
+    text:
+      de: >-
+        Systeme und Verfahren für das Datenmanagement, einschließlich Datengewinnung,
+        Datenerhebung, Datenanalyse, Datenkennzeichnung, Datenspeicherung, Datenfilterung,
+        Datenauswertung, Datenaggregation, Vorratsdatenspeicherung und sonstiger Vorgänge in
+        Bezug auf die Daten, die im Vorfeld und für die Zwecke des Inverkehrbringens oder
+        der Inbetriebnahme von Hochrisiko-KI-Systemen durchgeführt werden;
+      en: >-
+        systems and procedures for data management, including data acquisition, data
+        collection, data analysis, data labelling, data storage, data filtration, data
+        mining, data aggregation, data retention and any other operation regarding the data
+        that is performed before and for the purpose of the placing on the market or the
+        putting into service of high-risk AI systems;
+    related_articles: ["10"]
+    assessment_questions:
+      - id: art17-1-f.q1
+        question:
+          de: Sind alle Datenoperationen von der Erhebung bis zur Aufbewahrung als Verfahren beschrieben?
+          en: Are all data operations from collection to retention described as procedures?
+
+  - id: eu-ai-act.art-17.1.g
+    ref: "Art. 17(1)(g)"
+    type: obligation
+    text:
+      de: das in Artikel 9 genannte Risikomanagementsystem;
+      en: the risk management system referred to in Article 9;
+    related_articles: ["9"]
+    assessment_questions:
+      - id: art17-1-g.q1
+        question:
+          de: Existiert ein Risikomanagementsystem nach Art. 9 und ist es in das QMS eingebunden?
+          en: Is there a risk management system under Article 9 and is it integrated into the QMS?
+
+  - id: eu-ai-act.art-17.1.h
+    ref: "Art. 17(1)(h)"
+    type: obligation
+    text:
+      de: >-
+        die Einrichtung, Anwendung und Aufrechterhaltung eines Systems zur Beobachtung nach
+        dem Inverkehrbringen gemäß Artikel 72;
+      en: >-
+        the setting-up, implementation and maintenance of a post-market monitoring system,
+        in accordance with Article 72;
+    related_articles: ["72"]
+    assessment_questions:
+      - id: art17-1-h.q1
+        question:
+          de: Gibt es einen Post-Market-Monitoring-Plan und wird er nachweislich umgesetzt?
+          en: Is there a post-market monitoring plan and is there evidence it is carried out?
+
+  - id: eu-ai-act.art-17.1.i
+    ref: "Art. 17(1)(i)"
+    type: obligation
+    text:
+      de: Verfahren zur Meldung eines schwerwiegenden Vorfalls gemäß Artikel 73;
+      en: procedures related to the reporting of a serious incident in accordance with Article 73;
+    related_articles: ["73"]
+    assessment_questions:
+      - id: art17-1-i.q1
+        question:
+          de: Gibt es ein Meldeverfahren für schwerwiegende Vorfälle mit Zuständigkeiten und Fristen?
+          en: Is there a serious-incident reporting procedure with responsibilities and deadlines?
+
+  - id: eu-ai-act.art-17.1.j
+    ref: "Art. 17(1)(j)"
+    type: obligation
+    text:
+      de: >-
+        die Handhabung der Kommunikation mit zuständigen nationalen Behörden, anderen
+        einschlägigen Behörden, auch Behörden, die den Zugang zu Daten gewähren oder
+        erleichtern, notifizierten Stellen, anderen Akteuren, Kunden oder sonstigen
+        interessierten Kreisen;
+      en: >-
+        the handling of communication with national competent authorities, other relevant
+        authorities, including those providing or supporting the access to data, notified
+        bodies, other operators, customers or other interested parties;
+    assessment_questions:
+      - id: art17-1-j.q1
+        question:
+          de: Ist festgelegt, wer mit Behörden, notifizierten Stellen und Kunden kommuniziert und wie?
+          en: Is it defined who communicates with authorities, notified bodies and customers, and how?
+
+  - id: eu-ai-act.art-17.1.k
+    ref: "Art. 17(1)(k)"
+    type: obligation
+    text:
+      de: Systeme und Verfahren für die Aufzeichnung sämtlicher einschlägigen Dokumentation und Informationen;
+      en: systems and procedures for record-keeping of all relevant documentation and information;
+    related_articles: ["18", "19"]
+    assessment_questions:
+      - id: art17-1-k.q1
+        question:
+          de: Werden alle relevanten Dokumente und Aufzeichnungen versioniert und auffindbar aufbewahrt?
+          en: Are all relevant documents and records kept version-controlled and retrievable?
+
+  - id: eu-ai-act.art-17.1.l
+    ref: "Art. 17(1)(l)"
+    type: obligation
+    text:
+      de: Ressourcenmanagement, einschließlich Maßnahmen im Hinblick auf die Versorgungssicherheit;
+      en: resource management, including security-of-supply related measures;
+    assessment_questions:
+      - id: art17-1-l.q1
+        question:
+          de: Sind Abhängigkeiten von Lieferanten (z. B. Modell-APIs) und Ausweichpläne dokumentiert?
+          en: Are supplier dependencies (e.g. model APIs) and fallback plans documented?
+
+  - id: eu-ai-act.art-17.1.m
+    ref: "Art. 17(1)(m)"
+    type: obligation
+    text:
+      de: >-
+        einen Rechenschaftsrahmen, der die Verantwortlichkeiten der Leitung und des
+        sonstigen Personals in Bezug auf alle in diesem Absatz aufgeführten Aspekte regelt.
+      en: >-
+        an accountability framework setting out the responsibilities of the management and
+        other staff with regard to all the aspects listed in this paragraph.
+    assessment_questions:
+      - id: art17-1-m.q1
+        question:
+          de: Hat jeder Aspekt a–l eine namentlich oder per Rolle zugeordnete Verantwortung?
+          en: Does every aspect (a)–(l) have a responsibility assigned by name or role?
+
+  - id: eu-ai-act.art-17.2
+    ref: "Art. 17(2)"
+    type: proportionality
+    text:
+      de: >-
+        Die Umsetzung der in Absatz 1 genannten Aspekte erfolgt in einem angemessenen
+        Verhältnis zur Größe der Organisation des Anbieters, insbesondere wenn es sich bei
+        dem Anbieter um ein KMU, einschließlich Start-up-Unternehmen, oder ein kleines
+        Midcap-Unternehmen handelt. Die Anbieter müssen in jedem Fall den Grad der Strenge
+        und das Schutzniveau einhalten, die erforderlich sind, um die Übereinstimmung ihrer
+        Hochrisiko-KI-Systeme mit dieser Verordnung sicherzustellen.
+      en: >-
+        The implementation of the aspects referred to in paragraph 1 shall be proportionate
+        to the size of the provider's organisation, in particular, if the provider is an SME,
+        including a start-up, or an SMC. Providers shall, in any event, respect the degree of
+        rigour and the level of protection required to ensure the compliance of their
+        high-risk AI systems with this Regulation.
+    amended:
+      by: Regulation (EU) 2026/1744
+      note: Small mid-cap enterprises (SMCs) added.
+    summary:
+      de: Umfang darf zur Unternehmensgröße passen (KMU, Start-ups, Small Mid-Caps), das Schutzniveau nicht.
+      en: Scope may match company size (SMEs, start-ups, small mid-caps); the level of protection may not.
+
+  - id: eu-ai-act.art-17.3
+    ref: "Art. 17(3)"
+    type: derogation
+    text:
+      de: >-
+        Anbieter von Hochrisiko-KI-Systemen, die Pflichten in Bezug auf
+        Qualitätsmanagementsysteme oder eine gleichwertige Funktion gemäß den
+        sektorspezifischen Rechtsvorschriften der Union unterliegen, können die in Absatz 1
+        aufgeführten Aspekte als Bestandteil der nach den genannten Rechtsvorschriften
+        festgelegten Qualitätsmanagementsysteme einbeziehen.
+      en: >-
+        Providers of high-risk AI systems that are subject to obligations regarding quality
+        management systems or an equivalent function under relevant sectoral Union law may
+        include the aspects listed in paragraph 1 as part of the quality management systems
+        pursuant to that law.
+
+  - id: eu-ai-act.art-17.4
+    ref: "Art. 17(4)"
+    type: derogation
+    text:
+      de: >-
+        Bei Anbietern, die Finanzinstitute sind und gemäß den Rechtsvorschriften der Union
+        über Finanzdienstleistungen Anforderungen in Bezug auf ihre Regelungen oder
+        Verfahren der internen Unternehmensführung unterliegen, gilt die Pflicht zur
+        Einrichtung eines Qualitätsmanagementsystems – mit Ausnahme des Absatzes 1
+        Buchstaben g, h und i des vorliegenden Artikels – als erfüllt, wenn die Vorschriften
+        über Regelungen oder Verfahren der internen Unternehmensführung gemäß dem
+        einschlägigen Unionsrecht über Finanzdienstleistungen eingehalten werden. Zu diesem
+        Zweck werden die in Artikel 40 genannten harmonisierten Normen berücksichtigt.
+      en: >-
+        For providers that are financial institutions subject to requirements regarding
+        their internal governance, arrangements or processes under Union financial services
+        law, the obligation to put in place a quality management system, with the exception
+        of paragraph 1, points (g), (h) and (i) of this Article, shall be deemed to be
+        fulfilled by complying with the rules on internal governance arrangements or
+        processes pursuant to the relevant Union financial services law. To that end, any
+        harmonised standards referred to in Article 40 shall be taken into account.
+    related_articles: ["40"]

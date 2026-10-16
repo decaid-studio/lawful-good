@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/decaid-studio/lawful-good/schema/crosswalk.schema.json",
+  "title": "Crosswalk between two catalogs",
+  "type": "object",
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "kind": { "const": "crosswalk" },
+    "id": { "$ref": "common.schema.json#/$defs/id" },
+    "from": { "type": "string", "description": "Catalog id or external reference of the source side." },
+    "to": { "type": "string", "description": "Catalog id or external reference of the target side." },
+    "basis": { "type": "string", "description": "How the mapping was produced." },
+    "publication_status": { "enum": ["public", "internal", "blocked-pending-legal-review"] },
+    "verification": { "$ref": "common.schema.json#/$defs/verification" },
+    "disclaimer": { "$ref": "common.schema.json#/$defs/i18n" },
+    "mappings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "targets": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "relation": {
+            "description": "'supports' = contributes to, does not by itself fulfil. 'covers' = intended to address the target as stated by the source document.",
+            "enum": ["supports", "covers", "partially-covers", "not-covered"]
+          },
+          "confidence": { "enum": ["low", "medium", "high"] },
+          "rationale": { "$ref": "common.schema.json#/$defs/i18n" }
+        },
+        "required": ["source", "targets", "relation"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["schema_version", "kind", "id", "from", "to", "basis", "publication_status", "verification", "mappings"],
+  "additionalProperties": false
+}

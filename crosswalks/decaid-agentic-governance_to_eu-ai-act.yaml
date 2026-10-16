@@ -1,0 +1,137 @@
+# Crosswalk: DECAID Agentic Governance Framework -> EU AI Act
+# Own analysis by DECAID. Content license: CC BY 4.0.
+# Target ids: "eu-ai-act.art-<article>.<paragraph>.<point>" (Art. 17 items exist in catalog/regulations/eu-ai-act/art-17.yaml)
+
+schema_version: "0.1"
+kind: crosswalk
+id: crosswalk.decaid-agentic-governance.eu-ai-act
+from: decaid.agentic-governance
+to: eu-ai-act
+basis: Own analysis of WP2 controls against the text of Regulation (EU) 2024/1689 as amended by (EU) 2026/1744.
+publication_status: internal
+verification:
+  status: unverified
+  date: 2026-10-16
+  note: Draft mapping, to be reviewed by DECAID and the legal partner before publication.
+disclaimer:
+  de: >-
+    Die Zuordnung zeigt, wo eine Kontrolle zur Erfüllung einer Anforderung beitragen kann
+    ("supports"). Sie begründet keine Konformitätsvermutung und ersetzt keine rechtliche
+    Prüfung. Die zitierten Pflichten gelten überwiegend nur für Hochrisiko-KI-Systeme.
+  en: >-
+    The mapping shows where a control can contribute to meeting a requirement
+    ("supports"). It does not confer a presumption of conformity and is not legal advice.
+    Most cited obligations apply to high-risk AI systems only.
+
+mappings:
+  - source: decaid.agentic-governance.levels
+    targets: [eu-ai-act.art-17.1.m, eu-ai-act.art-9.2]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Die Level-Zuordnung mit Freigaberollen ist ein Rechenschaftsrahmen und eine strukturierte Risikoeinstufung pro Agent.
+      en: Level assignment with approval roles is an accountability framework and a structured risk classification per agent.
+
+  - source: DAG-C1
+    targets: [eu-ai-act.art-15.5, eu-ai-act.art-9.5.a]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Minimale Rechte reduzieren Angriffsfläche und Risiken bereits durch Design.
+      en: Minimal permissions reduce attack surface and risk by design.
+
+  - source: DAG-C2
+    targets: [eu-ai-act.art-15.4, eu-ai-act.art-15.5, eu-ai-act.art-17.1.b]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Deterministische Schnittstellen erhöhen Robustheit und begrenzen Manipulation über Tool-Aufrufe.
+      en: Deterministic interfaces increase robustness and limit manipulation via tool calls.
+
+  - source: DAG-C3
+    targets: [eu-ai-act.art-9.5.a, eu-ai-act.art-15.5]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Harte Guardrails sind technische Risikominderung durch Entwurf, nicht nur Anweisung.
+      en: Hard guardrails are technical risk reduction by design, not mere instruction.
+
+  - source: DAG-C4
+    targets: [eu-ai-act.art-14.4.e, eu-ai-act.art-15.4]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Abbruchgrenzen und Timeouts ermöglichen das Unterbrechen des Systems und erhöhen die Fehlerresilienz.
+      en: Abort limits and timeouts allow the system to be interrupted and improve resilience to errors.
+
+  - source: DAG-C5
+    targets: [eu-ai-act.art-14.1, eu-ai-act.art-14.4.d]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Erzwungene Bestätigung vor externer Wirkung ist eine Form wirksamer menschlicher Aufsicht.
+      en: Enforced confirmation before external effect is a form of effective human oversight.
+
+  - source: DAG-C6
+    targets: [eu-ai-act.art-17.1.h, eu-ai-act.art-72, eu-ai-act.art-17.1.a, eu-ai-act.art-43.4]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Monitoring speist die Beobachtung nach dem Inverkehrbringen; Freigabe-Entzug bei Drift ist ein Änderungsmanagement, das auch die Prüfung auf wesentliche Änderung auslösen kann.
+      en: Monitoring feeds post-market monitoring; revoking approval on drift is change management that can also trigger the check for substantial modification.
+
+  - source: DAG-C7
+    targets: [eu-ai-act.art-17.1.k, eu-ai-act.art-17.1.m]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Snapshot und Owner-Bereinigung unterstützen Dokumentation und klare Verantwortlichkeiten.
+      en: Snapshots and owner cleanup support record-keeping and clear responsibilities.
+
+  - source: DAG-P1
+    targets: [eu-ai-act.art-15.5]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Netzwerk-, DNS- und Laufzeit-Isolation sind Cybersicherheitsmaßnahmen.
+      en: Network, DNS and runtime isolation are cybersecurity measures.
+
+  - source: DAG-P2
+    targets: [eu-ai-act.art-12.1, eu-ai-act.art-17.1.k]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Eindeutige Agenten-Identitäten machen protokollierte Ereignisse rückverfolgbar.
+      en: Unique agent identities make logged events traceable.
+
+  - source: DAG-P3
+    targets: [eu-ai-act.art-12.1, eu-ai-act.art-19.1, eu-ai-act.art-26.6]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Vollständige Logs mit Mindestaufbewahrung adressieren Aufzeichnungs- und Aufbewahrungspflichten.
+      en: Complete logs with minimum retention address recording and retention obligations.
+
+  - source: DAG-P4
+    targets: [eu-ai-act.art-17.1.m]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Owner-Pflicht und Inventar konkretisieren den Rechenschaftsrahmen.
+      en: Mandatory ownership and an inventory make the accountability framework concrete.
+
+  - source: DAG-P5
+    targets: [eu-ai-act.art-14.4.e, eu-ai-act.art-20.1, eu-ai-act.art-17.1.i]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Sofortiger Freigabe-Entzug ermöglicht Stopp und Korrekturmaßnahmen; der Incident-Prozess kann Meldeverfahren speisen.
+      en: Immediate revocation enables stopping and corrective action; the incident process can feed reporting procedures.
+
+  - source: DAG-P6
+    targets: [eu-ai-act.art-50.1]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Kennzeichnung informiert Personen, dass sie mit einem KI-System interagieren.
+      en: Labelling informs people that they are interacting with an AI system.

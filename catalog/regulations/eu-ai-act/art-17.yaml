@@ -49,13 +49,14 @@ application:
     from: 2028-08-02
 
 verification:
-  status: unverified
+  status: verified-against-source
   date: 2026-10-16
   note: >-
-    Texts taken from secondary sources reproducing the consolidated version
-    (DE: lxgesetze.de, EN: artificialintelligenceact.eu). Must be checked
-    word by word against the EUR-Lex consolidated version 02024R1689-20260727
-    before public release. Application dates per Regulation (EU) 2026/1744.
+    DE and EN text of all paragraphs checked word by word on 2026-10-16:
+    Art. 17(1), (3) and (4) against OJ L, 2024/1689, 12.7.2024; Art. 17(1)-(4) against
+    the EUR-Lex consolidated version 02024R1689-20260727 (incl. amendment M1 to
+    Art. 17(2) by Regulation (EU) 2026/1744). Consolidated texts have no legal effect;
+    only the Official Journal is authentic. Application dates per Regulation (EU) 2026/1744.
 
 requirements:
 
@@ -315,13 +316,21 @@ requirements:
         Hochrisiko-KI-Systeme mit dieser Verordnung sicherzustellen.
       en: >-
         The implementation of the aspects referred to in paragraph 1 shall be proportionate
-        to the size of the provider's organisation, in particular, if the provider is an SME,
+        to the size of the provider’s organisation, in particular, if the provider is an SME,
         including a start-up, or an SMC. Providers shall, in any event, respect the degree of
         rigour and the level of protection required to ensure the compliance of their
         high-risk AI systems with this Regulation.
     amended:
       by: Regulation (EU) 2026/1744
-      note: Small mid-cap enterprises (SMCs) added.
+      note: >-
+        Small mid-cap enterprises (SMCs) and the explicit reference to SMEs and start-ups
+        were added. Original wording (OJ L 2024/1689) ended after "the provider's organisation".
+    verification:
+      status: verified-against-source
+      date: 2026-10-16
+      note: >-
+        DE and EN checked word by word against the EUR-Lex consolidated version
+        02024R1689-20260727 (amendment marker M1 = Regulation (EU) 2026/1744).
     summary:
       de: Umfang darf zur Unternehmensgröße passen (KMU, Start-ups, Small Mid-Caps), das Schutzniveau nicht.
       en: Scope may match company size (SMEs, start-ups, small mid-caps); the level of protection may not.
@@ -350,8 +359,8 @@ requirements:
         Bei Anbietern, die Finanzinstitute sind und gemäß den Rechtsvorschriften der Union
         über Finanzdienstleistungen Anforderungen in Bezug auf ihre Regelungen oder
         Verfahren der internen Unternehmensführung unterliegen, gilt die Pflicht zur
-        Einrichtung eines Qualitätsmanagementsystems – mit Ausnahme des Absatzes 1
-        Buchstaben g, h und i des vorliegenden Artikels – als erfüllt, wenn die Vorschriften
+        Einrichtung eines Qualitätsmanagementsystems — mit Ausnahme des Absatzes 1
+        Buchstaben g, h und i des vorliegenden Artikels — als erfüllt, wenn die Vorschriften
         über Regelungen oder Verfahren der internen Unternehmensführung gemäß dem
         einschlägigen Unionsrecht über Finanzdienstleistungen eingehalten werden. Zu diesem
         Zweck werden die in Artikel 40 genannten harmonisierten Normen berücksichtigt.

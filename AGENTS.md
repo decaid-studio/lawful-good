@@ -1,36 +1,45 @@
 # AGENTS.md – using lawful-good as an agent
 
-This repository is designed to be read by coding agents and governance tools.
+This repository holds governance recommendations as data. Use them to structure checks
+and questions. Do not present results as legal compliance.
 
 ## Load
 
-Prefer the bundle `dist/lawful-good.json` (built by `python tools/lg.py build`).
-Otherwise read the YAML files under `catalog/` and `crosswalks/` directly.
-Never read or use files under `drafts/` or `private/` unless explicitly told to.
+Prefer `dist/lawful-good.json` (built by `python tools/lg.py build`); otherwise read the
+YAML files under `catalog/`.
 
-## Data model in one minute
+## Data model
 
-- `regulations[].requirements[]` – legal text (`text.de`, `text.en`), editorial `summary`
-  and `assessment_questions`. Treat `text` as authoritative wording, everything else as help.
-- `frameworks[].levels[]` – clearance levels with `capabilities` (upper bound of what an agent
-  may do), `approval_roles` and derived `mandatory_controls`.
-- `frameworks[].controls[]` – `statement` (normative), `parameters` (thresholds),
-  `assessment_questions` (what to check), `implementation_examples` (informative only).
-- `crosswalks[].mappings[]` – `relation: supports` means *contributes to*, never *fulfils*.
+- `frameworks[].levels[]` – clearance levels with `capabilities` (upper bound of what an
+  agent may do), `approval_roles` and derived `mandatory_controls`.
+- `frameworks[].controls[]` – `statement` (the recommendation), `parameters` (thresholds),
+  `assessment_questions` (what to check), `implementation_examples` (illustrative only).
+- `assessment_catalogs[].items[]` – check questions per gate with maturity criteria
+  (`basic`, `advanced`, `high`), expected `evidence`, `methods` and
+  `reassessment_triggers`. Items with a `module` apply only if the module's `applies_if`
+  holds. Apply the catalog's `principles`.
+- `crosswalks[]` – links check items to agent controls (`relation: supports`).
+- `templates/` – a human-readable AI policy; the `→ DAG-…` and `→ G…` markers point to the
+  data above.
 
-## Typical task: assess an agent configuration
+## Typical task: watch for reassessment triggers
 
-1. Determine the agent's level from its actual capabilities: pick the lowest level whose
-   `capabilities` cover what the agent can do (read scope, write scope, external tools).
-   If the agent can act autonomously without any abort mechanism, it is `prohibited`.
+Compare a change (pull request, config diff, model or provider switch) with the
+`reassessment_triggers` of every item and report which items are due for a new assessment.
+
+## Typical task: review an agent configuration
+
+1. Derive the agent's level from its actual capabilities: the lowest level whose
+   `capabilities` cover what the agent can read, write and call. An agent that can act
+   autonomously without any way to abort it is `prohibited`.
 2. For every id in that level's `mandatory_controls`, answer each `assessment_question`
-   with evidence from the repository or configuration you inspected.
-3. Report per control: `status` (met / not met / not determinable), evidence (file and line),
-   and the related AI Act requirements from the crosswalk.
-4. Never state that a system "complies with the AI Act". State which controls are evidenced.
+   with evidence from what you inspected.
+3. Report per control: met / not met / not determinable, with evidence (file and line).
+4. Hand judgement calls to a human. Flag them instead of deciding them.
 
-## Rules for agents
+## Rules
 
-- Do not invent requirements, thresholds or clause numbers that are not in the data.
-- Quote legal text only from `text` fields and cite the `ref` (e.g. "Art. 17(1)(h)").
-- Flag content whose `verification.status` is `unverified`.
+- Never state that a system "complies" with the EU AI Act or any standard.
+- Do not invent thresholds, levels or controls that are not in the data.
+- Flag content whose `verification.status` is `unverified` or whose
+  `translation_status` is `machine-assisted-review-needed`.

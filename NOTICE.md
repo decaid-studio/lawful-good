@@ -1,32 +1,40 @@
 # Notice / Hinweise
 
-## Not legal advice / Keine Rechtsberatung
+## Not legal advice, no conformity
 
-EN: This repository is provided for information. It is not legal advice. Using it does not
-confer a presumption of conformity under the EU AI Act. Presumption of conformity arises
-only from applying a harmonised standard whose reference is published in the Official
-Journal of the EU, and only within the limits stated in that standard.
+EN: This repository contains DECAID's own governance recommendations. It is not legal
+advice and does not establish conformity with the EU AI Act or any other law or standard.
 
-DE: Dieses Repository dient der Information und ist keine Rechtsberatung. Seine Nutzung
-begründet keine Konformitätsvermutung nach der KI-Verordnung. Diese entsteht nur durch
-Anwendung einer harmonisierten Norm, deren Fundstelle im Amtsblatt der EU veröffentlicht
-ist, und nur in den dort genannten Grenzen.
+It is **not a basis for implementing Article 17 of the EU AI Act** (quality management
+system for high-risk AI systems). Providers of high-risk AI systems must apply the
+relevant harmonised standards themselves and seek legal advice. Using this repository
+does not confer a presumption of conformity.
 
-## What is NOT in this repository
+DE: Dieses Repository enthält eigene Governance-Empfehlungen von DECAID. Es ist keine
+Rechtsberatung und weist keine Konformität mit dem EU AI Act oder anderen Gesetzen und
+Normen nach.
 
-- No text, tables, figures or definitions from EN 18286 or any other purchased standard.
-- Only clause numbers may be referenced, and only after legal review (see `drafts/`).
-- Buy standards from your national standards body (e.g. DIN Media in Germany).
+Es ist **keine Grundlage für die Umsetzung von Art. 17 des EU AI Act**
+(Qualitätsmanagementsystem für Hochrisiko-KI-Systeme). Anbieter von Hochrisiko-KI-Systemen
+müssen die einschlägigen harmonisierten Normen selbst anwenden und sich rechtlich beraten
+lassen. Die Nutzung dieses Repositorys begründet keine Konformitätsvermutung.
+
+## Policy template
+
+The AI policy template is a sample to be adapted. Rules on how employees use AI can be
+subject to co-determination (in Germany e.g. § 87 (1) no. 6 BetrVG). Seek legal advice
+before adopting it.
+
+Die KI-Richtlinie ist ein Muster zur Anpassung. Regeln zur KI-Nutzung durch Beschäftigte
+können mitbestimmungspflichtig sein (z. B. § 87 Abs. 1 Nr. 6 BetrVG). Lassen Sie die
+Richtlinie vor der Einführung rechtlich prüfen.
+
+## No copyrighted standards
+
+This repository contains no text, structure, tables or mappings taken from purchased
+standards (CEN/CENELEC, ISO/IEC, DIN or others). Contributions must not add any.
 
 ## Sources
 
-- Regulation (EU) 2024/1689 (AI Act), consolidated version 02024R1689-20260727, EUR-Lex.
-  Only the texts published in the Official Journal are authentic. © European Union.
-- Regulation (EU) 2026/1744 (Digital Omnibus on AI), OJ L, 24.7.2026.
-- DECAID Whitepaper 2 "Agentic Governance – Wenn KI handelt statt antwortet" (draft, 2026),
-  CC BY 4.0.
-
-## Verification status
-
-Every catalog file carries a `verification` block. Content marked `unverified` must be
-checked against its authoritative source before public release.
+All content is original work by DECAID, licensed under CC BY 4.0. Implementation
+examples name third-party tools for illustration only; no endorsement is implied.

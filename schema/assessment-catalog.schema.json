@@ -1,0 +1,281 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/decaid-studio/lawful-good/schema/assessment-catalog.schema.json",
+  "title": "Assessment catalog (check items with maturity criteria)",
+  "description": "Open check criteria for assessing an AI system. Scoring, weights and decision logic are intentionally not part of this schema.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "kind": {
+      "const": "assessment-catalog"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "title": {
+      "$ref": "common.schema.json#/$defs/i18n"
+    },
+    "version": {
+      "type": "string"
+    },
+    "publisher": {
+      "type": "string"
+    },
+    "license": {
+      "type": "string"
+    },
+    "verification": {
+      "$ref": "common.schema.json#/$defs/verification"
+    },
+    "translation_status": {
+      "enum": [
+        "original",
+        "machine-assisted-review-needed",
+        "reviewed"
+      ]
+    },
+    "maturity_levels": {
+      "description": "Definitions of the maturity levels used by every item.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "name": {
+            "type": "string"
+          },
+          "definition": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          }
+        },
+        "required": [
+          "level",
+          "name",
+          "definition"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^G[0-9]$"
+          },
+          "name": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          },
+          "focus": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          },
+          "guiding_question": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/item"
+      }
+    },
+    "principles": {
+      "description": "Rules for applying the catalog. Scoring and decision logic are not published.",
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/i18n"
+      }
+    },
+    "evidence_types": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "name": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          },
+          "examples": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "name": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          },
+          "applies_if": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          },
+          "output_channels": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "common.schema.json#/$defs/id"
+                },
+                "name": {
+                  "$ref": "common.schema.json#/$defs/i18n"
+                },
+                "check": {
+                  "$ref": "common.schema.json#/$defs/i18n"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "check"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/i18n"
+            }
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/i18n"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "applies_if"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "kind",
+    "id",
+    "title",
+    "version",
+    "verification",
+    "maturity_levels",
+    "items"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "item": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^G[0-9]-[0-9]{2}$"
+        },
+        "gate": {
+          "type": "string",
+          "pattern": "^G[0-9]$"
+        },
+        "category": {
+          "$ref": "common.schema.json#/$defs/i18n"
+        },
+        "subcategory": {
+          "$ref": "common.schema.json#/$defs/i18n"
+        },
+        "question": {
+          "$ref": "common.schema.json#/$defs/i18n"
+        },
+        "criteria": {
+          "type": "object",
+          "properties": {
+            "basic": {
+              "$ref": "common.schema.json#/$defs/i18n"
+            },
+            "advanced": {
+              "$ref": "common.schema.json#/$defs/i18n"
+            },
+            "high": {
+              "$ref": "common.schema.json#/$defs/i18n"
+            }
+          },
+          "required": [
+            "basic",
+            "advanced",
+            "high"
+          ],
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          }
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          }
+        },
+        "reassessment_triggers": {
+          "description": "Events that should trigger a new assessment of this item. Designed to be detected automatically.",
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/i18n"
+          }
+        },
+        "references": {
+          "description": "Openly available frameworks or laws the item draws on (e.g. 'NIST AI RMF', 'GDPR Art. 35'). No text from copyrighted standards.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "$ref": "common.schema.json#/$defs/i18n"
+        },
+        "module": {
+          "type": "string",
+          "description": "Id of the optional module this item belongs to. Items without a module apply to every AI system."
+        }
+      },
+      "required": [
+        "id",
+        "gate",
+        "question",
+        "criteria"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

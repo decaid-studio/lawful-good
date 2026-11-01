@@ -14,23 +14,20 @@ publisher: DECAID
 license: CC-BY-4.0
 source_document:
   title: "Agentic Governance – Wenn KI handelt statt antwortet (Whitepaper 2)"
-  version: Draft v2, Herbst 2026
+  version: Herbst 2026 (Stand 2026-11-01)
+  url: https://www.decaid.ai
 verification:
-  status: unverified
-  date: 2026-10-16
+  status: verified-against-source
+  date: 2026-11-01
   note: >-
-    Extracted from the WP2 draft. Open points before release: level naming, role
-    "chief", supplementary practices (DAG-P*) need sign-off by the authors.
+    Aligned with the revised WP2 (approval for levels 3 and 4 by the product owner,
+    level-8 exception for human-in-the-loop). Supplementary practices (DAG-P*) are derived
+    from WP2 chapters 4, 5 and 8.2.
 translation_status: machine-assisted-review-needed
 
 roles:
   - id: team-lead
     name: { de: Team Lead, en: Team lead }
-  - id: chief
-    name: { de: Chief, en: Chief }
-    description:
-      de: "OFFEN: Im WP2 nicht definiert (Führungskraft? Chief-Agent-Verantwortliche/r?)."
-      en: "OPEN: Not defined in WP2 (executive? person responsible for chief agents?)."
   - id: product-owner
     name: { de: Product Owner, en: Product owner }
   - id: governance-owner
@@ -74,7 +71,7 @@ levels:
     description:
       de: Lesezugriff Internet / externe Daten, keine schreibenden Aktionen.
       en: Read access to the internet / external data, no write actions.
-    approval_roles: [chief, product-owner]
+    approval_roles: [product-owner]
     capabilities: { external_tools: true, read: internal-and-external, write: none }
     allowed: true
   - id: level-4
@@ -83,7 +80,7 @@ levels:
     description:
       de: Vorbereitung schreibender Aktionen ohne eigenmächtiges Absenden.
       en: Prepares write actions without sending them on its own.
-    approval_roles: [chief, product-owner]
+    approval_roles: [product-owner]
     capabilities: { external_tools: true, read: internal-and-external, write: prepare-only }
     allowed: true
   - id: level-5
@@ -212,8 +209,15 @@ controls:
         tool call. Critical integrations are restricted to read-only at system level unless
         an approved business case for write access exists.
     rationale:
-      de: Weiche Guardrails (Prompt) können durch adversarielle Inputs oder Halluzination umgangen werden, harte (Gateway/Tool) nicht.
-      en: Soft guardrails (prompt) can be bypassed by adversarial input or hallucination; hard ones (gateway/tool) cannot.
+      de: >-
+        Weiche Guardrails (Prompt) können durch adversarielle Inputs oder Halluzination umgangen
+        werden. Harte Guardrails (Gateway, Tool, Netzwerk) kann das LLM nicht per Prompt
+        aushebeln; umgehbar sind sie nur über Lücken in der Konfiguration. Deshalb werden
+        mehrere Ebenen kombiniert.
+      en: >-
+        Soft guardrails (prompt) can be bypassed by adversarial input or hallucination. Hard
+        guardrails (gateway, tool, network) cannot be overridden by a prompt; they can only be
+        bypassed through gaps in the configuration. That is why several layers are combined.
     enforcement: [architectural, configuration]
     applies_from_level: 2
     assessment_questions:
@@ -257,16 +261,21 @@ controls:
       de: >-
         Menschliche Freigaben werden risikobasiert gefordert, nicht pauschal. Aktionen ab
         Level 5 (Secret) erfordern systemseitig eine Bestätigung durch den Nutzer, bevor die
-        Handlung extern wirksam wird.
+        Handlung extern wirksam wird. Schwellenwerte werden in der Harness konfiguriert.
+        Ausnahme Level 8: statt Bestätigung pro Aktion Betragsgrenzen, Freigabe durch die
+        Geschäftsführung und ein Abbruch, der jederzeit greift.
       en: >-
         Human approvals are required based on risk, not across the board. Actions from
         level 5 (Secret) upwards require a system-enforced confirmation by the user before
-        the action takes external effect.
+        the action takes external effect. Thresholds are configured in the harness.
+        Exception for level 8: instead of a confirmation per action, amount limits, approval
+        by management and an abort that works at any time.
     enforcement: [architectural, configuration]
     applies_from_level: 5
     parameters:
       hitl_from_level: 5
       confirmation: before-external-effect
+      level_8_exception: [amount-limits, management-approval, abort-at-any-time]
     implementation_examples:
       - tooling: Langdock governance module
         description:
@@ -388,6 +397,9 @@ controls:
         behalf of which person, at what time. From level 5, every agent gets its own account
         flagged as a bot with least-privilege rights. External requests carry identifying
         HTTP headers.
+    rationale:
+      de: Header sind eine Selbstauskunft, keine Authentifizierung. Die Zuordnung im Zielsystem erfolgt über eigene Bot-Accounts.
+      en: Headers are a self-declaration, not authentication. Attribution in the target system relies on dedicated bot accounts.
     enforcement: [architectural, configuration]
     applies_from_level: 5
     parameters:

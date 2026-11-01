@@ -4,8 +4,9 @@
   python tools/lg.py validate          # schema + reference checks for all catalogs
   python tools/lg.py build             # write dist/lawful-good.json (public content only)
   python tools/lg.py build --internal  # also include crosswalks marked "internal"
+  python tools/lg.py triage            # walk through the EU AI Act triage interactively (--lang en)
 
-Files with publication_status "blocked-pending-legal-review" are never bundled.
+Crosswalks marked "internal" are only bundled with --internal.
 """
 from __future__ import annotations
 
@@ -20,7 +21,7 @@ from referencing import Registry, Resource
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA_DIR = ROOT / "schema"
-CATALOG_DIRS = [ROOT / "catalog", ROOT / "crosswalks", ROOT / "drafts"]
+CATALOG_DIRS = [ROOT / "catalog", ROOT / "crosswalks"]
 BASE = "https://github.com/decaid-studio/lawful-good/schema/"
 
 
@@ -71,42 +72,88 @@ def validate() -> int:
             errors.append(f"{path.relative_to(ROOT)}: {loc}: {err.message}")
 
     # --- reference checks ---
-    req_ids, control_ids, level_ids = set(), set(), set()
+    known_ids: set[str] = set()
     for path, doc in docs.items():
-        if doc.get("kind") == "regulation":
-            ids = [r["id"] for r in doc["requirements"]]
-            dupes = {i for i in ids if ids.count(i) > 1}
-            if dupes:
-                errors.append(f"{path.relative_to(ROOT)}: duplicate requirement ids {sorted(dupes)}")
-            req_ids.update(ids)
         if doc.get("kind") == "framework":
             roles = {r["id"] for r in doc.get("roles", [])}
             for lvl in doc.get("levels", []):
-                level_ids.add(lvl["id"])
                 for role in lvl["approval_roles"]:
                     if role not in roles:
                         errors.append(f"{path.relative_to(ROOT)}: level {lvl['id']} uses unknown role {role!r}")
             ids = [c["id"] for c in doc["controls"]]
-            dupes = {i for i in ids if ids.count(i) > 1}
-            if dupes:
-                errors.append(f"{path.relative_to(ROOT)}: duplicate control ids {sorted(dupes)}")
-            control_ids.update(ids)
-            control_ids.add(f"{doc['id']}.levels")
+            known_ids.update(ids)
+            known_ids.add(f"{doc['id']}.levels")
+        elif doc.get("kind") == "assessment-catalog":
+            ids = [i["id"] for i in doc["items"]]
+            gates = {g["id"] for g in doc.get("gates", [])}
+            for item in doc["items"]:
+                if gates and item["gate"] not in gates:
+                    errors.append(f"{path.relative_to(ROOT)}: item {item['id']} uses unknown gate {item['gate']!r}")
+            known_ids.update(ids)
+        else:
+            continue
+        dupes = {i for i in ids if ids.count(i) > 1}
+        if dupes:
+            errors.append(f"{path.relative_to(ROOT)}: duplicate ids {sorted(dupes)}")
 
     for path, doc in docs.items():
         if doc.get("kind") != "crosswalk":
             continue
         for m in doc["mappings"]:
-            refs = [m["source"], *m["targets"]]
-            for ref in refs:
-                base = ref.split("@")[0]
-                # Only refs into catalogs we hold are checked; other articles are external refs.
-                if base.startswith("eu-ai-act.art-17") and base not in req_ids:
-                    errors.append(f"{path.relative_to(ROOT)}: unknown requirement {ref!r}")
-                if base.startswith("DAG-") and base not in control_ids:
-                    errors.append(f"{path.relative_to(ROOT)}: unknown control {ref!r}")
-        if doc["publication_status"] == "blocked-pending-legal-review" and "drafts" not in path.parts:
-            errors.append(f"{path.relative_to(ROOT)}: blocked content must live in drafts/")
+            for ref in [m["source"], *m["targets"]]:
+                internal = ref.startswith("DAG-") or ref.startswith("decaid.") or (len(ref) == 5 and ref[0] == "G")
+                if internal and ref not in known_ids:
+                    errors.append(f"{path.relative_to(ROOT)}: unknown reference {ref!r}")
+
+    for path, doc in docs.items():
+        if doc.get("kind") != "decision-tree":
+            continue
+        rel = path.relative_to(ROOT)
+        nodes = {n["id"]: n for n in doc["nodes"]}
+        outcomes = {o["id"]: o for o in doc["outcomes"]}
+        flags = {f["id"] for f in doc.get("flags", [])}
+        if doc["start"] not in nodes:
+            errors.append(f"{rel}: start node {doc['start']!r} not found")
+        for f in doc.get("flags", []):
+            for link in f.get("links", []):
+                if link not in known_ids:
+                    errors.append(f"{rel}: flag {f['id']} links unknown id {link!r}")
+        rec_ids = [f["id"] for f in doc["record"]["fields"]]
+        for must in ("answers", "outcome", "approved-by", "date"):
+            if must not in rec_ids:
+                errors.append(f"{rel}: record must contain field {must!r}")
+        for f in doc["record"]["fields"]:
+            for link in f.get("links", []):
+                if link not in known_ids:
+                    errors.append(f"{rel}: record field {f['id']} links unknown id {link!r}")
+        for pc in doc.get("parallel_checks", []):
+            for link in pc.get("links", []):
+                if link not in known_ids:
+                    errors.append(f"{rel}: parallel check links unknown id {link!r}")
+        for o in doc["outcomes"]:
+            for link in o.get("links", []):
+                if not link.startswith("http") and link not in known_ids:
+                    errors.append(f"{rel}: outcome {o['id']} links unknown id {link!r}")
+        reached = {doc["start"]}
+        for n in doc["nodes"]:
+            for ans in n["answers"]:
+                where = f"{rel}: node {n['id']} answer {ans['id']}"
+                if "next" in ans:
+                    reached.add(ans["next"])
+                    if ans["next"] not in nodes:
+                        errors.append(f"{where}: unknown next node {ans['next']!r}")
+                if "outcome" in ans and ans["outcome"] not in outcomes:
+                    errors.append(f"{where}: unknown outcome {ans['outcome']!r}")
+                for fl in ans.get("flags", []):
+                    if fl not in flags:
+                        errors.append(f"{where}: unknown flag {fl!r}")
+                # Safety rule: on critical questions, "unclear" must stop.
+                if n.get("critical") and ans["id"] == "unclear":
+                    out = outcomes.get(ans.get("outcome", ""))
+                    if not out or out["type"] != "stop":
+                        errors.append(f"{where}: critical question must stop on 'unclear'")
+        for orphan in sorted(set(nodes) - reached):
+            errors.append(f"{rel}: node {orphan!r} is never reached")
 
     for e in errors:
         print(f"ERROR {e}")
@@ -118,7 +165,7 @@ def build(include_internal: bool) -> int:
     if validate():
         return 1
     allowed = {"public", "internal"} if include_internal else {"public"}
-    bundle: dict = {"schema_version": "0.1", "regulations": [], "frameworks": [], "crosswalks": []}
+    bundle: dict = {"schema_version": "0.1", "decision_trees": [], "frameworks": [], "assessment_catalogs": [], "crosswalks": []}
     for path in iter_files():
         doc = load(path)
         kind = doc["kind"]
@@ -137,8 +184,10 @@ def build(include_internal: bool) -> int:
                     and rank >= c["applies_from_level"]
                 ]
             bundle["frameworks"].append(doc)
-        elif kind == "regulation":
-            bundle["regulations"].append(doc)
+        elif kind == "assessment-catalog":
+            bundle["assessment_catalogs"].append(doc)
+        elif kind == "decision-tree":
+            bundle["decision_trees"].append(doc)
         print(f"add   {path.relative_to(ROOT)}")
     out = ROOT / "dist" / "lawful-good.json"
     out.parent.mkdir(exist_ok=True)
@@ -147,13 +196,79 @@ def build(include_internal: bool) -> int:
     return 0
 
 
+def triage(lang: str) -> int:
+    path = ROOT / "catalog" / "decision-trees" / "eu-ai-act-triage.yaml"
+    tree = load(path)
+    nodes = {n["id"]: n for n in tree["nodes"]}
+    outcomes = {o["id"]: o for o in tree["outcomes"]}
+    flag_defs = {f["id"]: f for f in tree.get("flags", [])}
+    collected: list[str] = []
+    answers: list[tuple[str, str]] = []
+    print(tree["title"][lang], "\n")
+    print(tree["disclaimer"][lang], "\n")
+    node = nodes[tree["start"]]
+    while True:
+        print(f"[{', '.join(node['refs'])}] {node['question'][lang]}")
+        if "help" in node:
+            print(f"  ({node['help'][lang]})")
+        for i, ans in enumerate(node["answers"], 1):
+            print(f"  {i}) {ans['label'][lang]}")
+        choice = input("> ").strip()
+        if not choice.isdigit() or not 1 <= int(choice) <= len(node["answers"]):
+            print("?")
+            continue
+        ans = node["answers"][int(choice) - 1]
+        answers.append((node["id"], ans["id"]))
+        collected += [f for f in ans.get("flags", []) if f not in collected]
+        print()
+        if "outcome" in ans:
+            out = outcomes[ans["outcome"]]
+            print(f"=> {out['title'][lang]}\n   {out['text'][lang]}")
+            if out.get("links"):
+                print(f"   -> {', '.join(out['links'])}")
+            for fid in collected:
+                f = flag_defs[fid]
+                extra = f" ({', '.join(f.get('refs', []))})" if f.get("refs") else ""
+                since = f" [{f['applies_from']}]" if f.get("applies_from") else ""
+                links = f" -> {', '.join(f['links'])}" if f.get("links") else ""
+                print(f"   * {f['text'][lang]}{extra}{since}{links}")
+            if tree.get("parallel_checks"):
+                print("\n" + ("Parallel prüfen:" if lang == "de" else "Check in parallel:"))
+                for pc in tree["parallel_checks"]:
+                    links = f" -> {', '.join(pc['links'])}" if pc.get("links") else ""
+                    print(f"   - {pc['text'][lang]} ({', '.join(pc.get('refs', []))}){links}")
+            print_record(tree, lang, answers, ans["outcome"], collected)
+            return 0
+        node = nodes[ans["next"]]
+
+
+def print_record(tree: dict, lang: str, answers, outcome: str, flags) -> None:
+    """Print a prefilled record (YAML) for the AI register."""
+    import datetime
+    prefill = {
+        "tree-version": f"{tree['id']} {tree['version']} / {tree.get('law_version', '')}",
+        "answers": [{"question": q, "answer": a, "justification": ""} for q, a in answers],
+        "outcome": outcome,
+        "flags": list(flags),
+        "date": datetime.date.today().isoformat(),
+    }
+    rec = {f["id"]: prefill.get(f["id"], "") for f in tree["record"]["fields"]}
+    print("\n" + ("Protokoll für das KI-Register (ergänzen, Freigabe durch einen Menschen):"
+                  if lang == "de" else "Record for the AI register (complete it; a person approves):"))
+    print(yaml.safe_dump(rec, allow_unicode=True, sort_keys=False))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("validate")
     b = sub.add_parser("build")
     b.add_argument("--internal", action="store_true", help="include crosswalks marked internal")
+    t = sub.add_parser("triage")
+    t.add_argument("--lang", choices=["de", "en"], default="de")
     args = ap.parse_args()
+    if args.cmd == "triage":
+        return triage(args.lang)
     return validate() if args.cmd == "validate" else build(args.internal)
 
 

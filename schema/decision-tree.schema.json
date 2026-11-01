@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/decaid-studio/lawful-good/schema/decision-tree.schema.json",
+  "title": "Decision tree (orientation, not legal assessment)",
+  "type": "object",
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "kind": { "const": "decision-tree" },
+    "id": { "$ref": "common.schema.json#/$defs/id" },
+    "title": { "$ref": "common.schema.json#/$defs/i18n" },
+    "version": { "type": "string" },
+    "publisher": { "type": "string" },
+    "license": { "type": "string" },
+    "law_version": { "type": "string", "description": "Version of the law the questions refer to." },
+    "verification": { "$ref": "common.schema.json#/$defs/verification" },
+    "translation_status": { "enum": ["original", "machine-assisted-review-needed", "reviewed"] },
+    "disclaimer": { "$ref": "common.schema.json#/$defs/i18n" },
+    "principles": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/i18n" } },
+    "start": { "$ref": "common.schema.json#/$defs/id" },
+    "record": {
+      "description": "What to document after every run, for the AI register. A person approves the classification.",
+      "type": "object",
+      "properties": {
+        "description": { "$ref": "common.schema.json#/$defs/i18n" },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "$ref": "common.schema.json#/$defs/id" },
+              "required": { "type": "boolean" },
+              "label": { "$ref": "common.schema.json#/$defs/i18n" },
+              "links": { "type": "array", "items": { "type": "string" } }
+            },
+            "required": ["id", "required", "label"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["fields"],
+      "additionalProperties": false
+    },
+    "parallel_checks": {
+      "description": "Other law to check in parallel. Shown with every outcome.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": { "$ref": "common.schema.json#/$defs/i18n" },
+          "refs": { "type": "array", "items": { "type": "string" } },
+          "links": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["text"],
+        "additionalProperties": false
+      }
+    },
+    "flags": {
+      "description": "Notes collected along the way and passed on to the assessment.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "text": { "$ref": "common.schema.json#/$defs/i18n" },
+          "refs": { "type": "array", "items": { "type": "string" } },
+          "applies_from": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "description": "Date from which the referenced obligation applies." },
+          "links": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["id", "text"],
+        "additionalProperties": false
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "critical": {
+            "type": "boolean",
+            "description": "If true, the answer 'unclear' must lead to an outcome of type 'stop'."
+          },
+          "question": { "$ref": "common.schema.json#/$defs/i18n" },
+          "help": { "$ref": "common.schema.json#/$defs/i18n" },
+          "refs": { "type": "array", "items": { "type": "string" } },
+          "answers": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "$ref": "common.schema.json#/$defs/id" },
+                "label": { "$ref": "common.schema.json#/$defs/i18n" },
+                "next": { "$ref": "common.schema.json#/$defs/id" },
+                "outcome": { "$ref": "common.schema.json#/$defs/id" },
+                "flags": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/id" } }
+              },
+              "required": ["id", "label"],
+              "oneOf": [ { "required": ["next"] }, { "required": ["outcome"] } ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["id", "question", "refs", "answers"],
+        "additionalProperties": false
+      }
+    },
+    "outcomes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "type": { "enum": ["stop", "out-of-scope", "continue"] },
+          "title": { "$ref": "common.schema.json#/$defs/i18n" },
+          "text": { "$ref": "common.schema.json#/$defs/i18n" },
+          "links": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["id", "type", "title", "text"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["schema_version", "kind", "id", "title", "version", "verification", "disclaimer", "start", "record", "nodes", "outcomes"],
+  "additionalProperties": false
+}

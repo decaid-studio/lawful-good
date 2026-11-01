@@ -1,0 +1,121 @@
+# Crosswalk: DECAID AI System Assessment Catalog -> DECAID Agentic Governance Framework
+# Shows which agent controls implement or support a check item. Content license: CC BY 4.0.
+
+schema_version: "0.1"
+kind: crosswalk
+id: crosswalk.ai-system-assessment.agentic-governance
+from: decaid.ai-system-assessment
+to: decaid.agentic-governance
+basis: Own analysis by DECAID of both catalogs.
+publication_status: public
+verification:
+  status: unverified
+  date: 2026-10-23
+  note: First draft, to be reviewed by the DECAID team.
+disclaimer:
+  de: >-
+    Die Zuordnung zeigt, welche Agenten-Kontrollen zu einem Prüfpunkt beitragen. Ein
+    umgesetzter Control erfüllt den Prüfpunkt nicht automatisch.
+  en: >-
+    The mapping shows which agent controls contribute to a check item. An implemented
+    control does not automatically satisfy the check item.
+
+mappings:
+  - source: G0-02
+    targets: [DAG-P4, decaid.agentic-governance.levels]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Agenten-Inventar und Level-Zuordnung grenzen das System mit seinen Rechten und Aktionen ab.
+      en: The agent inventory and level assignment delimit the system with its permissions and actions.
+  - source: G1-02
+    targets: [DAG-C5]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Schwellenwerte für Human-in-the-Loop legen fest, wo Menschen entscheiden.
+      en: Human-in-the-loop thresholds define where people decide.
+  - source: G3-01
+    targets: [DAG-P4, decaid.agentic-governance.levels]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Agent Owner und Freigaberollen je Level ordnen Verantwortung zu.
+      en: Agent owners and approval roles per level assign responsibility.
+  - source: G3-02
+    targets: [DAG-C5, DAG-P5, DAG-C4]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Bestätigung vor externer Wirkung, Kill Switch und Abbruchgrenzen machen Eingreifen und Stoppen möglich.
+      en: Confirmation before external effect, kill switch and abort limits make intervening and stopping possible.
+  - source: G3-04
+    targets: [DAG-P5]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Der Incident-Prozess für Agenten ist Teil des Vorfallmanagements.
+      en: The incident process for agents is part of incident management.
+  - source: G3-06
+    targets: [DAG-P6]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Die Kennzeichnung von KI-Interaktionen ist ein Teil der Transparenz.
+      en: Labelling AI interactions is one part of transparency.
+  - source: G4-01
+    targets: [DAG-P1]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Mehrschichtige Isolation macht Vertrauensgrenzen technisch wirksam.
+      en: Layered isolation makes trust boundaries technically effective.
+  - source: G4-02
+    targets: [DAG-C1, DAG-P2]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Least Privilege und eigene Maschinenidentitäten setzen Rechtekonzept und Trennung um.
+      en: Least privilege and dedicated machine identities implement the permission concept and separation.
+  - source: G4-03
+    targets: [DAG-C2, DAG-C3, DAG-P1]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Deterministische Tool-Calls, harte Guardrails und Isolation begrenzen die Wirkung von Manipulation.
+      en: Deterministic tool calls, hard guardrails and isolation limit the effect of manipulation.
+  - source: G4-04
+    targets: [DAG-C3, DAG-C6]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Guardrails auf Tool-Ebene und Monitoring adressieren unerwünschtes Verhalten.
+      en: Tool-level guardrails and monitoring address unwanted behaviour.
+  - source: G4-05
+    targets: [DAG-P1]
+    relation: supports
+    confidence: low
+    rationale:
+      de: Isolation reduziert die Angriffsfläche, ersetzt aber keine Sicherheitstests.
+      en: Isolation reduces the attack surface but does not replace security testing.
+  - source: G4-06
+    targets: [DAG-C6, DAG-P3, DAG-P2]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Monitoring, Audit-Trail und Maschinenidentitäten machen Nutzung, Verhalten und Änderungen nachvollziehbar.
+      en: Monitoring, audit trail and machine identities make use, behaviour and changes traceable.
+  - source: G4-07
+    targets: [DAG-C4, DAG-P5]
+    relation: supports
+    confidence: medium
+    rationale:
+      de: Abbruchgrenzen und Freigabe-Entzug sind Bausteine einer sicheren Degradation.
+      en: Abort limits and revoking approval are building blocks of safe degradation.
+  - source: G5-04
+    targets: [DAG-C6, DAG-C7]
+    relation: supports
+    confidence: high
+    rationale:
+      de: Freigabe-Entzug bei Drift, 90-Tage-Prüfung und Cleanup sind konkrete Reassessment-Trigger.
+      en: Revoking approval on drift, the 90-day review and the cleanup are concrete reassessment triggers.

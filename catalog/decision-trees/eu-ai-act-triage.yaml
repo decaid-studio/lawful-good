@@ -1,0 +1,479 @@
+# EU AI Act triage – decision tree for orientation
+# Content license: CC BY 4.0 (see LICENSE-CONTENT). © DECAID.
+# Questions refer to Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744.
+# This tree is not a legal assessment. German is the original; English is a machine-assisted
+# translation pending review.
+
+schema_version: "0.1"
+kind: decision-tree
+id: decaid.eu-ai-act-triage
+title:
+  de: Vorprüfung nach dem EU AI Act
+  en: EU AI Act triage
+version: 0.1.0
+publisher: DECAID
+license: CC-BY-4.0
+law_version: Regulation (EU) 2024/1689, consolidated version 02024R1689-20260727
+verification:
+  status: unverified
+  date: 2026-11-01
+  note: >-
+    First version. Questions reference articles only and give no interpretation. To be
+    reviewed by the DECAID team; a legal review is recommended before relying on it.
+translation_status: machine-assisted-review-needed
+
+disclaimer:
+  de: >-
+    Dieser Entscheidungsbaum dient der Orientierung und strukturiert die ersten Fragen.
+    Er ist keine Rechtsberatung und ersetzt keine rechtliche Einordnung im Einzelfall.
+    Maßgeblich ist der Gesetzestext in der jeweils geltenden Fassung.
+  en: >-
+    This decision tree is for orientation and structures the first questions. It is not
+    legal advice and does not replace a legal assessment in the individual case. The law
+    in its current version is authoritative.
+
+principles:
+  - de: Bei kritischen Fragen führt „unklar“ immer zum Stopp, nie automatisch weiter.
+    en: For critical questions, "unclear" always leads to a stop, never automatically onwards.
+  - de: Die Fragen verweisen auf Artikel und legen sie nicht aus.
+    en: Questions point to articles and do not interpret them.
+  - de: Das Ergebnis wird nach dem Protokoll unten dokumentiert, ins KI-Register übernommen und bei Änderungen von Zweck, Nutzergruppe oder Funktion erneut durchlaufen.
+    en: The result is documented using the record below, entered in the AI register and the tree is run again when purpose, user group or function change.
+  - de: Transparenzpflichten nach Art. 50 können zusätzlich zu anderen Pflichten gelten; die Risikoklassen schließen sich nicht gegenseitig aus.
+    en: Transparency obligations under Art. 50 can apply in addition to other obligations; the risk classes are not mutually exclusive.
+  - de: Bei einem Stopp entscheidet ein Mensch nach rechtlicher Klärung, nicht der Agent.
+    en: After a stop, a person decides once the legal question is clarified, not the agent.
+
+start: ai-system
+
+# Every run ends with a record, whatever the outcome. A person signs off the
+# classification; an agent may prefill everything else.
+record:
+  description:
+    de: >-
+      Protokoll jedes Durchlaufs für das KI-Register. Ein Agent darf es vorbefüllen; die
+      Einstufung bestätigt und gibt ein Mensch frei.
+    en: >-
+      Record of every run for the AI register. An agent may prefill it; a person confirms and
+      approves the classification.
+  fields:
+    - id: system
+      required: true
+      label: { de: KI-System mit Version, en: AI system and version }
+    - id: use-case
+      required: true
+      label: { de: Use Case mit Zweck und Nutzergruppen, en: Use case with purpose and user groups }
+      links: [G0-01]
+    - id: tree-version
+      required: true
+      label: { de: Version dieses Entscheidungsbaums und Gesetzesstand, en: Version of this decision tree and law version }
+    - id: answers
+      required: true
+      label: { de: Jede Frage mit Antwort und Begründung, en: Each question with answer and justification }
+    - id: outcome
+      required: true
+      label: { de: Ergebnis, en: Outcome }
+    - id: flags
+      required: true
+      label: { de: Gesammelte Hinweise, en: Collected notes }
+    - id: assessed-by
+      required: true
+      label: { de: Wer hat eingestuft (Person oder Agent), en: Who classified (person or agent) }
+    - id: approved-by
+      required: true
+      label: { de: Wer hat die Einstufung freigegeben (immer ein Mensch), en: Who approved the classification (always a person) }
+      links: [G5-05]
+    - id: date
+      required: true
+      label: { de: Datum, en: Date }
+    - id: legal-review
+      required: false
+      label: { de: Ergebnis der rechtlichen Klärung nach einem Stopp, en: Result of the legal clarification after a stop }
+    - id: next-review
+      required: false
+      label: { de: Anlass oder Datum der nächsten Prüfung, en: Trigger or date of the next review }
+      links: [G5-04]
+
+# Shown with every outcome: the triage covers the AI Act only.
+parallel_checks:
+  - text: { de: Datenschutz, en: Data protection }
+    refs: ["DSGVO / GDPR"]
+    links: [G2-02, G2-07]
+  - text: { de: Urheberrecht und Lizenzen, en: Copyright and licences }
+    refs: ["UrhG", "(EU) 2019/790"]
+    links: [G1-04]
+  - text: { de: Haftung, en: Liability }
+    refs: ["(EU) 2024/2853"]
+    links: [G1-04]
+  - text: { de: "Sektorrecht, z. B. Medizinprodukte oder Cybersicherheit", en: "Sector law, e.g. medical devices or cybersecurity" }
+    refs: ["MDR", "NIS2"]
+    links: [G1-04, G3-04]
+
+flags:
+  - id: role-provider
+    text: { de: "Rolle: Anbieter", en: "Role: provider" }
+    refs: ["Art. 3 Nr. 3"]
+  - id: role-deployer
+    text: { de: "Rolle: Betreiber", en: "Role: deployer" }
+    refs: ["Art. 3 Nr. 4"]
+  - id: ai-literacy
+    text:
+      de: Maßnahmen zur Förderung der KI-Kompetenz der Beschäftigten, die mit dem System arbeiten.
+      en: Measures to support the AI literacy of staff working with the system.
+    refs: ["Art. 4"]
+    applies_from: "2025-02-02"
+    links: [G3-03]
+  - id: transparency-interaction
+    text:
+      de: Menschen müssen erkennen können, dass sie mit einem KI-System interagieren.
+      en: People must be able to recognise that they are interacting with an AI system.
+    refs: ["Art. 50 Abs. 1"]
+    applies_from: "2026-08-02"
+    links: [DAG-P6, G3-05]
+  - id: transparency-synthetic
+    text:
+      de: >-
+        Erzeugte Inhalte: Anbieter sorgen für eine maschinenlesbare Kennzeichnung. Betreiber
+        prüfen, ob zusätzlich eine Offenlegung nach Art. 50 Abs. 4 nötig ist. Für Systeme, die
+        vor dem 2. August 2026 in Verkehr gebracht wurden, gilt eine Übergangsfrist bis zum
+        2. Februar 2027.
+      en: >-
+        Generated content: providers ensure machine-readable marking. Deployers check whether
+        disclosure under Art. 50(4) is also needed. Systems placed on the market before
+        2 August 2026 have a transitional period until 2 February 2027.
+    refs: ["Art. 50 Abs. 2"]
+    applies_from: "2026-08-02"
+    links: [G3-06, G4-09]
+  - id: transparency-deepfake
+    text:
+      de: Deepfakes und KI-erzeugte Texte zu Angelegenheiten von öffentlichem Interesse sind offenzulegen.
+      en: Deepfakes and AI-generated text on matters of public interest must be disclosed.
+    refs: ["Art. 50 Abs. 4"]
+    applies_from: "2026-08-02"
+    links: [G3-06]
+  - id: transparency-unclear
+    text:
+      de: Ob eine Transparenzpflicht besteht, ist unklar und rechtlich zu klären.
+      en: Whether a transparency obligation applies is unclear and needs legal clarification.
+    refs: ["Art. 50"]
+
+nodes:
+  - id: ai-system
+    critical: true
+    refs: ["Art. 3 Nr. 1"]
+    question:
+      de: >-
+        Handelt es sich um ein KI-System? Gemeint ist ein maschinengestütztes System, das für
+        einen gewissen Grad an Autonomie ausgelegt ist und aus den Eingaben ableitet, wie es
+        Ausgaben wie Vorhersagen, Inhalte, Empfehlungen oder Entscheidungen erzeugt.
+      en: >-
+        Is it an AI system? This means a machine-based system designed to operate with
+        varying levels of autonomy that infers from its input how to generate outputs such
+        as predictions, content, recommendations or decisions.
+    help:
+      de: >-
+        Klassische, rein regelbasierte Software fällt in der Regel nicht darunter. Die
+        Europäische Kommission hat Leitlinien zur Definition veröffentlicht.
+      en: >-
+        Conventional, purely rule-based software is usually not covered. The European
+        Commission has published guidelines on the definition.
+    answers:
+      - { id: "yes", label: { de: Ja, en: "Yes" }, next: territorial }
+      - { id: "no", label: { de: Nein, en: "No" }, outcome: not-ai-system }
+      - { id: unclear, label: { de: Unklar, en: Unclear }, outcome: stop-clarify }
+
+  - id: territorial
+    critical: true
+    refs: ["Art. 2 Abs. 1"]
+    question:
+      de: >-
+        Hat der Einsatz einen Bezug zur EU? Also: Wird das System in der EU in Verkehr
+        gebracht oder in Betrieb genommen, wird es von einer Organisation mit Sitz oder
+        Niederlassung in der EU verwendet, oder wird seine Ausgabe in der EU verwendet?
+      en: >-
+        Does the use have a link to the EU? That is: is the system placed on the market or
+        put into service in the EU, is it used by an organisation established or located in
+        the EU, or is its output used in the EU?
+    help:
+      de: >-
+        Die Verordnung kann auch für Anbieter und Betreiber außerhalb der EU gelten, wenn die
+        Ausgabe des Systems in der EU verwendet wird.
+      en: >-
+        The Regulation can also apply to providers and deployers outside the EU if the
+        system's output is used in the EU.
+    answers:
+      - { id: "yes", label: { de: Ja, en: "Yes" }, next: scope }
+      - { id: "no", label: { de: Nein, en: "No" }, outcome: no-eu-link }
+      - { id: unclear, label: { de: Unklar, en: Unclear }, outcome: stop-clarify }
+
+  - id: scope
+    critical: true
+    refs: ["Art. 2"]
+    question:
+      de: Fällt der Einsatz unter eine Ausnahme vom Anwendungsbereich der Verordnung?
+      en: Does the use fall under an exception from the scope of the Regulation?
+    help:
+      de: >-
+        Beispiele: ausschließlich militärische Zwecke, Verteidigung oder nationale Sicherheit;
+        ausschließlich wissenschaftliche Forschung und Entwicklung; Forschung, Tests und
+        Entwicklung vor dem Inverkehrbringen (außer Tests unter Realbedingungen); Nutzung durch
+        Privatpersonen für rein persönliche, nicht berufliche Zwecke; Systeme unter freien und
+        quelloffenen Lizenzen, sofern sie nicht als Hochrisiko-System oder unter Art. 5 oder
+        Art. 50 fallen.
+      en: >-
+        Examples: exclusively military, defence or national security purposes; exclusively
+        scientific research and development; research, testing and development before placing
+        on the market (except real-world testing); use by natural persons for purely personal,
+        non-professional purposes; systems under free and open-source licences unless they are
+        high-risk or fall under Art. 5 or Art. 50.
+    answers:
+      - { id: "yes", label: { de: Ja, en: "Yes" }, outcome: out-of-scope }
+      - { id: "no", label: { de: Nein, en: "No" }, next: gpai }
+      - { id: unclear, label: { de: Unklar, en: Unclear }, outcome: stop-clarify }
+
+  - id: gpai
+    critical: true
+    refs: ["Art. 3 Nr. 63", "Kapitel V"]
+    question:
+      de: >-
+        Entwickeln Sie selbst ein KI-Modell mit allgemeinem Verwendungszweck oder bringen ein
+        solches in Verkehr? (Die reine Nutzung eines solchen Modells über eine Anwendung oder
+        API ist hier nicht gemeint.)
+      en: >-
+        Do you yourself develop or place on the market a general-purpose AI model? (Merely
+        using such a model through an application or API is not meant here.)
+    answers:
+      - { id: "yes", label: { de: Ja, en: "Yes" }, outcome: stop-gpai }
+      - { id: "no", label: { de: Nein, en: "No" }, next: role }
+      - { id: unclear, label: { de: Unklar, en: Unclear }, outcome: stop-clarify }
+
+  - id: role
+    critical: true
+    refs: ["Art. 3 Nr. 3", "Art. 3 Nr. 4", "Art. 3 Nr. 6", "Art. 3 Nr. 7", "Art. 25"]
+    question:
+      de: Welche Rolle haben Sie für dieses KI-System?
+      en: What is your role for this AI system?
+    help:
+      de: >-
+        Rollenwechsel beachten: Wer ein Hochrisiko-System unter eigenem Namen oder eigener
+        Marke anbietet, es wesentlich verändert oder seine Zweckbestimmung ändert, kann selbst
+        zum Anbieter werden (Art. 25). Mehrere Rollen gleichzeitig sind möglich; dann die
+        weitergehende wählen. Bei anderen Rollen, z. B. Bevollmächtigter oder Produkthersteller,
+        „Unklar“ wählen.
+      en: >-
+        Watch for role changes: anyone who offers a high-risk system under their own name or
+        trademark, substantially modifies it or changes its intended purpose may become a
+        provider (Art. 25). Several roles at once are possible; then choose the broader one.
+        For other roles, e.g. authorised representative or product manufacturer, choose
+        "Unclear".
+    answers:
+      - id: provider
+        label:
+          de: Anbieter – wir entwickeln das System oder lassen es entwickeln und bringen es unter eigenem Namen in Verkehr oder nehmen es in Betrieb
+          en: Provider – we develop the system or have it developed and place it on the market or put it into service under our own name
+        next: prohibited
+        flags: [role-provider, ai-literacy]
+      - id: deployer
+        label:
+          de: Betreiber – wir verwenden das System in eigener Verantwortung
+          en: Deployer – we use the system under our own authority
+        next: prohibited
+        flags: [role-deployer, ai-literacy]
+      - id: importer-distributor
+        label:
+          de: Einführer oder Händler – wir bringen ein System eines Dritten in der EU in Verkehr oder stellen es bereit
+          en: Importer or distributor – we place a third party's system on the EU market or make it available
+        outcome: stop-importer-distributor
+      - { id: unclear, label: { de: Unklar, en: Unclear }, outcome: stop-clarify }
+
+  - id: prohibited
+    critical: true
+    refs: ["Art. 5"]
+    question:
+      de: Könnte der Einsatz unter eine verbotene Praxis fallen?
+      en: Could the use fall under a prohibited practice?
+    help:
+      de: >-
+        Dazu gehören unter anderem manipulative Techniken und das Ausnutzen von Schwächen,
+        Social Scoring, die Vorhersage von Straftaten allein auf Grundlage von Profiling, das
+        ungezielte Auslesen von Gesichtsbildern, Emotionserkennung am Arbeitsplatz und in
+        Bildungseinrichtungen, biometrische Kategorisierung nach sensiblen Merkmalen und
+        biometrische Echtzeit-Fernidentifizierung zu Strafverfolgungszwecken. Ab dem
+        2. Dezember 2026 kommen weitere Verbote hinzu.
+      en: >-
+        These include, among others, manipulative techniques and exploiting vulnerabilities,
+        social scoring, predicting criminal offences based solely on profiling, untargeted
+        scraping of facial images, emotion recognition in the workplace and in education,
+        biometric categorisation by sensitive characteristics and real-time remote biometric
+        identification for law enforcement. Further prohibitions apply from 2 December 2026.
+    answers:
+      - { id: "yes", label: { de: Ja, en: "Yes" }, outcome: stop-prohibited }
+      - { id: "no", label: { de: Nein, en: "No" }, next: high-risk }
+      - { id: unclear, label: { de: Unklar, en: Unclear }, outcome: stop-prohibited }
+
+  - id: high-risk
+    critical: true
+    refs: ["Art. 6", "Anhang I", "Anhang III"]
+    question:
+      de: >-
+        Ist das KI-System als Sicherheitsbauteil eines Produkts nach Anhang I vorgesehen oder
+        selbst ein solches Produkt, oder wird es in einem Bereich nach Anhang III eingesetzt?
+      en: >-
+        Is the AI system intended as a safety component of a product under Annex I or is it
+        itself such a product, or is it used in an area listed in Annex III?
+    help:
+      de: >-
+        Bereiche nach Anhang III: Biometrie (einschließlich Emotionserkennung und biometrischer
+        Kategorisierung), kritische Infrastruktur, allgemeine und berufliche Bildung,
+        Beschäftigung und Personalmanagement (z. B. Bewerberauswahl, Leistungsbewertung),
+        Zugang zu wesentlichen privaten und öffentlichen Diensten (z. B. Kreditwürdigkeit,
+        Lebens- und Krankenversicherung, Notrufe), Strafverfolgung, Migration und
+        Grenzkontrolle, Rechtspflege und demokratische Prozesse. Auch die Ausnahme nach
+        Art. 6 Abs. 3 ist rechtlich zu prüfen.
+      en: >-
+        Areas under Annex III: biometrics (including emotion recognition and biometric
+        categorisation), critical infrastructure, education and vocational training,
+        employment and workers management (e.g. recruitment, performance evaluation), access
+        to essential private and public services (e.g. creditworthiness, life and health
+        insurance, emergency calls), law enforcement, migration and border control,
+        administration of justice and democratic processes. The exception under Art. 6(3)
+        also needs a legal assessment.
+    answers:
+      - { id: "yes", label: { de: Ja, en: "Yes" }, outcome: stop-high-risk }
+      - { id: "no", label: { de: Nein, en: "No" }, next: transparency-interaction }
+      - { id: unclear, label: { de: Unklar, en: Unclear }, outcome: stop-high-risk }
+
+  - id: transparency-interaction
+    refs: ["Art. 50 Abs. 1"]
+    question:
+      de: >-
+        Interagiert das System direkt mit Menschen, z. B. als Chatbot, Sprachassistent oder
+        Agent, der Nachrichten an Menschen schreibt?
+      en: >-
+        Does the system interact directly with people, e.g. as a chatbot, voice assistant or
+        agent that writes messages to people?
+    answers:
+      - { id: "yes", label: { de: Ja, en: "Yes" }, next: transparency-synthetic, flags: [transparency-interaction] }
+      - { id: "no", label: { de: Nein, en: "No" }, next: transparency-synthetic }
+      - { id: unclear, label: { de: Unklar, en: Unclear }, next: transparency-synthetic, flags: [transparency-unclear] }
+
+  - id: transparency-synthetic
+    refs: ["Art. 50 Abs. 2"]
+    question:
+      de: Erzeugt das System synthetische Audio-, Bild-, Video- oder Textinhalte?
+      en: Does the system generate synthetic audio, image, video or text content?
+    answers:
+      - { id: "yes", label: { de: Ja, en: "Yes" }, next: transparency-deepfake, flags: [transparency-synthetic] }
+      - { id: "no", label: { de: Nein, en: "No" }, outcome: continue-catalog }
+      - { id: unclear, label: { de: Unklar, en: Unclear }, next: transparency-deepfake, flags: [transparency-unclear] }
+
+  - id: transparency-deepfake
+    refs: ["Art. 50 Abs. 4"]
+    question:
+      de: >-
+        Veröffentlichen oder verbreiten Sie damit Deepfakes (Bild-, Audio- oder Videoinhalte,
+        die realen Personen, Orten oder Ereignissen ähneln) oder KI-erzeugte Texte, die die
+        Öffentlichkeit über Angelegenheiten von öffentlichem Interesse informieren sollen?
+      en: >-
+        Do you publish or distribute deepfakes with it (image, audio or video content that
+        resembles real persons, places or events) or AI-generated text intended to inform the
+        public on matters of public interest?
+    answers:
+      - { id: "yes", label: { de: Ja, en: "Yes" }, outcome: continue-catalog, flags: [transparency-deepfake] }
+      - { id: "no", label: { de: Nein, en: "No" }, outcome: continue-catalog }
+      - { id: unclear, label: { de: Unklar, en: Unclear }, outcome: continue-catalog, flags: [transparency-unclear] }
+
+outcomes:
+  - id: not-ai-system
+    type: out-of-scope
+    title: { de: Kein KI-System, en: Not an AI system }
+    text:
+      de: >-
+        Nach dieser Einschätzung gilt die KI-Verordnung für das System nicht. Ergebnis
+        dokumentieren. Die Empfehlungen in lawful-good können trotzdem sinnvoll sein.
+      en: >-
+        Based on this assessment the AI Regulation does not apply to the system. Document the
+        result. The recommendations in lawful-good may still be useful.
+    links: [G0-01]
+  - id: no-eu-link
+    type: out-of-scope
+    title: { de: Kein Bezug zur EU, en: No link to the EU }
+    text:
+      de: >-
+        Nach dieser Einschätzung gilt die KI-Verordnung nicht. Ergebnis mit Begründung
+        dokumentieren und erneut prüfen, sobald das System oder seine Ausgaben in der EU
+        genutzt werden sollen.
+      en: >-
+        Based on this assessment the AI Regulation does not apply. Document the result with a
+        justification and check again as soon as the system or its output is to be used in
+        the EU.
+  - id: out-of-scope
+    type: out-of-scope
+    title: { de: Ausnahme vom Anwendungsbereich, en: Outside the scope }
+    text:
+      de: >-
+        Ergebnis mit Begründung dokumentieren und bei Änderungen des Einsatzes erneut prüfen.
+      en: >-
+        Document the result with a justification and check again when the use changes.
+  - id: stop-clarify
+    type: stop
+    title: { de: "Stopp: Einordnung unklar", en: "Stop: classification unclear" }
+    text:
+      de: Vor jeder weiteren Prüfung ist eine rechtliche Klärung erforderlich.
+      en: Legal clarification is needed before any further assessment.
+  - id: stop-gpai
+    type: stop
+    title: { de: "Stopp: KI-Modell mit allgemeinem Verwendungszweck", en: "Stop: general-purpose AI model" }
+    text:
+      de: >-
+        Für Anbieter solcher Modelle gelten eigene Pflichten (Kapitel V). Sie sind nicht
+        Gegenstand von lawful-good. Bitte rechtlich beraten lassen.
+      en: >-
+        Providers of such models have specific obligations (Chapter V). They are not covered by
+        lawful-good. Please seek legal advice.
+  - id: stop-importer-distributor
+    type: stop
+    title: { de: "Stopp: Rolle als Einführer oder Händler", en: "Stop: importer or distributor role" }
+    text:
+      de: >-
+        Einführer und Händler haben eigene Pflichten, die nicht Gegenstand von lawful-good
+        sind. Rolle und Pflichten rechtlich klären.
+      en: >-
+        Importers and distributors have their own obligations, which are not covered by
+        lawful-good. Clarify the role and obligations legally.
+  - id: stop-prohibited
+    type: stop
+    title: { de: "Stopp: möglicherweise verbotene Praxis", en: "Stop: possibly prohibited practice" }
+    text:
+      de: >-
+        Das System nicht einführen oder weiter betreiben, bis rechtlich geklärt ist, dass
+        keine verbotene Praxis vorliegt.
+      en: >-
+        Do not introduce or continue operating the system until it has been legally clarified
+        that no prohibited practice is involved.
+  - id: stop-high-risk
+    type: stop
+    title: { de: "Stopp: möglicherweise Hochrisiko", en: "Stop: possibly high-risk" }
+    text:
+      de: >-
+        Für Hochrisiko-Systeme gelten zusätzliche Pflichten für Anbieter und Betreiber;
+        Transparenzpflichten nach Art. 50 können zusätzlich gelten. Dafür ist lawful-good
+        nicht gedacht. Bitte rechtlich beraten lassen; zum Stand der
+        harmonisierten Normen siehe ai-act-standards.com.
+      en: >-
+        High-risk systems carry additional obligations for providers and deployers;
+        transparency obligations under Art. 50 can apply in addition. lawful-good is not meant
+        for them. Please seek legal advice; for the status of the harmonised
+        standards see ai-act-standards.com.
+    links: ["https://ai-act-standards.com/"]
+  - id: continue-catalog
+    type: continue
+    title: { de: Weiter mit dem Prüfkatalog, en: Continue with the assessment catalog }
+    text:
+      de: >-
+        Weiter mit dem Prüfkatalog ab Gate 0. Die gesammelten Hinweise fließen in die Prüfung
+        ein.
+      en: >-
+        Continue with the assessment catalog from gate 0. The notes collected along the way
+        feed into the assessment.
+    links: [G0-01]

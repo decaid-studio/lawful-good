@@ -1,0 +1,1751 @@
+# DECAID AI System Assessment Catalog (KI-Systemprüfung)
+# Content license: CC BY 4.0 (see LICENSE-CONTENT). © DECAID.
+# Scoring, weights, criticality and decision logic are not part of this catalog.
+# German is the original; English is a machine-assisted translation pending review.
+
+schema_version: '0.1'
+kind: assessment-catalog
+id: decaid.ai-system-assessment
+title:
+  de: DECAID Prüfkatalog KI-Systemprüfung
+  en: DECAID AI System Assessment Catalog
+version: 0.2.0
+publisher: DECAID
+license: CC-BY-4.0
+verification:
+  status: verified-against-source
+  date: '2026-10-23'
+  note: Converted from the DECAID assessment catalog v0.2 (2026-10-23). Pilot version. Check items are DECAID's own wording. Not yet calibrated on three real assessments;
+    scoring, weights, criticality and decision logic are intentionally not published.
+translation_status: machine-assisted-review-needed
+principles:
+- de: Bewertet wird ein konkreter Use Case, keine pauschale Anbieter- oder Modellfreigabe.
+  en: A specific use case is assessed, never a blanket approval of a provider or model.
+- de: Jedes Szenario (Kanal, Betriebsmodus, Konfiguration) wird separat bewertet. Ein Ergebnis gilt nur
+    für das geprüfte Szenario, die geprüfte Version und den Stichtag.
+  en: Every scenario (channel, operating mode, configuration) is assessed separately. A result is valid
+    only for the assessed scenario, version and reference date.
+- de: Anwendbarkeit, Erfüllung, Reifegrad und Evidenz werden getrennt betrachtet.
+  en: Applicability, fulfilment, maturity and evidence are considered separately.
+- de: „Nicht anwendbar“ nur mit nachvollziehbarer Begründung.
+  en: '"Not applicable" only with a traceable justification.'
+- de: Anbieterangaben sind ein Input. Wesentliche Kontrollen brauchen nachvollziehbare Evidenz.
+  en: Provider statements are an input. Key controls need traceable evidence.
+- de: Offene Rechtsfragen werden rechtlich geklärt und nicht als Managemententscheidung behandelt.
+  en: Open legal questions are clarified by legal experts and not treated as management decisions.
+- de: Reifegrad und Prüfergebnis ersetzen keine rechtliche Bewertung, keine technische Sicherheitsprüfung
+    und keine Entscheidung des Betreibers.
+  en: Maturity and assessment results do not replace a legal assessment, a technical security test or
+    the operator's decision.
+maturity_levels:
+- level: 0
+  name: Not met
+  definition:
+    de: Anforderung nicht erfüllt oder keine belastbare Evidenz vorhanden.
+    en: Requirement not met or no reliable evidence available.
+- level: 1
+  name: Basic
+  definition:
+    de: 'Mindestanforderung: Zweck und Verantwortlichkeit sind dokumentiert.'
+    en: 'Minimum requirement: purpose and responsibility are documented.'
+- level: 2
+  name: Advanced
+  definition:
+    de: Kontrolle ist umgesetzt; Rollen, Nachweise und Anwendung im Use Case sind nachvollziehbar.
+    en: Control is implemented; roles, evidence and application in the use case are traceable.
+- level: 3
+  name: High
+  definition:
+    de: Wirksamkeit wird regelmäßig getestet oder überwacht und bei Änderungen angepasst.
+    en: Effectiveness is regularly tested or monitored and adjusted on changes.
+gates:
+- id: G0
+  name:
+    de: Triage
+    en: Triage
+  focus:
+    de: Scope, Risiko und Prüftiefe festlegen
+    en: Define scope, risk and depth of assessment
+  guiding_question:
+    de: Was genau wird in welchem Kontext geprüft?
+    en: What exactly is assessed, and in which context?
+- id: G1
+  name:
+    de: Zweck
+    en: Purpose
+  focus:
+    de: Zweckbestimmung, Grenzen und menschliche Entscheidung
+    en: Intended purpose, limits and human decision
+  guiding_question:
+    de: Was soll das System tun – und was nicht?
+    en: What should the system do – and what not?
+- id: G2
+  name:
+    de: Daten
+    en: Data
+  focus:
+    de: Datenarten, Quellen, Datenschutz, RAG und Transfers
+    en: Data types, sources, data protection, RAG and transfers
+  guiding_question:
+    de: Welche Daten werden wie und warum verarbeitet?
+    en: Which data is processed, how and why?
+- id: G3
+  name:
+    de: Rollen
+    en: Roles
+  focus:
+    de: Verantwortung, menschliche Kontrolle, Kompetenzen und Eskalation
+    en: Responsibility, human oversight, competences and escalation
+  guiding_question:
+    de: Wer trägt welche Verantwortung und kann eingreifen?
+    en: Who is responsible for what, and who can intervene?
+- id: G4
+  name:
+    de: Technik
+    en: Technology
+  focus:
+    de: Architektur, Rechte, Verhalten, Sicherheit, Monitoring und Betrieb
+    en: Architecture, permissions, behaviour, security, monitoring and operations
+  guiding_question:
+    de: Wie verhält sich das System technisch und im Betrieb?
+    en: How does the system behave technically and in operation?
+- id: G5
+  name:
+    de: Entscheidung
+    en: Decision
+  focus:
+    de: Befunde, Auflagen, Freigabeempfehlung und Reassessment
+    en: Findings, conditions, approval recommendation and reassessment
+  guiding_question:
+    de: Unter welchen Bedingungen ist der geprüfte Scope vertretbar?
+    en: Under which conditions is the assessed scope acceptable?
+evidence_types:
+- id: documentation
+  name:
+    de: Dokumentation
+    en: Documentation
+  examples:
+    de: Richtlinie, Prozessbeschreibung, Architekturdiagramm
+    en: Policy, process description, architecture diagram
+- id: self-declaration
+  name:
+    de: Selbstauskunft
+    en: Self-declaration
+  examples:
+    de: Schriftliche Angabe des Anbieters oder Betreibers
+    en: Written statement by the provider or operator
+- id: interview
+  name:
+    de: Gesprächsergebnis
+    en: Interview result
+  examples:
+    de: Protokollierte Aussage aus Interview oder Workshop
+    en: Recorded statement from an interview or workshop
+- id: observed-ui
+  name:
+    de: Beobachtetes UI-Verhalten
+    en: Observed UI behaviour
+  examples:
+    de: Beobachtung der Oberfläche mit Datum und Testkonto
+    en: Observation of the interface with date and test account
+- id: spot-check
+  name:
+    de: Technische Funktionsstichprobe
+    en: Technical spot check
+  examples:
+    de: Stichprobe mit definierten Eingaben und Ergebnisprotokoll
+    en: Sample with defined inputs and a result log
+- id: config-review
+  name:
+    de: Passiver Konfigurationsreview
+    en: Passive configuration review
+  examples:
+    de: Sichtung von Einstellungen ohne Eingriff
+    en: Review of settings without changing them
+- id: security-test
+  name:
+    de: Aktiver Sicherheitstest
+    en: Active security test
+  examples:
+    de: Test mit Angriffs- oder Fehlerszenarien im vereinbarten Rahmen
+    en: Test with attack or failure scenarios within the agreed scope
+- id: vendor-source
+  name:
+    de: Externe Anbieterquelle
+    en: External provider source
+  examples:
+    de: Zertifikat, Whitepaper oder Herstellerangabe ohne eigene Prüfung
+    en: Certificate, white paper or vendor statement without own verification
+modules:
+- id: generated-content
+  name:
+    de: Generierte Inhalte
+    en: Generated content
+  applies_if:
+    de: Das System erzeugt Bilder, Audio, Video oder Texte, die an Menschen oder andere Systeme weitergegeben
+      werden.
+    en: The system generates images, audio, video or text that is passed on to people or other systems.
+  output_channels:
+  - id: direct-download
+    name:
+      de: Direktdownload
+      en: Direct download
+    check:
+      de: Bleibt die Kennzeichnung im heruntergeladenen Original erhalten?
+      en: Is the labelling preserved in the downloaded original?
+  - id: qr-download
+    name:
+      de: QR-Download
+      en: QR download
+    check:
+      de: Bleibt die Kennzeichnung nach dem Abruf über QR-Code auf dem Zielgerät erhalten?
+      en: Is the labelling preserved on the target device after retrieval via QR code?
+  - id: mobile-storage
+    name:
+      de: Smartphone-Speicherung
+      en: Smartphone storage
+    check:
+      de: Bleiben Metadaten bei Speicherung in Fotos oder Dateien erhalten?
+      en: Are metadata preserved when saved to photos or files?
+  - id: messenger
+    name:
+      de: Messenger-Weitergabe
+      en: Messenger sharing
+    check:
+      de: Werden Metadaten durch den Messenger entfernt oder verändert?
+      en: Does the messenger remove or alter metadata?
+  - id: social-media
+    name:
+      de: Social-Media-Upload
+      en: Social media upload
+    check:
+      de: Werden Metadaten oder Wasserzeichen durch die Plattform entfernt?
+      en: Does the platform remove metadata or watermarks?
+  - id: archive-export
+    name:
+      de: Archiv-/ZIP-Export
+      en: Archive/ZIP export
+    check:
+      de: Bleibt die Kennzeichnung im Archiv und im Export erhalten?
+      en: Is the labelling preserved in the archive and the export?
+  - id: re-editing
+    name:
+      de: Erneute Komprimierung / Bearbeitung
+      en: Re-compression / editing
+    check:
+      de: Bleibt die Kennzeichnung nach Kompression, Zuschnitt oder Bearbeitung erhalten?
+      en: Is the labelling preserved after compression, cropping or editing?
+  checks:
+  - de: Welche Kennzeichnung ist vorhanden (IPTC/XMP, C2PA, Anbieter-Wasserzeichen, sonstige Markierung)?
+    en: Which labelling is present (IPTC/XMP, C2PA, provider watermark, other marking)?
+  - de: Wo wird sie erzeugt (Modellanbieter, Nachbearbeitung durch den Betreiber, Exportprozess)?
+    en: Where is it created (model provider, post-processing by the operator, export process)?
+  - de: Welche Transformationen überlebt sie?
+    en: Which transformations does it survive?
+  - de: Mit welchem Werkzeug (und welcher Version) wurde sie geprüft?
+    en: Which tool (and version) was used to check it?
+  - de: Ist die Kennzeichnung modell- und providerunabhängig?
+    en: Is the labelling independent of model and provider?
+  - de: Ist der Archivpfad ebenfalls abgedeckt?
+    en: Is the archive path covered as well?
+  - de: Welche sichtbare Offenlegung besteht für Menschen?
+    en: Which visible disclosure exists for people?
+  notes:
+  - de: Geprüft wird das Ergebnis am Ausgabeweg, nicht nur die Originaldatei.
+    en: Check the result at the output channel, not only the original file.
+  - de: Ein positives Ergebnis mit einem Anbieter-Detektor ist ein Nachweis für diesen Detektor, kein
+      Beweis, dass jede Person oder jedes System die Kennzeichnung erkennt.
+    en: A positive result from a provider's detector proves that detector only, not that every person
+      or system recognises the labelling.
+  - de: Anbieter- und Betreiberpflichten je Transparenzpunkt getrennt erfassen und nicht vermischen. Die
+      rechtliche Einordnung im Einzelfall bleibt Aufgabe der Rechtsberatung.
+    en: Record provider and deployer duties separately for each transparency point and do not mix them.
+      Legal classification in a specific case remains a matter for legal advice.
+items:
+- id: G0-01
+  gate: G0
+  category:
+    de: Triage
+    en: Triage
+  subcategory:
+    de: Use Case und Scope
+    en: Use case and scope
+  question:
+    de: Ist der konkrete Use Case mit Zweck, Nutzergruppen, betroffenen Personen und Einsatzkontext eindeutig
+      beschrieben?
+    en: Is the specific use case clearly described, including purpose, user groups, affected persons and
+      context of use?
+  criteria:
+    basic:
+      de: Use Case, Nutzer und Einsatzkontext sind dokumentiert.
+      en: Use case, users and context of use are documented.
+    advanced:
+      de: Scope ist mit Fachbereich, Betreiber und relevanten Stakeholdern abgestimmt; Abgrenzungen sind
+        nachvollziehbar.
+      en: Scope is agreed with the business unit, operator and relevant stakeholders; boundaries are traceable.
+    high:
+      de: Scope wird bei Änderungen aktualisiert und regelmäßig auf Gültigkeit geprüft.
+      en: Scope is updated on changes and regularly checked for validity.
+  evidence:
+  - de: Use-Case-Steckbrief
+    en: Use case profile
+  - de: Prozessbeschreibung
+    en: Process description
+  - de: Stakeholderliste
+    en: Stakeholder list
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Interview
+    en: Interview
+  reassessment_triggers:
+  - de: Änderung von Zweck, Nutzergruppe oder Einsatzkontext
+    en: Change of purpose, user group or context of use
+  references:
+  - EU AI Act
+  - NIST AI RMF
+  note:
+    de: Grundlage für die gesamte Prüfung.
+    en: Basis for the entire assessment.
+- id: G0-02
+  gate: G0
+  category:
+    de: Triage
+    en: Triage
+  subcategory:
+    de: Systemgrenzen
+    en: System boundaries
+  question:
+    de: Sind Modell, Prompts, RAG/Quellen, Integrationen, Rechte und mögliche Aktionen als ein konkretes
+      System abgegrenzt?
+    en: Are model, prompts, RAG/sources, integrations, permissions and possible actions delimited as one
+      concrete system?
+  criteria:
+    basic:
+      de: Systemkomponenten und Systemgrenze sind dokumentiert.
+      en: System components and system boundary are documented.
+    advanced:
+      de: Datenfluss, Abhängigkeiten und Aktionsmöglichkeiten sind nachvollziehbar dargestellt.
+      en: Data flow, dependencies and possible actions are traceably described.
+    high:
+      de: Systeminventar und Abhängigkeiten werden versioniert und bei Änderungen neu bewertet.
+      en: System inventory and dependencies are versioned and reassessed on changes.
+  evidence:
+  - de: Architekturübersicht
+    en: Architecture overview
+  - de: Datenfluss
+    en: Data flow
+  - de: Komponenten-/Providerliste
+    en: Component and provider list
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Architekturreview
+    en: Architecture review
+  reassessment_triggers:
+  - de: Modell-, Prompt-, Provider- oder Integrationswechsel
+    en: Change of model, prompt, provider or integration
+  references:
+  - NIST AI RMF
+  - ISO/IEC 23894
+  - OWASP (LLM Top 10, AI Exchange)
+  note:
+    de: Nicht nur das Basismodell prüfen.
+    en: Do not assess the base model only.
+- id: G0-03
+  gate: G0
+  category:
+    de: Triage
+    en: Triage
+  subcategory:
+    de: Risiko und Betroffenheit
+    en: Risk and affected persons
+  question:
+    de: Sind potenziell betroffene Personen, kritische Entscheidungen, Schadensszenarien und relevante
+      Domänenrisiken identifiziert?
+    en: Are potentially affected persons, critical decisions, harm scenarios and relevant domain risks
+      identified?
+  criteria:
+    basic:
+      de: Betroffene, Entscheidungen und wesentliche Schadensszenarien sind benannt.
+      en: Affected persons, decisions and key harm scenarios are named.
+    advanced:
+      de: Risiken sind priorisiert und mit dem vorgesehenen Nutzungskontext verknüpft.
+      en: Risks are prioritised and linked to the intended context of use.
+    high:
+      de: Risikoprofil wird anhand von Vorfällen, Monitoring und Änderungen aktualisiert.
+      en: The risk profile is updated based on incidents, monitoring and changes.
+  evidence:
+  - de: Risikobeschreibung
+    en: Risk description
+  - de: Prozesskarte
+    en: Process map
+  - de: Impact-Analyse
+    en: Impact analysis
+  methods:
+  - de: Interview
+    en: Interview
+  - de: Dokumentenprüfung
+    en: Document review
+  reassessment_triggers:
+  - de: Neue betroffene Gruppe, neue Entscheidung oder neuer Schadensfall
+    en: New affected group, new decision or new harm case
+  references:
+  - EU AI Act
+  - GDPR
+  - ISO/IEC 23894
+  note:
+    de: Keine pauschale Einstufung ohne Use-Case-Kontext.
+    en: No blanket classification without the use case context.
+- id: G0-04
+  gate: G0
+  category:
+    de: Triage
+    en: Triage
+  subcategory:
+    de: Assessmentpfad
+    en: Assessment path
+  question:
+    de: Ist die erforderliche Prüftiefe begründet ausgewählt und sind offene Vorbedingungen sichtbar?
+    en: Is the required depth of assessment selected with a rationale, and are open preconditions visible?
+  criteria:
+    basic:
+      de: Assessmentpfad und Begründung sind dokumentiert.
+      en: Assessment path and rationale are documented.
+    advanced:
+      de: Prüftiefe ist an Risiko, Systemkomplexität und Evidenzlage ausgerichtet.
+      en: Depth of assessment is aligned with risk, system complexity and available evidence.
+    high:
+      de: Prüftiefe wird bei neuen Erkenntnissen oder Triggern angepasst.
+      en: Depth of assessment is adjusted when new findings or triggers arise.
+  evidence:
+  - de: Triage-Entscheidung
+    en: Triage decision
+  - de: Scope-Notiz
+    en: Scope note
+  - de: offene Punkte
+    en: Open points
+  methods:
+  - de: Triage-Workshop
+    en: Triage workshop
+  reassessment_triggers:
+  - de: Neue Evidenz oder höhere Risikoeinschätzung
+    en: New evidence or higher risk estimate
+  references:
+  - NIST AI RMF
+  - ISO/IEC 23894
+- id: G1-01
+  gate: G1
+  category:
+    de: Zweck
+    en: Purpose
+  subcategory:
+    de: Zweckbestimmung
+    en: Intended purpose
+  question:
+    de: Ist der beabsichtigte Zweck einschließlich zulässiger und unzulässiger Nutzung dokumentiert?
+    en: Is the intended purpose documented, including permitted and non-permitted use?
+  criteria:
+    basic:
+      de: Intended purpose und wesentliche Grenzen sind dokumentiert.
+      en: Intended purpose and key limits are documented.
+    advanced:
+      de: Zweck und Grenzen sind mit Fachbereich, Betreiber und Nutzern abgestimmt.
+      en: Purpose and limits are agreed with the business unit, operator and users.
+    high:
+      de: Zweckverletzungen werden überwacht; Änderungen lösen eine Neubewertung aus.
+      en: Use outside the purpose is monitored; changes trigger a reassessment.
+  evidence:
+  - de: Zweckbeschreibung
+    en: Purpose description
+  - de: Nutzungsrichtlinie
+    en: Usage policy
+  - de: Prozessbeschreibung
+    en: Process description
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Interview
+    en: Interview
+  reassessment_triggers:
+  - de: Änderung der Zweckbestimmung oder Nutzung
+    en: Change of intended purpose or use
+  references:
+  - EU AI Act
+  - NIST AI RMF
+- id: G1-02
+  gate: G1
+  category:
+    de: Zweck
+    en: Purpose
+  subcategory:
+    de: Menschliche Entscheidung
+    en: Human decision
+  question:
+    de: Ist klar definiert, welche Entscheidungen Menschen treffen, welche Ausgaben das System liefert
+      und wo menschliches Ermessen erforderlich bleibt?
+    en: Is it clearly defined which decisions people make, which outputs the system provides and where
+      human judgement remains necessary?
+  criteria:
+    basic:
+      de: Menschliche Rolle und Entscheidungsgrenzen sind beschrieben.
+      en: The human role and decision boundaries are described.
+    advanced:
+      de: Übersteuerung, Ablehnung und Eskalation sind praktisch vorgesehen und getestet.
+      en: Override, rejection and escalation are provided for in practice and tested.
+    high:
+      de: Wirksamkeit der menschlichen Kontrolle wird überwacht und regelmäßig überprüft.
+      en: The effectiveness of human control is monitored and regularly reviewed.
+  evidence:
+  - de: Rollenbeschreibung
+    en: Role description
+  - de: Prozess
+    en: Process
+  - de: Kontrollnachweise
+    en: Control evidence
+  - de: Testfälle
+    en: Test cases
+  methods:
+  - de: Prozessreview
+    en: Process review
+  - de: Verhaltenstest
+    en: Behaviour test
+  reassessment_triggers:
+  - de: Änderung von Automatisierungsgrad oder Entscheidungskompetenz
+    en: Change of automation level or decision authority
+  references:
+  - EU AI Act
+  - NIST AI RMF
+- id: G1-03
+  gate: G1
+  category:
+    de: Zweck
+    en: Purpose
+  subcategory:
+    de: Ausgaben und Grenzen
+    en: Outputs and limits
+  question:
+    de: Sind erwartbare Ausgaben, Unsicherheiten, Fehlermodi und Grenzen der Nutzung verständlich beschrieben?
+    en: Are expected outputs, uncertainties, failure modes and limits of use described in an understandable
+      way?
+  criteria:
+    basic:
+      de: Ausgaben und bekannte Grenzen sind dokumentiert.
+      en: Outputs and known limits are documented.
+    advanced:
+      de: Grenzen werden im Interface, Prozess und Training berücksichtigt.
+      en: Limits are reflected in the interface, the process and training.
+    high:
+      de: Fehlermodi werden aus Monitoring und Tests kontinuierlich ergänzt.
+      en: Failure modes are continuously added from monitoring and tests.
+  evidence:
+  - de: Produktdokumentation
+    en: Product documentation
+  - de: Nutzerhinweise
+    en: User guidance
+  - de: Testfälle
+    en: Test cases
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Verhaltenstest
+    en: Behaviour test
+  reassessment_triggers:
+  - de: Neue Fehlermuster oder relevante Modelländerung
+    en: New failure patterns or relevant model change
+  references:
+  - NIST AI RMF
+  - OWASP (LLM Top 10, AI Exchange)
+- id: G1-04
+  gate: G1
+  category:
+    de: Zweck
+    en: Purpose
+  subcategory:
+    de: Regulatorische Einordnung
+    en: Regulatory classification
+  question:
+    de: Sind die einschlägigen regulatorischen und sektoralen Anforderungen für den Use Case geprüft und
+      dokumentiert?
+    en: Have the relevant regulatory and sector-specific requirements for the use case been checked and
+      documented?
+  criteria:
+    basic:
+      de: Anwendbare Rechts- und Regelungsbereiche sind identifiziert.
+      en: Applicable areas of law and regulation are identified.
+    advanced:
+      de: Anforderungen sind in Kontrollen, Nachweise und Verantwortlichkeiten übersetzt.
+      en: Requirements are translated into controls, evidence and responsibilities.
+    high:
+      de: Regulatorische Änderungen werden beobachtet und in die Neubewertung überführt.
+      en: Regulatory changes are tracked and fed into reassessment.
+  evidence:
+  - de: Regulatory Scoping
+    en: Regulatory scoping
+  - de: Datenschutzbewertung
+    en: Data protection assessment
+  - de: Fachbereichsfreigabe
+    en: Business owner approval
+  methods:
+  - de: Regulatory Review
+    en: Regulatory review
+  reassessment_triggers:
+  - de: Neue Rechtslage, neue Domäne oder neue Funktion
+    en: New legal situation, new domain or new function
+  references:
+  - EU AI Act
+  - GDPR
+  - Sector-specific rules
+- id: G1-05
+  gate: G1
+  category:
+    de: Zweck
+    en: Purpose
+  subcategory:
+    de: Erfolgskriterien
+    en: Success criteria
+  question:
+    de: Sind fachliche Akzeptanzkriterien und Mindestqualität für den geprüften Zweck definiert?
+    en: Are business acceptance criteria and minimum quality defined for the assessed purpose?
+  criteria:
+    basic:
+      de: Akzeptanzkriterien und Mindestqualität sind dokumentiert.
+      en: Acceptance criteria and minimum quality are documented.
+    advanced:
+      de: Kriterien sind messbar, getestet und mit einer Entscheidung verknüpft.
+      en: Criteria are measurable, tested and linked to a decision.
+    high:
+      de: Kriterien werden anhand realer Nutzung und Monitoring angepasst.
+      en: Criteria are adjusted based on real use and monitoring.
+  evidence:
+  - de: Akzeptanzkriterien
+    en: Acceptance criteria
+  - de: Testplan
+    en: Test plan
+  - de: Qualitätsmetriken
+    en: Quality metrics
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Testreview
+    en: Test review
+  reassessment_triggers:
+  - de: Änderung von Zweck, Daten oder Qualitätsziel
+    en: Change of purpose, data or quality target
+  references:
+  - NIST AI RMF
+  - ISO/IEC 23894
+- id: G2-01
+  gate: G2
+  category:
+    de: Daten & Recht
+    en: Data and law
+  subcategory:
+    de: Dateninventar
+    en: Data inventory
+  question:
+    de: Sind Datenarten, Quellen, Verarbeitungszwecke und Datenflüsse vollständig inventarisiert?
+    en: Are data types, sources, processing purposes and data flows fully inventoried?
+  criteria:
+    basic:
+      de: Datenarten, Quellen und Zwecke sind dokumentiert.
+      en: Data types, sources and purposes are documented.
+    advanced:
+      de: Datenfluss und Verantwortlichkeiten sind nachvollziehbar; externe Quellen sind erfasst.
+      en: Data flow and responsibilities are traceable; external sources are recorded.
+    high:
+      de: Inventar wird versioniert und bei Änderungen aktualisiert.
+      en: The inventory is versioned and updated on changes.
+  evidence:
+  - de: Dateninventar
+    en: Data inventory
+  - de: Datenfluss
+    en: Data flow
+  - de: Verzeichnis der Verarbeitung
+    en: Record of processing activities
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Datenflussreview
+    en: Data flow review
+  reassessment_triggers:
+  - de: Neue Datenquelle, RAG-Quelle oder Integration
+    en: New data source, RAG source or integration
+  references:
+  - GDPR
+  - NIST AI RMF
+- id: G2-02
+  gate: G2
+  category:
+    de: Daten & Recht
+    en: Data and law
+  subcategory:
+    de: Zweckbindung und Rechtsgrundlage
+    en: Purpose limitation and legal basis
+  question:
+    de: Sind Zweckbindung, Rechtsgrundlage und zulässige Nutzung der relevanten Daten bewertet?
+    en: Have purpose limitation, legal basis and permitted use of the relevant data been assessed?
+  criteria:
+    basic:
+      de: Zweck und Rechtsgrundlage sind für die relevanten Verarbeitungen dokumentiert.
+      en: Purpose and legal basis are documented for the relevant processing.
+    advanced:
+      de: Bewertung ist mit Datenflüssen, Empfängern und Nutzung im System verknüpft.
+      en: The assessment is linked to data flows, recipients and use within the system.
+    high:
+      de: Rechtsgrundlage und Zweckbindung werden bei Änderungen erneut geprüft.
+      en: Legal basis and purpose limitation are rechecked on changes.
+  evidence:
+  - de: Datenschutzbewertung
+    en: Data protection assessment
+  - de: Verarbeitungsübersicht
+    en: Processing overview
+  - de: Verträge
+    en: Contracts
+  methods:
+  - de: Datenschutzreview
+    en: Data protection review
+  reassessment_triggers:
+  - de: Neue Datenart, neuer Zweck oder neuer Empfänger
+    en: New data type, new purpose or new recipient
+  references:
+  - GDPR
+  - EU AI Act
+- id: G2-03
+  gate: G2
+  category:
+    de: Daten & Recht
+    en: Data and law
+  subcategory:
+    de: Minimierung, Speicher und Löschung
+    en: Minimisation, storage and deletion
+  question:
+    de: Sind Datenminimierung, Speicherfristen, Löschung und ggf. Trennung von Trainings-, Kontext- und
+      Betriebsdaten geregelt?
+    en: Are data minimisation, retention periods, deletion and, where relevant, separation of training,
+      context and operational data governed?
+  criteria:
+    basic:
+      de: Minimierung, Speicherfrist und Löschung sind beschrieben.
+      en: Minimisation, retention period and deletion are described.
+    advanced:
+      de: Technische und organisatorische Kontrollen setzen die Vorgaben um.
+      en: Technical and organisational controls implement the rules.
+    high:
+      de: Einhaltung wird getestet oder überwacht; Abweichungen werden nachverfolgt.
+      en: Compliance is tested or monitored; deviations are followed up.
+  evidence:
+  - de: Löschkonzept
+    en: Deletion concept
+  - de: Konfiguration
+    en: Configuration
+  - de: Logs
+    en: Logs
+  - de: Testnachweis
+    en: Test record
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Konfigurationstest
+    en: Configuration test
+  reassessment_triggers:
+  - de: Änderung von Speicher, Prompt-/RAG-Kontext oder Datenhaltung
+    en: Change of storage, prompt/RAG context or data retention
+  references:
+  - GDPR
+  - NIST AI RMF
+- id: G2-04
+  gate: G2
+  category:
+    de: Daten & Recht
+    en: Data and law
+  subcategory:
+    de: Datenqualität und Repräsentativität
+    en: Data quality and representativeness
+  question:
+    de: Sind Qualität, Aktualität, Repräsentativität und mögliche Verzerrungen der verwendeten Daten bewertet?
+    en: Have quality, timeliness, representativeness and possible bias of the data been assessed?
+  criteria:
+    basic:
+      de: Datenqualität und bekannte Einschränkungen sind dokumentiert.
+      en: Data quality and known limitations are documented.
+    advanced:
+      de: Qualitätskriterien und Bias-/Repräsentativitätsprüfungen sind umgesetzt.
+      en: Quality criteria and bias/representativeness checks are in place.
+    high:
+      de: Qualität und mögliche Verzerrungen werden regelmäßig gemessen und verbessert.
+      en: Quality and possible bias are measured and improved regularly.
+  evidence:
+  - de: Datenprofil
+    en: Data profile
+  - de: Qualitätsmetriken
+    en: Quality metrics
+  - de: Bias-Analyse
+    en: Bias analysis
+  - de: Testdaten
+    en: Test data
+  methods:
+  - de: Datenreview
+    en: Data review
+  - de: Verhaltenstest
+    en: Behaviour test
+  reassessment_triggers:
+  - de: Neue Datenquelle, Drift oder relevanter Qualitätsbefund
+    en: New data source, drift or relevant quality finding
+  references:
+  - EU AI Act
+  - NIST AI RMF
+  - ISO/IEC 23894
+- id: G2-05
+  gate: G2
+  category:
+    de: Daten & Recht
+    en: Data and law
+  subcategory:
+    de: RAG und Quellen
+    en: RAG and sources
+  question:
+    de: Sind RAG-/Wissensquellen freigegeben, versioniert, aktuell und gegen ungewollte Inhalte abgesichert?
+    en: Are RAG/knowledge sources approved, versioned, current and protected against unwanted content?
+  criteria:
+    basic:
+      de: Quellen und Freigabekriterien sind dokumentiert.
+      en: Sources and approval criteria are documented.
+    advanced:
+      de: Quellen werden versioniert, Zugriff und Aktualisierung sind geregelt; Retrieval ist getestet.
+      en: Sources are versioned, access and updates are governed; retrieval is tested.
+    high:
+      de: Quellenqualität, Aktualität und Retrieval-Verhalten werden überwacht.
+      en: Source quality, timeliness and retrieval behaviour are monitored.
+  evidence:
+  - de: Quellenregister
+    en: Source register
+  - de: Versionierung
+    en: Versioning
+  - de: Retrieval-Tests
+    en: Retrieval tests
+  - de: Freigaben
+    en: Approvals
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Verhaltenstest
+    en: Behaviour test
+  reassessment_triggers:
+  - de: Neue Quelle, Quellen-Update oder Retrieval-Änderung
+    en: New source, source update or retrieval change
+  references:
+  - NIST AI RMF
+  - OWASP (LLM Top 10, AI Exchange)
+- id: G2-06
+  gate: G2
+  category:
+    de: Daten & Recht
+    en: Data and law
+  subcategory:
+    de: Anbieter und Transfers
+    en: Providers and transfers
+  question:
+    de: Sind Anbieter, Auftragsverarbeitung, Datenstandorte, Transfers und relevante Vertrags-/Sicherheitszusagen
+      bewertet?
+    en: Have providers, data processing, data locations, transfers and relevant contractual and security
+      commitments been assessed?
+  criteria:
+    basic:
+      de: Anbieter, Verarbeitung und relevante Datenstandorte sind dokumentiert.
+      en: Providers, processing and relevant data locations are documented.
+    advanced:
+      de: Verträge, Transfers, Subprozessoren und technische Zusagen sind geprüft.
+      en: Contracts, transfers, sub-processors and technical commitments are reviewed.
+    high:
+      de: Anbieteränderungen und neue Subprozessoren lösen eine Neubewertung aus.
+      en: Provider changes and new sub-processors trigger a reassessment.
+  evidence:
+  - de: Verträge
+    en: Contracts
+  - de: DPA
+    en: Data processing agreement (DPA)
+  - de: Subprozessorenliste
+    en: Sub-processor list
+  - de: Transferbewertung
+    en: Transfer assessment
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Vendor Review
+    en: Vendor review
+  reassessment_triggers:
+  - de: Provider-, Subprozessor- oder Standortwechsel
+    en: Change of provider, sub-processor or location
+  references:
+  - GDPR
+  - EU AI Act
+  - NIST AI RMF
+- id: G2-07
+  gate: G2
+  category:
+    de: Daten & Recht
+    en: Data and law
+  subcategory:
+    de: Betroffenenrechte und Folgenabschätzung
+    en: Data subject rights and impact assessment
+  question:
+    de: Sind Betroffenenrechte, Informationspflichten und die Anwendbarkeit einer Datenschutz- oder sonstigen
+      Folgenabschätzung bewertet?
+    en: Have data subject rights, information duties and the need for a data protection or other impact
+      assessment been assessed?
+  criteria:
+    basic:
+      de: Anwendbarkeit und Verantwortlichkeiten sind dokumentiert.
+      en: Applicability and responsibilities are documented.
+    advanced:
+      de: Erforderliche Information, Rechteprozesse und Assessments sind umgesetzt.
+      en: Required information, rights processes and assessments are implemented.
+    high:
+      de: Wirksamkeit wird durch Tests, Reviews oder Fallbearbeitung überprüft.
+      en: Effectiveness is checked through tests, reviews or case handling.
+  evidence:
+  - de: DPIA/LIA falls erforderlich
+    en: DPIA/LIA where required
+  - de: Datenschutzhinweise
+    en: Privacy notices
+  - de: Prozessnachweise
+    en: Process records
+  methods:
+  - de: Datenschutzreview
+    en: Data protection review
+  - de: Prozessprüfung
+    en: Process check
+  reassessment_triggers:
+  - de: Neue Datenkategorie, neue Betroffenengruppe oder neue Funktion
+    en: New data category, new group of affected persons or new function
+  references:
+  - GDPR
+  - EU AI Act
+- id: G3-01
+  gate: G3
+  category:
+    de: Rollen
+    en: Roles
+  subcategory:
+    de: Verantwortung
+    en: Responsibility
+  question:
+    de: Sind Anbieter-, Betreiber-, Fach-, Datenschutz-, Sicherheits- und Freigaberollen eindeutig zugeordnet?
+    en: Are provider, operator, business, data protection, security and approval roles clearly assigned?
+  criteria:
+    basic:
+      de: Rollen und Verantwortlichkeiten sind benannt.
+      en: Roles and responsibilities are named.
+    advanced:
+      de: Rollen sind mit Mandat, Stellvertretung und Entscheidungsrechten hinterlegt.
+      en: Roles have a mandate, a deputy and decision rights.
+    high:
+      de: Rollen werden bei Änderungen und im Betrieb regelmäßig überprüft.
+      en: Roles are reviewed on changes and regularly during operation.
+  evidence:
+  - de: RACI
+    en: RACI
+  - de: Organigramm
+    en: Organisation chart
+  - de: Rollenbeschreibung
+    en: Role description
+  - de: Freigabematrix
+    en: Approval matrix
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Interview
+    en: Interview
+  reassessment_triggers:
+  - de: Rollenwechsel oder Systemübergabe
+    en: Change of role holder or system handover
+  references:
+  - EU AI Act
+  - ISO/IEC 42001
+  - NIST AI RMF
+- id: G3-02
+  gate: G3
+  category:
+    de: Rollen
+    en: Roles
+  subcategory:
+    de: Menschliche Kontrolle
+    en: Human oversight
+  question:
+    de: Sind Eingriffs-, Übersteuerungs-, Stop- und Eskalationsmöglichkeiten für Menschen praktisch nutzbar?
+    en: Can people actually use options to intervene, override, stop and escalate?
+  criteria:
+    basic:
+      de: Kontroll- und Eingriffsmöglichkeiten sind beschrieben.
+      en: Control and intervention options are described.
+    advanced:
+      de: Möglichkeiten sind implementiert, zugänglich und in realistischen Szenarien getestet.
+      en: Options are implemented, accessible and tested in realistic scenarios.
+    high:
+      de: Nutzung und Wirksamkeit der Kontrollen werden überwacht und verbessert.
+      en: Use and effectiveness of the controls are monitored and improved.
+  evidence:
+  - de: Prozess
+    en: Process
+  - de: UI/Workflow
+    en: UI/workflow
+  - de: Testfälle
+    en: Test cases
+  - de: Logs
+    en: Logs
+  methods:
+  - de: Prozessreview
+    en: Process review
+  - de: Verhaltenstest
+    en: Behaviour test
+  reassessment_triggers:
+  - de: Änderung von UI, Workflow oder Automatisierungsgrad
+    en: Change of UI, workflow or automation level
+  references:
+  - EU AI Act
+  - NIST AI RMF
+- id: G3-03
+  gate: G3
+  category:
+    de: Rollen
+    en: Roles
+  subcategory:
+    de: Kompetenz und Schulung
+    en: Competence and training
+  question:
+    de: Verfügen die relevanten Nutzer und Betreiber über ausreichende Kompetenz für sichere Nutzung,
+      Grenzen und Eskalation?
+    en: Do relevant users and operators have sufficient competence for safe use, limits and escalation?
+  criteria:
+    basic:
+      de: Zielgruppen und Mindestkompetenzen sind beschrieben.
+      en: Target groups and minimum competences are described.
+    advanced:
+      de: Schulung, Guidance und Nachweis der Teilnahme sind umgesetzt.
+      en: Training, guidance and proof of participation are in place.
+    high:
+      de: Kompetenz wird regelmäßig evaluiert und bei Vorfällen nachgeschärft.
+      en: Competence is evaluated regularly and sharpened after incidents.
+  evidence:
+  - de: Schulung
+    en: Training
+  - de: Nutzerleitfaden
+    en: User guide
+  - de: Teilnahme-/Kompetenznachweise
+    en: Attendance and competence records
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Interview
+    en: Interview
+  reassessment_triggers:
+  - de: Neue Nutzergruppe, neue Funktion oder relevanter Vorfall
+    en: New user group, new function or relevant incident
+  references:
+  - EU AI Act
+  - NIST AI RMF
+- id: G3-04
+  gate: G3
+  category:
+    de: Rollen
+    en: Roles
+  subcategory:
+    de: Incident und Eskalation
+    en: Incident and escalation
+  question:
+    de: Sind Zuständigkeiten und Abläufe für Fehlverhalten, Datenschutz- und Sicherheitsvorfälle sowie
+      Eskalation definiert?
+    en: Are responsibilities and procedures for misbehaviour, data protection and security incidents and
+      escalation defined?
+  criteria:
+    basic:
+      de: Incident- und Eskalationsrollen sind benannt.
+      en: Incident and escalation roles are named.
+    advanced:
+      de: Abläufe, Meldewege und Fallbacks sind dokumentiert und geübt.
+      en: Procedures, reporting lines and fallbacks are documented and practised.
+    high:
+      de: Übungen, Vorfälle und Lessons Learned führen zu Verbesserungen.
+      en: Exercises, incidents and lessons learned lead to improvements.
+  evidence:
+  - de: Incident-Plan
+    en: Incident plan
+  - de: Eskalationsmatrix
+    en: Escalation matrix
+  - de: Übungsnachweis
+    en: Exercise record
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Tabletop-Test
+    en: Tabletop test
+  reassessment_triggers:
+  - de: Relevanter Vorfall, neue Integration oder neue Kritikalität
+    en: Relevant incident, new integration or new criticality
+  references:
+  - NIS2
+  - GDPR
+  - NIST AI RMF
+  - OWASP (LLM Top 10, AI Exchange)
+- id: G3-05
+  gate: G3
+  category:
+    de: Rollen
+    en: Roles
+  subcategory:
+    de: Information und Widerspruch
+    en: Information and objection
+  question:
+    de: Sind Nutzer und betroffene Personen angemessen informiert und bestehen praktikable Möglichkeiten
+      für Rückfragen, Korrektur oder Widerspruch?
+    en: Are users and affected persons appropriately informed, and are there workable options for questions,
+      correction or objection?
+  criteria:
+    basic:
+      de: Information und Kontakt-/Eskalationsweg sind beschrieben.
+      en: Information and contact/escalation channel are described.
+    advanced:
+      de: Information ist zugänglich; Rückfragen und Widerspruch sind prozessual bearbeitbar.
+      en: Information is accessible; questions and objections can be handled in a process.
+    high:
+      de: Rückmeldungen werden ausgewertet und in Verbesserungen überführt.
+      en: Feedback is analysed and turned into improvements.
+  evidence:
+  - de: Hinweise
+    en: Notices
+  - de: Kontaktweg
+    en: Contact channel
+  - de: Widerspruchsprozess
+    en: Objection process
+  - de: Auswertung
+    en: Analysis
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Prozessprüfung
+    en: Process check
+  reassessment_triggers:
+  - de: Änderung der Nutzergruppe oder des Entscheidungskontexts
+    en: Change of user group or decision context
+  references:
+  - GDPR
+  - EU AI Act
+  - NIST AI RMF
+- id: G3-06
+  gate: G3
+  category:
+    de: Rollen
+    en: Roles
+  subcategory:
+    de: Transparenz und Kennzeichnung
+    en: Transparency and labelling
+  question:
+    de: Sind Kennzeichnung und Offenlegung generierter Inhalte je Szenario, Ausgabeweg und Archivpfad
+      festgelegt, und sind Anbieter- und Betreiberpflicht je Szenario zugeordnet?
+    en: Are labelling and disclosure of generated content defined per scenario, output channel and archive
+      path, and are provider and deployer duties assigned per scenario?
+  criteria:
+    basic:
+      de: Kennzeichnungs- und Offenlegungspflichten sind dokumentiert; Anbieter- und Betreiberrolle sind
+        je Szenario benannt.
+      en: Labelling and disclosure duties are documented; provider and deployer roles are named per scenario.
+    advanced:
+      de: Kennzeichnung ist maschinenlesbar und sichtbar geprüft; Rollen für nachgelagerte Systeme und
+        Archivübergabe sind festgelegt.
+      en: Labelling is tested in machine-readable and visible form; roles for downstream systems and archive
+        handover are defined.
+    high:
+      de: Kennzeichnung wird bei Modell-, Export- oder Prozesswechsel erneut geprüft und überwacht.
+      en: Labelling is retested and monitored on changes of model, export or process.
+  evidence:
+  - de: Kennzeichnungskonzept
+    en: Labelling concept
+  - de: Rollenmatrix
+    en: Role matrix
+  - de: Prüfprotokoll Kennzeichnung je Art und Szenario
+    en: Labelling test record per type and scenario
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: passiver Konfigurationsreview
+    en: Passive configuration review
+  - de: technische Funktionsstichprobe
+    en: Technical spot check
+  reassessment_triggers:
+  - de: Neuer Modell- oder Anbieterwechsel, neuer Ausgabeweg, Exportänderung, Archivübergabe
+    en: New model or provider, new output channel, export change, archive handover
+  references:
+  - EU AI Act Art. 50 (classification to be checked legally)
+  - NIST AI RMF
+  note:
+    de: Ein positives Ergebnis eines Detektors belegt nur diesen Detektor.
+    en: A positive result from a detector only proves that detector.
+  module: generated-content
+- id: G4-01
+  gate: G4
+  category:
+    de: Technik & Betrieb
+    en: Technology and operations
+  subcategory:
+    de: Architektur und Datenfluss
+    en: Architecture and data flow
+  question:
+    de: Sind Architektur, Datenfluss, Schnittstellen und Trust Boundaries nachvollziehbar dokumentiert?
+    en: Are architecture, data flow, interfaces and trust boundaries documented in a traceable way?
+  criteria:
+    basic:
+      de: Architektur und Datenfluss sind dokumentiert.
+      en: Architecture and data flow are documented.
+    advanced:
+      de: Schnittstellen, Trust Boundaries und relevante Abhängigkeiten sind geprüft.
+      en: Interfaces, trust boundaries and relevant dependencies are reviewed.
+    high:
+      de: Architektur wird versioniert und bei Änderungen neu bewertet.
+      en: Architecture is versioned and reassessed on changes.
+  evidence:
+  - de: Architekturdiagramm
+    en: Architecture diagram
+  - de: Datenfluss
+    en: Data flow
+  - de: Schnittstellenliste
+    en: Interface list
+  methods:
+  - de: Architekturreview
+    en: Architecture review
+  reassessment_triggers:
+  - de: Architektur-, Schnittstellen- oder Provideränderung
+    en: Change of architecture, interface or provider
+  references:
+  - NIST AI RMF
+  - ISO/IEC 23894
+  - ENISA
+- id: G4-02
+  gate: G4
+  category:
+    de: Technik & Betrieb
+    en: Technology and operations
+  subcategory:
+    de: Identitäten und Rechte
+    en: Identities and permissions
+  question:
+    de: Sind Identitäten, Berechtigungen, Least Privilege und Trennung kritischer Aktionen umgesetzt?
+    en: Are identities, permissions, least privilege and separation of critical actions implemented?
+  criteria:
+    basic:
+      de: Zugriffsrollen und Berechtigungskonzept sind dokumentiert.
+      en: Access roles and permission concept are documented.
+    advanced:
+      de: Zugriffe sind technisch beschränkt, nachvollziehbar und regelmäßig rezertifiziert.
+      en: Access is technically restricted, traceable and regularly recertified.
+    high:
+      de: Berechtigungen werden kontinuierlich überwacht und bei Änderungen angepasst.
+      en: Permissions are monitored continuously and adjusted on changes.
+  evidence:
+  - de: IAM-Konfiguration
+    en: IAM configuration
+  - de: Rollenmatrix
+    en: Role matrix
+  - de: Rezertifizierungsnachweis
+    en: Recertification record
+  - de: Logs
+    en: Logs
+  methods:
+  - de: Konfigurationstest
+    en: Configuration test
+  - de: Rechteprüfung
+    en: Permission review
+  reassessment_triggers:
+  - de: Neue Rolle, Integration oder Aktion
+    en: New role, integration or action
+  references:
+  - NIS2
+  - OWASP (LLM Top 10, AI Exchange)
+  - ENISA
+- id: G4-03
+  gate: G4
+  category:
+    de: Technik & Betrieb
+    en: Technology and operations
+  subcategory:
+    de: Prompt- und Input-Sicherheit
+    en: Prompt and input security
+  question:
+    de: Sind System-/Developer-Instruktionen, Eingaben und externe Inhalte gegen Manipulation und ungewollte
+      Prioritätsänderungen abgesichert?
+    en: Are system/developer instructions, inputs and external content protected against manipulation
+      and unwanted changes of priority?
+  criteria:
+    basic:
+      de: Relevante Angriffs- und Fehlerszenarien sind beschrieben.
+      en: Relevant attack and failure scenarios are described.
+    advanced:
+      de: Schutzmaßnahmen und Tests gegen Prompt-/Input-Manipulation sind umgesetzt.
+      en: Protective measures and tests against prompt/input manipulation are in place.
+    high:
+      de: Testkatalog, Monitoring und Abwehrmaßnahmen werden regelmäßig aktualisiert.
+      en: Test catalog, monitoring and defences are updated regularly.
+  evidence:
+  - de: Prompt-Inventar
+    en: Prompt inventory
+  - de: Schutzkonzept
+    en: Protection concept
+  - de: Testfälle
+    en: Test cases
+  - de: Ergebnisse
+    en: Results
+  methods:
+  - de: Verhaltenstest
+    en: Behaviour test
+  - de: Security Review
+    en: Security review
+  reassessment_triggers:
+  - de: Prompt-, Modell-, RAG- oder Inputänderung
+    en: Change of prompt, model, RAG or input
+  references:
+  - OWASP (LLM Top 10, AI Exchange)
+  - ENISA
+  - NIST AI RMF
+- id: G4-04
+  gate: G4
+  category:
+    de: Technik & Betrieb
+    en: Technology and operations
+  subcategory:
+    de: Ausgaben und Verhalten
+    en: Outputs and behaviour
+  question:
+    de: Sind Ausgaben auf Sicherheit, Halluzinationen, unerlaubte Inhalte, Datenabfluss und fachliche
+      Mindestqualität getestet?
+    en: Are outputs tested for safety, hallucinations, prohibited content, data leakage and minimum business
+      quality?
+  criteria:
+    basic:
+      de: Relevante Fehlermodi und Testfälle sind definiert.
+      en: Relevant failure modes and test cases are defined.
+    advanced:
+      de: Tests decken realistische und adversariale Szenarien ab; Ergebnisse sind bewertet.
+      en: Tests cover realistic and adversarial scenarios; results are evaluated.
+    high:
+      de: Verhalten wird im Betrieb überwacht und bei Drift oder Vorfällen nachgetestet.
+      en: Behaviour is monitored in operation and retested on drift or incidents.
+  evidence:
+  - de: Testkatalog
+    en: Test catalog
+  - de: Testdaten
+    en: Test data
+  - de: Ergebnisse
+    en: Results
+  - de: Monitoring
+    en: Monitoring
+  methods:
+  - de: Verhaltenstest
+    en: Behaviour test
+  - de: Red-Team-nahe Prüfung
+    en: Red-team style test
+  reassessment_triggers:
+  - de: Modell-, Prompt-, Daten- oder Use-Case-Änderung
+    en: Change of model, prompt, data or use case
+  references:
+  - EU AI Act
+  - NIST AI RMF
+  - OWASP (LLM Top 10, AI Exchange)
+- id: G4-05
+  gate: G4
+  category:
+    de: Technik & Betrieb
+    en: Technology and operations
+  subcategory:
+    de: Sicherheitstests
+    en: Security testing
+  question:
+    de: Sind technische Sicherheitstests, Penetrationstests oder fokussierte Red-Team-/Adversarial-Tests
+      risikobasiert geplant und ausgewertet?
+    en: Are technical security tests, penetration tests or focused red-team/adversarial tests planned
+      and evaluated based on risk?
+  criteria:
+    basic:
+      de: Erforderliche Testarten und Scope sind begründet.
+      en: Required test types and scope are justified.
+    advanced:
+      de: Tests wurden durchgeführt; Befunde und Nachbesserungen sind dokumentiert.
+      en: Tests have been carried out; findings and fixes are documented.
+    high:
+      de: Testprogramm wird regelmäßig und anlassbezogen wiederholt.
+      en: The test programme is repeated regularly and when needed.
+  evidence:
+  - de: Testplan
+    en: Test plan
+  - de: Befunde
+    en: Findings
+  - de: Remediation-Nachweise
+    en: Remediation records
+  methods:
+  - de: Security Test Review
+    en: Security test review
+  reassessment_triggers:
+  - de: Neue Angriffsfläche, relevante Änderung oder Vorfall
+    en: New attack surface, relevant change or incident
+  references:
+  - NIS2
+  - OWASP (LLM Top 10, AI Exchange)
+  - ENISA
+- id: G4-06
+  gate: G4
+  category:
+    de: Technik & Betrieb
+    en: Technology and operations
+  subcategory:
+    de: Logs, Monitoring und Changes
+    en: Logs, monitoring and changes
+  question:
+    de: Sind Logs, Monitoring, Versionierung und Change Control ausreichend, um Nutzung, Verhalten und
+      relevante Änderungen nachzuvollziehen?
+    en: Are logs, monitoring, versioning and change control sufficient to trace use, behaviour and relevant
+      changes?
+  criteria:
+    basic:
+      de: Relevante Ereignisse und Versionen sind definiert.
+      en: Relevant events and versions are defined.
+    advanced:
+      de: Logging, Monitoring und Change-Prozess sind umgesetzt und auswertbar.
+      en: Logging, monitoring and change process are in place and can be evaluated.
+    high:
+      de: Metriken, Alarme und Reviews führen zu kontinuierlicher Verbesserung.
+      en: Metrics, alerts and reviews lead to continuous improvement.
+  evidence:
+  - de: Logging-Konzept
+    en: Logging concept
+  - de: Dashboards
+    en: Dashboards
+  - de: Change-Logs
+    en: Change logs
+  - de: Versionen
+    en: Versions
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Konfigurationstest
+    en: Configuration test
+  reassessment_triggers:
+  - de: Neue Version, neue Metrik oder relevanter Befund
+    en: New version, new metric or relevant finding
+  references:
+  - NIST AI RMF
+  - ISO/IEC 42001
+  - ENISA
+- id: G4-07
+  gate: G4
+  category:
+    de: Technik & Betrieb
+    en: Technology and operations
+  subcategory:
+    de: Fallback und Resilienz
+    en: Fallback and resilience
+  question:
+    de: Sind Fallback, sichere Degradation, Betriebsunterbrechung und Wiederanlauf für relevante Szenarien
+      definiert und getestet?
+    en: Are fallback, safe degradation, interruption and recovery defined and tested for relevant scenarios?
+  criteria:
+    basic:
+      de: Fallback- und Wiederanlaufkonzept ist dokumentiert.
+      en: Fallback and recovery concept is documented.
+    advanced:
+      de: Mechanismen sind implementiert und in realistischen Szenarien getestet.
+      en: Mechanisms are implemented and tested in realistic scenarios.
+    high:
+      de: Übungen, Vorfälle und Betriebsdaten führen zu Verbesserungen.
+      en: Exercises, incidents and operational data lead to improvements.
+  evidence:
+  - de: BCP/DR
+    en: BCP/DR
+  - de: Fallback-Prozess
+    en: Fallback process
+  - de: Test-/Übungsnachweise
+    en: Test and exercise records
+  methods:
+  - de: Tabletop-Test
+    en: Tabletop test
+  - de: Konfigurationstest
+    en: Configuration test
+  reassessment_triggers:
+  - de: Neue Abhängigkeit, neue Kritikalität oder Betriebsstörung
+    en: New dependency, new criticality or operational disruption
+  references:
+  - NIS2
+  - NIST AI RMF
+  - ENISA
+- id: G4-08
+  gate: G4
+  category:
+    de: Technik & Betrieb
+    en: Technology and operations
+  subcategory:
+    de: Provider und Abhängigkeiten
+    en: Providers and dependencies
+  question:
+    de: Sind Modell-/Providerabhängigkeiten, Updates, Verfügbarkeit und Exit-/Fallback-Optionen bewertet?
+    en: Have model/provider dependencies, updates, availability and exit/fallback options been assessed?
+  criteria:
+    basic:
+      de: Abhängigkeiten und Update-Risiken sind dokumentiert.
+      en: Dependencies and update risks are documented.
+    advanced:
+      de: Update- und Provideränderungen werden kontrolliert; Fallback ist vorgesehen.
+      en: Updates and provider changes are controlled; a fallback is planned.
+    high:
+      de: Abhängigkeiten werden regelmäßig überwacht und die Exit-Fähigkeit getestet.
+      en: Dependencies are monitored regularly and the ability to exit is tested.
+  evidence:
+  - de: Providerregister
+    en: Provider register
+  - de: SLA/Verträge
+    en: SLA/contracts
+  - de: Updateprozess
+    en: Update process
+  - de: Fallback-Plan
+    en: Fallback plan
+  methods:
+  - de: Vendor-/Architekturreview
+    en: Vendor and architecture review
+  reassessment_triggers:
+  - de: Provider-, Modell- oder Updateänderung
+    en: Change of provider, model or update
+  references:
+  - ISO/IEC 23894
+  - NIST AI RMF
+  - ENISA
+- id: G4-09
+  gate: G4
+  category:
+    de: Technik & Betrieb
+    en: Technology and operations
+  subcategory:
+    de: Ausgabewege und Weitergabe
+    en: Output channels and sharing
+  question:
+    de: Bleiben Kennzeichnung, Metadaten und Herkunftsangaben über die realen Ausgabe- und Weitergabewege
+      erhalten (Direktdownload, QR, Smartphone, Messenger, Social Media, Archiv/ZIP, erneute Bearbeitung)?
+    en: Are labelling, metadata and provenance information preserved across the real output and sharing
+      channels (direct download, QR, smartphone, messenger, social media, archive/ZIP, re-editing)?
+  criteria:
+    basic:
+      de: Ausgabewege sind dokumentiert.
+      en: Output channels are documented.
+    advanced:
+      de: Die relevanten Ausgabewege sind je Szenario Ende-zu-Ende geprüft und Verluste sind dokumentiert.
+      en: The relevant output channels are tested end to end per scenario and losses are documented.
+    high:
+      de: Ausgabewege werden bei Plattform-, Export- oder Komprimierungsänderungen erneut geprüft.
+      en: Output channels are retested on changes of platform, export or compression.
+  evidence:
+  - de: Ausgabewegematrix mit Prüfprotokoll je Pfad (Datum, Version, Prüfwerkzeug)
+    en: Output channel matrix with a test record per channel (date, version, test tool)
+  methods:
+  - de: Technische Funktionsstichprobe Ende-zu-Ende
+    en: End-to-end technical spot check
+  - de: aktiver Test nur im vereinbarten Rahmen
+    en: Active testing only within the agreed scope
+  reassessment_triggers:
+  - de: Neuer Ausgabeweg, Plattform- oder Exportänderung, Archivpfad, Komprimierungs- oder Bearbeitungsschritt
+    en: New output channel, change of platform or export, archive path, compression or editing step
+  references:
+  - NIST AI RMF
+  note:
+    de: Die Originaldatei allein belegt nicht, was Empfänger erhalten.
+    en: The original file alone does not show what recipients receive.
+  module: generated-content
+- id: G5-01
+  gate: G5
+  category:
+    de: Entscheidung
+    en: Decision
+  subcategory:
+    de: Befunde und Risiken
+    en: Findings and risks
+  question:
+    de: Sind Prüfergebnisse, Evidenzlücken, Risiken und Restrisiken nachvollziehbar dokumentiert?
+    en: Are assessment results, evidence gaps, risks and residual risks documented in a traceable way?
+  criteria:
+    basic:
+      de: Befunde und Risiken sind dokumentiert.
+      en: Findings and risks are documented.
+    advanced:
+      de: Befunde sind priorisiert, mit Evidenz und Maßnahmen verknüpft.
+      en: Findings are prioritised and linked to evidence and actions.
+    high:
+      de: Risikoentwicklung und Wirksamkeit der Maßnahmen werden nachverfolgt.
+      en: Risk development and the effectiveness of actions are tracked.
+  evidence:
+  - de: Prüfbericht
+    en: Assessment report
+  - de: Risikoregister
+    en: Risk register
+  - de: Evidenzverweise
+    en: Evidence references
+  methods:
+  - de: Review
+    en: Review
+  - de: Konsistenzprüfung
+    en: Consistency check
+  reassessment_triggers:
+  - de: Neue Befunde, Maßnahmenabschluss oder Trigger
+    en: New findings, completion of actions or trigger
+  references:
+  - NIST AI RMF
+  - ISO/IEC 42001
+- id: G5-02
+  gate: G5
+  category:
+    de: Entscheidung
+    en: Decision
+  subcategory:
+    de: Entscheidungsstatus
+    en: Decision status
+  question:
+    de: Ist der Entscheidungsstatus auf den geprüften Zweck, die geprüfte Version und Umgebung begrenzt?
+    en: Is the decision status limited to the assessed purpose, version and environment?
+  criteria:
+    basic:
+      de: Scope, Version, Umgebung und Status sind dokumentiert.
+      en: Scope, version, environment and status are documented.
+    advanced:
+      de: Entscheidung ist mit Bedingungen, Ausnahmen und Nutzungsgrenzen verknüpft.
+      en: The decision is linked to conditions, exceptions and limits of use.
+    high:
+      de: Änderungen an Scope oder Version lösen eine Neubewertung aus.
+      en: Changes of scope or version trigger a reassessment.
+  evidence:
+  - de: Freigabevermerk
+    en: Approval record
+  - de: Versions-/Umgebungsnachweis
+    en: Version and environment record
+  - de: Scope
+    en: Scope
+  methods:
+  - de: Entscheidungsreview
+    en: Decision review
+  reassessment_triggers:
+  - de: Scope-, Versions- oder Umgebungsänderung
+    en: Change of scope, version or environment
+  references:
+  - EU AI Act
+  - ISO/IEC 42001
+- id: G5-03
+  gate: G5
+  category:
+    de: Entscheidung
+    en: Decision
+  subcategory:
+    de: Auflagen und Maßnahmen
+    en: Conditions and actions
+  question:
+    de: Sind Auflagen, Maßnahmen, Owner und Fristen konkret genug, um die Freigabe zu steuern?
+    en: Are conditions, actions, owners and deadlines specific enough to steer the approval?
+  criteria:
+    basic:
+      de: Auflagen, Owner und Fristen sind dokumentiert.
+      en: Conditions, owners and deadlines are documented.
+    advanced:
+      de: Maßnahmen sind priorisiert, nachverfolgbar und mit Risiken verknüpft.
+      en: Actions are prioritised, trackable and linked to risks.
+    high:
+      de: Erledigung und Wirksamkeit werden überprüft; Überfälligkeit eskaliert.
+      en: Completion and effectiveness are checked; overdue items are escalated.
+  evidence:
+  - de: Maßnahmenregister
+    en: Action register
+  - de: Ownerbestätigung
+    en: Owner confirmation
+  - de: Fristen
+    en: Deadlines
+  - de: Nachweise
+    en: Records
+  methods:
+  - de: Maßnahmenreview
+    en: Action review
+  reassessment_triggers:
+  - de: Überfälligkeit, Scopeänderung oder neue Evidenz
+    en: Overdue item, scope change or new evidence
+  references:
+  - NIST AI RMF
+  - ISO/IEC 42001
+- id: G5-04
+  gate: G5
+  category:
+    de: Entscheidung
+    en: Decision
+  subcategory:
+    de: Reassessment
+    en: Reassessment
+  question:
+    de: Sind konkrete Ereignisse definiert, die eine erneute Prüfung oder Teilprüfung auslösen?
+    en: Are concrete events defined that trigger a full or partial reassessment?
+  criteria:
+    basic:
+      de: Reassessment-Trigger sind dokumentiert.
+      en: Reassessment triggers are documented.
+    advanced:
+      de: Trigger sind operationalisiert, Owner und Reaktionsfrist sind festgelegt.
+      en: Triggers are operationalised; owner and response time are defined.
+    high:
+      de: Trigger werden überwacht und ihre Angemessenheit regelmäßig überprüft.
+      en: Triggers are monitored and their adequacy is reviewed regularly.
+  evidence:
+  - de: Triggerliste
+    en: Trigger list
+  - de: Monitoring
+    en: Monitoring
+  - de: Reviewkalender
+    en: Review calendar
+  methods:
+  - de: Dokumentenprüfung
+    en: Document review
+  - de: Prozessprüfung
+    en: Process check
+  reassessment_triggers:
+  - de: Modell-/Prompt-/Daten-/Provider-/Zweckänderung, Vorfall, Drift
+    en: Change of model, prompt, data, provider or purpose, incident, drift
+  references:
+  - ISO/IEC 42001
+  - NIST AI RMF
+  - ISO/IEC 23894
+- id: G5-05
+  gate: G5
+  category:
+    de: Entscheidung
+    en: Decision
+  subcategory:
+    de: Entscheidungsbefugnis
+    en: Decision authority
+  question:
+    de: Ist klar, wer die Freigabeentscheidung und die Risikoakzeptanz für den geprüften Scope trifft?
+    en: Is it clear who makes the customer decision and accepts the risk for the assessed scope?
+  criteria:
+    basic:
+      de: Entscheidungsrolle und Risikoakzeptanz sind benannt.
+      en: Decision role and risk acceptance are named.
+    advanced:
+      de: Mandat, Entscheidungsgrundlage und Eskalation sind nachvollziehbar.
+      en: Mandate, basis for the decision and escalation are traceable.
+    high:
+      de: Entscheidungen und Risikoakzeptanzen werden regelmäßig auf Aktualität geprüft.
+      en: Decisions and risk acceptances are reviewed regularly for currency.
+  evidence:
+  - de: Freigabematrix
+    en: Approval matrix
+  - de: Beschluss
+    en: Decision record
+  - de: Risikoakzeptanz
+    en: Risk acceptance
+  - de: Protokoll
+    en: Minutes
+  methods:
+  - de: Entscheidungsreview
+    en: Decision review
+  reassessment_triggers:
+  - de: Rollenwechsel, Scopeänderung oder neue Risikolage
+    en: Change of role holder, scope change or new risk situation
+  references:
+  - ISO/IEC 42001
+  - NIST AI RMF

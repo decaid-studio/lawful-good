@@ -8,6 +8,23 @@ and questions. Do not present results as legal compliance.
 Prefer `dist/lawful-good.json` (built by `python tools/lg.py build`); otherwise read the
 YAML files under `catalog/`.
 
+## Start with the triage
+
+Run every new use case through `decision_trees[]` (`decaid.eu-ai-act-triage`) first,
+beginning at `start`. Follow `next` until you reach an `outcome`, and collect the `flags`
+of every answer you give.
+
+- `outcome.type == "stop"`: stop. Report the outcome and hand over to a person for legal
+  review. Do not continue into the catalog.
+- `outcome.type == "out-of-scope"`: document the result and the reason.
+- `outcome.type == "continue"`: continue with the assessment catalog and pass on the
+  collected flags.
+- If you cannot answer a question from the facts you have, choose `unclear`. Never guess.
+- Whatever the outcome, prefill the tree's `record` (answers with a justification, outcome,
+  flags, date) for the AI register. Leave `approved-by` empty: a person approves the
+  classification.
+- Report the tree's `parallel_checks` with every outcome. The triage covers the AI Act only.
+
 ## Data model
 
 - `frameworks[].levels[]` – clearance levels with `capabilities` (upper bound of what an

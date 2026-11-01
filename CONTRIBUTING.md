@@ -17,6 +17,8 @@ Thanks for helping. lawful-good is maintained by DECAID.
   ISO/IEC, DIN or others), not even paraphrased.
 - References only to openly available sources (laws, NIST publications, OWASP and similar).
 - Recommendations, not legal statements: never claim conformity.
+- Decision trees reference articles and do not interpret them. On critical questions,
+  "unclear" must lead to a stop (`tools/lg.py validate` checks this).
 
 ## Sign-off
 

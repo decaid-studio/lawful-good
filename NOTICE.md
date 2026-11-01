@@ -19,6 +19,15 @@ Es ist **keine Grundlage für die Umsetzung von Art. 17 des EU AI Act**
 müssen die einschlägigen harmonisierten Normen selbst anwenden und sich rechtlich beraten
 lassen. Die Nutzung dieses Repositorys begründet keine Konformitätsvermutung.
 
+## Triage decision tree
+
+The EU AI Act triage is for orientation. It points to articles and does not interpret
+them. It does not replace a legal assessment. Any stop outcome means: seek legal advice.
+
+Der Entscheidungsbaum zur Vorprüfung dient der Orientierung. Er verweist auf Artikel und
+legt sie nicht aus. Er ersetzt keine rechtliche Einordnung. Jeder Stopp bedeutet: rechtlich
+beraten lassen.
+
 ## Policy template
 
 The AI policy template is a sample to be adapted. Rules on how employees use AI can be

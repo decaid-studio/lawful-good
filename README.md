@@ -144,7 +144,7 @@ Ausprobieren: `python tools/lg.py triage`
 
 Bewertungslogik, Gewichte und Scoring der DECAID-Prüfung sind nicht Teil des Repositorys.
 Hintergrund im Whitepaper *Agentic Governance – Wenn KI handelt statt antwortet* auf
-[decaid.ai](https://www.decaid.ai).
+[decaid.ai](https://www.decaid.ai/downloads/agentic-governance).
 
 Leitsatz: **Automatisieren bis zur Abwägung, dann entscheidet ein Mensch.**
 

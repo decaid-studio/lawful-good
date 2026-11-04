@@ -44,7 +44,7 @@ use case ─► triage ─┬─► stop: possibly prohibited, high-risk or uncl
 
 Scoring, weights and decision logic of the DECAID assessment are not part of this
 repository. The background is explained in DECAID's white paper *Agentic Governance –
-Wenn KI handelt statt antwortet*, available at [decaid.ai](https://www.decaid.ai).
+Wenn KI handelt statt antwortet*, available at [decaid.ai](https://www.decaid.ai](https://www.decaid.ai/downloads/agentic-governance).
 
 ## Principle
 

@@ -2,6 +2,8 @@
 
   python -m unittest discover tests
 """
+import contextlib
+import io
 import json
 import sys
 import unittest
@@ -26,7 +28,7 @@ def all_paths(given=()):
         yield given, step
         return
     for answer in step["answers"]:
-        yield from all_paths((*given, (step["node"], answer["id"], "")))
+        yield from all_paths((*given, (step["node"], answer["id"])))
 
 
 class Triage(unittest.TestCase):
@@ -40,13 +42,13 @@ class Triage(unittest.TestCase):
             record = step["record"]
             self.assertEqual(record["approved-by"], "", "a person approves, never the script")
             self.assertEqual(len(record["answers"]), len(given))
-            if any(node in CRITICAL and answer == "unclear" for node, answer, _ in given):
+            if any(node in CRITICAL and answer == "unclear" for node, answer in given):
                 self.assertEqual(step["outcome"]["type"], "stop", given)
 
     def test_questions_cannot_be_skipped_or_invented(self):
         later = next(n["id"] for n in TREE["nodes"] if n["id"] != TREE["start"])
-        for bad in ([(later, "yes", "")], [(TREE["start"], "maybe", "")],
-                    [(TREE["start"], "unclear", ""), (later, "yes", "")]):
+        for bad in ([(later, "yes")], [(TREE["start"], "maybe")],
+                    [(TREE["start"], "unclear"), (later, "yes")]):
             with self.assertRaises(lg.UsageError):
                 lg.triage(TREE, bad, "de")
 
@@ -82,6 +84,32 @@ class Framework(unittest.TestCase):
     def test_unknown_level(self):
         with self.assertRaises(lg.UsageError):
             lg.controls(FRAMEWORK, "level-99", "de")
+
+
+class CommandLine(unittest.TestCase):
+    def run_main(self, *argv):
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
+            try:
+                code = lg.main(list(argv))
+            except SystemExit as stop:  # argparse rejects the argument
+                code = stop.code
+        return code, out.getvalue()
+
+    def test_every_output_carries_the_disclaimer(self):
+        gate, level = CATALOG["gates"][0]["id"], FRAMEWORK["levels"][0]["id"]
+        for lang in ("de", "en"):
+            for argv in (["triage"], ["triage", f"{TREE['start']}=unclear"], ["levels"],
+                         ["controls", level], ["gate", gate], ["triggers"]):
+                code, out = self.run_main("--lang", lang, *argv)
+                self.assertEqual(code, 0, argv)
+                self.assertEqual(json.loads(out)["disclaimer"], lg.DISCLAIMER[lang], argv)
+
+    def test_arguments_are_ids_only(self):
+        for argv in (["triage", "ai-system=yes=free text"], ["triage", "ai-system=$(id)"],
+                     ["gate", "../../etc/passwd"], ["controls", "level 1"], ["--data", "x.json", "levels"]):
+            code, out = self.run_main(*argv)
+            self.assertEqual((code, out), (2, ""), argv)
 
 
 if __name__ == "__main__":

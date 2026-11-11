@@ -1,25 +1,38 @@
 #!/usr/bin/env python3
 """lawful-good skill: read the rulebook without loading it whole.
 
-  python scripts/lawful_good.py triage [node=answer[=justification] ...]
+  python scripts/lawful_good.py triage [node=answer ...]
   python scripts/lawful_good.py levels
   python scripts/lawful_good.py controls <level-id>
   python scripts/lawful_good.py gate <gate-id> [--module <module-id> ...]
   python scripts/lawful_good.py triggers
 
-Every command prints JSON in one language (--lang de|en, default de).
-Standard library only, so it runs in any agent sandbox. The data is
-data/lawful-good.json next to this folder, written by `tools/lg.py build`.
+Every command prints JSON in one language (--lang de|en, default de) and
+carries the disclaimer. Standard library only, so it runs in any agent sandbox.
+
+Safe to hand to other agents by construction: it reads one fixed file
+(data/lawful-good.json, written by `tools/lg.py build`), writes nothing, opens
+no network connection, starts no process, and takes only ids as arguments.
 """
 from __future__ import annotations
 
 import argparse
 import datetime
 import json
+import re
 import sys
 from pathlib import Path
 
 DATA = Path(__file__).resolve().parent.parent / "data" / "lawful-good.json"
+ID = re.compile(r"[a-z0-9-]+", re.IGNORECASE)
+
+# Wording follows NOTICE.md. Attached to every output so no report can leave without it.
+DISCLAIMER = {
+    "de": "Keine Rechtsberatung. Das Ergebnis beruht auf Governance-Empfehlungen von DECAID und weist "
+          "keine Konformität mit dem EU AI Act oder anderen Gesetzen und Normen nach.",
+    "en": "Not legal advice. The result is based on DECAID's governance recommendations and does not "
+          "establish conformity with the EU AI Act or any other law or standard.",
+}
 
 
 class UsageError(Exception):
@@ -55,20 +68,20 @@ def by_id(entries: list[dict], wanted: str, what: str) -> dict:
     raise UsageError(f"unknown {what} {wanted!r}; known: {', '.join(e['id'] for e in entries)}")
 
 
-def triage(tree: dict, given: list[tuple[str, str, str]], lang: str) -> dict:
+def triage(tree: dict, given: list[tuple[str, str]], lang: str) -> dict:
     """Walk the decision tree with the answers given so far.
 
-    given: (node id, answer id, justification) in any order.
+    given: (node id, answer id) in any order.
     Returns the next open question, or the outcome with flags, parallel checks
     and the prefilled register record. Raises UsageError for an answer that is
     unknown or not on the path, so no question can be skipped or pre-empted.
     """
     nodes = {n["id"]: n for n in tree["nodes"]}
     pending = {}
-    for node_id, answer_id, why in given:
+    for node_id, answer_id in given:
         if node_id in pending:
             raise UsageError(f"question {node_id!r} answered twice")
-        pending[node_id] = (answer_id, why)
+        pending[node_id] = answer_id
 
     flags: list[str] = []
     answered: list[dict] = []
@@ -89,9 +102,10 @@ def triage(tree: dict, given: list[tuple[str, str, str]], lang: str) -> dict:
                 "answers": [{"id": a["id"], "label": localise(a["label"], lang)} for a in node["answers"]],
                 "answered": answered,
             }
-        answer_id, why = pending.pop(node["id"])
+        answer_id = pending.pop(node["id"])
         answer = by_id(node["answers"], answer_id, f"answer to {node['id']!r}")
-        answered.append({"question": node["id"], "answer": answer_id, "justification": why})
+        # The justification is written by the caller into the report, never passed through the shell.
+        answered.append({"question": node["id"], "answer": answer_id, "justification": ""})
         flags += [f for f in answer.get("flags", []) if f not in flags]
         if "outcome" in answer:
             break
@@ -184,33 +198,36 @@ def triggers(catalog: dict, lang: str) -> dict:
     }
 
 
-def parse_answer(text: str) -> tuple[str, str, str]:
-    node, sep, rest = text.partition("=")
-    if not sep or not rest:
-        raise argparse.ArgumentTypeError(f"expected node=answer[=justification], got {text!r}")
-    answer, _, why = rest.partition("=")
-    return node, answer, why
+def an_id(text: str) -> str:
+    """Arguments are ids from the data, never free text."""
+    if not ID.fullmatch(text):
+        raise argparse.ArgumentTypeError("expected an id made of letters, digits and hyphens")
+    return text
+
+
+def parse_answer(text: str) -> tuple[str, str]:
+    node, _, answer = text.partition("=")
+    return an_id(node), an_id(answer)
 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--lang", choices=["de", "en"], default="de")
-    ap.add_argument("--data", type=Path, default=DATA, help="path to lawful-good.json")
     sub = ap.add_subparsers(dest="cmd", required=True)
     t = sub.add_parser("triage")
-    t.add_argument("answers", nargs="*", type=parse_answer, metavar="node=answer[=justification]")
+    t.add_argument("answers", nargs="*", type=parse_answer, metavar="node=answer")
     sub.add_parser("levels")
-    sub.add_parser("controls").add_argument("level")
+    sub.add_parser("controls").add_argument("level", type=an_id)
     g = sub.add_parser("gate")
-    g.add_argument("gate")
-    g.add_argument("--module", action="append", default=[])
+    g.add_argument("gate", type=an_id)
+    g.add_argument("--module", action="append", default=[], type=an_id)
     sub.add_parser("triggers")
     args = ap.parse_args(argv)
 
     try:
-        bundle = json.loads(args.data.read_text("utf-8"))
+        bundle = json.loads(DATA.read_text("utf-8"))
     except FileNotFoundError:
-        print(f"{args.data} not found; build it with `python tools/lg.py build`", file=sys.stderr)
+        print(f"{DATA} not found; build it with `python tools/lg.py build`", file=sys.stderr)
         return 2
     tree = bundle["decision_trees"][0]
     framework = bundle["frameworks"][0]
@@ -229,6 +246,7 @@ def main(argv: list[str] | None = None) -> int:
     except UsageError as err:
         print(f"ERROR {err}", file=sys.stderr)
         return 2
+    result["disclaimer"] = DISCLAIMER[args.lang]
     print(json.dumps(result, ensure_ascii=False, indent=1))
     return 0
 

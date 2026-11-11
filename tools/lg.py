@@ -3,6 +3,7 @@
 
   python tools/lg.py validate          # schema + reference checks for all catalogs
   python tools/lg.py build             # write dist/lawful-good.json (public content only)
+                                       # and the agent skill as dist/lawful-good-skill.zip
   python tools/lg.py build --internal  # also include crosswalks marked "internal"
   python tools/lg.py triage            # walk through the EU AI Act triage interactively (--lang en)
 
@@ -12,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import sys
 from pathlib import Path
 
@@ -193,6 +195,12 @@ def build(include_internal: bool) -> int:
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(bundle, ensure_ascii=False, indent=2, default=str), "utf-8")
     print(f"wrote {out.relative_to(ROOT)}")
+    if not include_internal:  # the skill is meant to be shared, so it only ever gets public content
+        skill = ROOT / "skill" / "lawful-good"
+        (skill / "data").mkdir(exist_ok=True)
+        shutil.copyfile(out, skill / "data" / out.name)
+        archive = shutil.make_archive(str(out.parent / "lawful-good-skill"), "zip", skill.parent, skill.name)
+        print(f"wrote {Path(archive).relative_to(ROOT)}")
     return 0
 
 

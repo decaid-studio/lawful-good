@@ -20,7 +20,10 @@ jobs:
           fi
       - run: python tools/lg.py validate
       - run: python tools/lg.py build
+      - run: python -m unittest discover tests
       - uses: actions/upload-artifact@v4
         with:
           name: lawful-good-bundle
-          path: dist/lawful-good.json
+          path: |
+            dist/lawful-good.json
+            dist/lawful-good-skill.zip

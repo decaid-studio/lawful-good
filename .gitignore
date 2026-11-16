@@ -6,6 +6,7 @@ private/
 
 # Build output
 dist/
+skill/lawful-good/data/
 
 # Python
 __pycache__/

@@ -31,6 +31,7 @@ show conformity with any law or standard.
 | **AI policy template** | What do we commit to? Every rule links to the controls and check items | Markdown (German) |
 | **Agentic Governance Framework** | How do agents enforce it? 8 clearance levels, 7 architectural controls, 6 supplementary practices | YAML (DE/EN) |
 | **AI system assessment catalog** | Does it work? 36 check items in six gates with maturity criteria, evidence and reassessment triggers, plus a module for generated content | YAML (DE/EN) |
+| **Agent skill** | How does an agent use all of this without loading it whole? Runs the triage step by step and returns levels, controls, check items and triggers on request | SKILL.md and Python script, for Claude and Langdock |
 
 A use case runs through them in order:
 
@@ -62,6 +63,7 @@ catalog/assessments/      AI system assessment catalog
 crosswalks/               Links between catalogs
 templates/                AI policy template (Markdown)
 schema/                   JSON Schemas
+skill/lawful-good/        Agent skill (SKILL.md and script) for Claude and Langdock
 tools/lg.py               Validate, build and run the triage
 AGENTS.md                 How agents should use this repository
 ```
@@ -76,6 +78,13 @@ python tools/lg.py build              # writes dist/lawful-good.json
 ```
 
 Agents: read [AGENTS.md](AGENTS.md).
+
+### As an agent skill
+
+`python tools/lg.py build` also writes `dist/lawful-good-skill.zip`. Upload it as a skill in
+Claude or import it into Langdock. The skill runs the triage step by step through a script, so a
+question cannot be skipped and "unclear" stops; it also returns clearance levels, controls, check
+items per gate and reassessment triggers on request. The script needs Python 3 and nothing else.
 
 ## Roadmap
 
@@ -141,6 +150,12 @@ Inhalt:
   Nachweisen und Reassessment-Triggern, dazu ein Modul für generierte Inhalte
 
 Ausprobieren: `python tools/lg.py triage`
+
+Als Skill für Agenten: `python tools/lg.py build` schreibt zusätzlich
+`dist/lawful-good-skill.zip`. Das Archiv lässt sich als Skill in Claude hochladen oder in
+Langdock importieren. Der Skill führt die Vorprüfung Frage für Frage über ein Skript, sodass
+keine Frage übersprungen werden kann und „unklar“ stoppt. Auf Abruf liefert er außerdem Level,
+Controls, Prüfpunkte je Gate und Reassessment-Trigger. Das Skript braucht nur Python 3.
 
 Bewertungslogik, Gewichte und Scoring der DECAID-Prüfung sind nicht Teil des Repositorys.
 Hintergrund im Whitepaper *Agentic Governance – Wenn KI handelt statt antwortet* auf

@@ -1,5 +1,5 @@
 # EU AI Act triage – decision tree for orientation
-# Content license: CC BY 4.0 (see LICENSE-CONTENT). © DECAID.
+# Content license: CC BY 4.0 (see LICENSE-CONTENT). © DECAID Group GmbH.
 # Questions refer to Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744.
 # This tree is not a legal assessment. German is the original; English is a machine-assisted
 # translation pending review.
@@ -11,7 +11,7 @@ title:
   de: Vorprüfung nach dem EU AI Act
   en: EU AI Act triage
 version: 0.1.0
-publisher: DECAID
+publisher: DECAID Group GmbH
 license: CC-BY-4.0
 law_version: Regulation (EU) 2024/1689, consolidated version 02024R1689-20260727
 verification:

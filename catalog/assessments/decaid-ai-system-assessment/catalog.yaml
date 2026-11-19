@@ -1,5 +1,5 @@
 # DECAID AI System Assessment Catalog (KI-Systemprüfung)
-# Content license: CC BY 4.0 (see LICENSE-CONTENT). © DECAID.
+# Content license: CC BY 4.0 (see LICENSE-CONTENT). © DECAID Group GmbH.
 # Scoring, weights, criticality and decision logic are not part of this catalog.
 # German is the original; English is a machine-assisted translation pending review.
 
@@ -10,7 +10,7 @@ title:
   de: DECAID Prüfkatalog KI-Systemprüfung
   en: DECAID AI System Assessment Catalog
 version: 0.2.0
-publisher: DECAID
+publisher: DECAID Group GmbH
 license: CC-BY-4.0
 verification:
   status: verified-against-source
@@ -186,55 +186,60 @@ modules:
       werden.
     en: The system generates images, audio, video or text that is passed on to people or other systems.
   output_channels:
-  - id: direct-download
+  - id: download-export
     name:
-      de: Direktdownload
-      en: Direct download
+      de: Download und Export
+      en: Download and export
     check:
-      de: Bleibt die Kennzeichnung im heruntergeladenen Original erhalten?
-      en: Is the labelling preserved in the downloaded original?
-  - id: qr-download
+      de: Bleibt die Kennzeichnung in der heruntergeladenen oder exportierten Datei erhalten?
+      en: Is the labelling preserved in the downloaded or exported file?
+  - id: link-sharing
     name:
-      de: QR-Download
-      en: QR download
+      de: Abruf über Link oder Code
+      en: Retrieval via link or code
     check:
-      de: Bleibt die Kennzeichnung nach dem Abruf über QR-Code auf dem Zielgerät erhalten?
-      en: Is the labelling preserved on the target device after retrieval via QR code?
-  - id: mobile-storage
+      de: Bleibt die Kennzeichnung erhalten, wenn Inhalte über einen Link oder Code auf einem anderen Gerät
+        abgerufen werden?
+      en: Is the labelling preserved when content is retrieved on another device via a link or code?
+  - id: device-storage
     name:
-      de: Smartphone-Speicherung
-      en: Smartphone storage
+      de: Speicherung auf Endgeräten und in Ablagen
+      en: Storage on devices and in repositories
     check:
-      de: Bleiben Metadaten bei Speicherung in Fotos oder Dateien erhalten?
-      en: Are metadata preserved when saved to photos or files?
-  - id: messenger
+      de: Bleiben Metadaten bei der Speicherung auf Endgeräten, in Dateiablagen oder Dokumentenmanagement erhalten?
+      en: Are metadata preserved when stored on devices, in file shares or document management systems?
+  - id: third-party-platforms
     name:
-      de: Messenger-Weitergabe
-      en: Messenger sharing
+      de: Weitergabe über Drittplattformen
+      en: Sharing via third-party platforms
     check:
-      de: Werden Metadaten durch den Messenger entfernt oder verändert?
-      en: Does the messenger remove or alter metadata?
-  - id: social-media
+      de: Werden Metadaten oder Wasserzeichen entfernt oder verändert, wenn Inhalte über E-Mail, Messenger,
+        Kollaborationstools oder soziale Netzwerke weitergegeben werden?
+      en: Are metadata or watermarks removed or altered when content is shared via e-mail, messengers,
+        collaboration tools or social networks?
+  - id: embedding-copying
     name:
-      de: Social-Media-Upload
-      en: Social media upload
+      de: Einbettung und Kopieren
+      en: Embedding and copying
     check:
-      de: Werden Metadaten oder Wasserzeichen durch die Plattform entfernt?
-      en: Does the platform remove metadata or watermarks?
-  - id: archive-export
+      de: Bleibt die Kennzeichnung erhalten, wenn Inhalte in Dokumente, Präsentationen oder Websites eingebettet
+        oder als Text kopiert werden?
+      en: Is the labelling preserved when content is embedded in documents, presentations or websites, or
+        copied as text?
+  - id: archiving
     name:
-      de: Archiv-/ZIP-Export
-      en: Archive/ZIP export
+      de: Archivierung
+      en: Archiving
     check:
-      de: Bleibt die Kennzeichnung im Archiv und im Export erhalten?
-      en: Is the labelling preserved in the archive and the export?
+      de: Bleibt die Kennzeichnung in Archiven und Langzeitablagen erhalten?
+      en: Is the labelling preserved in archives and long-term storage?
   - id: re-editing
     name:
-      de: Erneute Komprimierung / Bearbeitung
-      en: Re-compression / editing
+      de: Weiterbearbeitung
+      en: Further editing
     check:
-      de: Bleibt die Kennzeichnung nach Kompression, Zuschnitt oder Bearbeitung erhalten?
-      en: Is the labelling preserved after compression, cropping or editing?
+      de: Bleibt die Kennzeichnung nach Komprimierung, Zuschnitt, Übersetzung oder sonstiger Bearbeitung erhalten?
+      en: Is the labelling preserved after compression, cropping, translation or other editing?
   checks:
   - de: Welche Kennzeichnung ist vorhanden (IPTC/XMP, C2PA, Anbieter-Wasserzeichen, sonstige Markierung)?
     en: Which labelling is present (IPTC/XMP, C2PA, provider watermark, other marking)?
@@ -1525,9 +1530,11 @@ items:
     en: Output channels and sharing
   question:
     de: Bleiben Kennzeichnung, Metadaten und Herkunftsangaben über die realen Ausgabe- und Weitergabewege
-      erhalten (Direktdownload, QR, Smartphone, Messenger, Social Media, Archiv/ZIP, erneute Bearbeitung)?
+      erhalten (z. B. Download und Export, Abruf über Links, Weitergabe über Drittplattformen, Einbettung,
+      Archivierung, Weiterbearbeitung)?
     en: Are labelling, metadata and provenance information preserved across the real output and sharing
-      channels (direct download, QR, smartphone, messenger, social media, archive/ZIP, re-editing)?
+      channels (e.g. download and export, retrieval via links, sharing via third-party platforms,
+      embedding, archiving, further editing)?
   criteria:
     basic:
       de: Ausgabewege sind dokumentiert.

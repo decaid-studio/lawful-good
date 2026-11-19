@@ -113,7 +113,7 @@ standards see [ai-act-standards.com](https://ai-act-standards.com/), and seek le
 | Code and schemas (`tools/`, `schema/`, workflows) | [MIT](LICENSE) |
 | Content (decision tree, frameworks, catalogs, crosswalks, template) | [CC BY 4.0](LICENSE-CONTENT) |
 
-Attribution: *"lawful-good by DECAID, CC BY 4.0"*.
+Rights holder: DECAID Group GmbH. Attribution: *"lawful-good by DECAID, CC BY 4.0"*.
 
 ---
 
@@ -167,4 +167,4 @@ Leitsatz: **Automatisieren bis zur Abwägung, dann entscheidet ein Mensch.**
 Normen siehe [ai-act-standards.com](https://ai-act-standards.com/); lassen Sie sich rechtlich
 beraten.
 
-Lizenzen: Code und Schemas MIT, Inhalte CC BY 4.0.
+Lizenzen: Code und Schemas MIT, Inhalte CC BY 4.0. Rechteinhaberin: DECAID Group GmbH.

@@ -45,5 +45,5 @@ standards (CEN/CENELEC, ISO/IEC, DIN or others). Contributions must not add any.
 
 ## Sources
 
-All content is original work by DECAID, licensed under CC BY 4.0. Implementation
+All content is original work by DECAID Group GmbH, licensed under CC BY 4.0. Implementation
 examples name third-party tools for illustration only; no endorsement is implied.

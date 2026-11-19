@@ -16,7 +16,7 @@
 > und im [Prüfkatalog](../catalog/assessments/decaid-ai-system-assessment/catalog.yaml).
 > So lässt sich die Umsetzung der Richtlinie direkt prüfen.
 >
-> Lizenz: CC BY 4.0, © DECAID. Namensnennung: *„Basiert auf der KI-Richtlinie-Vorlage von
+> Lizenz: CC BY 4.0, © DECAID Group GmbH. Namensnennung: *„Basiert auf der KI-Richtlinie-Vorlage von
 > DECAID (lawful-good), CC BY 4.0“*.
 
 ---

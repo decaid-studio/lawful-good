@@ -1,6 +1,6 @@
 # DECAID Agentic Governance Framework
 # Source: Whitepaper 2 "Agentic Governance – Wenn KI handelt statt antwortet" (Draft v2, autumn 2026)
-# Content license: CC BY 4.0 (see LICENSE-CONTENT). © DECAID.
+# Content license: CC BY 4.0 (see LICENSE-CONTENT). © DECAID Group GmbH.
 # German text follows the whitepaper; English is a machine-assisted translation pending review.
 
 schema_version: "0.1"
@@ -10,7 +10,7 @@ title:
   de: DECAID Agentic Governance Framework
   en: DECAID Agentic Governance Framework
 version: 0.1.0
-publisher: DECAID
+publisher: DECAID Group GmbH
 license: CC-BY-4.0
 source_document:
   title: "Agentic Governance – Wenn KI handelt statt antwortet (Whitepaper 2)"

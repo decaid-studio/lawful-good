@@ -196,8 +196,7 @@ def diagram(lang, theme):
     s.append('</svg>\n')
     (OUT/f"schaubild-{lang}-{theme}.svg").write_text("".join(s), "utf-8")
 
-banner(1280, 640, "social-preview", flat=False)
-banner(1280, 320, "readme-header", flat=True)
+# Banner: see banner/ (Prismatic renders). The vector banner functions above are kept for reference.
 for lang in ("de", "en"):
     for th in ("light", "dark"):
         diagram(lang, th)

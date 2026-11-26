@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/readme-header@2x.png" width="100%" alt="lawful-good: open, machine-readable AI governance by DECAID"></p>
+<p align="center"><img src="assets/readme-header@2x.png" width="100%" alt="lawful-good: open, machine-readable AI governance by DECAID (KI-generiertes Bild)"></p>
 
 # lawful-good
 

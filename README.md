@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/readme-header@2x.png" width="100%" alt="lawful-good: open, machine-readable AI governance by DECAID"></p>
+
 # lawful-good
 
 **Open, machine-readable AI governance for AI systems and agents.**
@@ -33,19 +35,24 @@ show conformity with any law or standard.
 | **AI system assessment catalog** | Does it work? 36 check items in six gates with maturity criteria, evidence and reassessment triggers, plus a module for generated content | YAML (DE/EN) |
 | **Agent skill** | How does an agent use all of this without loading it whole? Runs the triage step by step and returns levels, controls, check items and triggers on request | SKILL.md and Python script, for Claude and Langdock |
 
-A use case runs through them in order:
+A use case runs through them in order. Outside the AI Act, the triage ends with a documented
+result instead.
 
-```
-use case ─► triage ─┬─► stop: possibly prohibited, high-risk or unclear ─► legal review
-                    ├─► outside the AI Act ─► document
-                    └─► assessment catalog (G0–G5) ─► people decide ─► triggers keep it current
-                              ▲
-                  policy template + agentic framework
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/schaubild-en-dark@2x.png">
+  <img src="assets/schaubild-en-light@2x.png" width="100%" alt="How a use case runs through lawful-good: use case, triage (stop and legal review if possibly prohibited, high-risk or unclear), assessment gates G0 to G5, a person decides, triggers keep the case up to date. Foundation: policy, agentic framework, assessment catalog.">
+</picture>
 
 Scoring, weights and decision logic of the DECAID assessment are not part of this
 repository. The background is explained in DECAID's white paper *Agentic Governance –
 Wenn KI handelt statt antwortet*, available at [decaid.ai](https://www.decaid.ai/downloads/agentic-governance).
+
+## Example
+
+[A worked example](examples/kundenservice-agent.md) takes a fictional agent for customer
+e-mails through all five steps: triage answers with justifications, clearance level and
+controls, an excerpt of the assessment, the decision with conditions, and the triggers. A
+variant shows the stop when the same agent would screen job applications. (German for now.)
 
 ## Principle
 
@@ -65,6 +72,9 @@ templates/                AI policy template (Markdown)
 schema/                   JSON Schemas
 skill/lawful-good/        Agent skill (SKILL.md and script) for Claude and Langdock
 tools/lg.py               Validate, build and run the triage
+examples/                 Worked example of a use case
+assets/                   Banner and diagram (PNG), sources in assets/source/
+CHANGELOG.md              Changes and how we keep the content current
 AGENTS.md                 How agents should use this repository
 ```
 
@@ -100,6 +110,9 @@ items per gate and reassessment triggers on request. The script needs Python 3 a
   its terms of use allow it
 - **OSCAL export**
 - **MCP server** on European infrastructure, so agents can query the rulebook directly
+
+**Updates:** we review all content monthly and update it when the EU AI Act or official
+guidance changes. Every change is listed in [CHANGELOG.md](CHANGELOG.md).
 
 Ideas and pull requests are welcome, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -149,7 +162,18 @@ Inhalt:
 - **Prüfkatalog zur KI-Systemprüfung**: 36 Prüfpunkte in sechs Gates mit Reifegraden,
   Nachweisen und Reassessment-Triggern, dazu ein Modul für generierte Inhalte
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/schaubild-de-dark@2x.png">
+  <img src="assets/schaubild-de-light@2x.png" width="100%" alt="So läuft ein Use Case durch lawful-good: Use Case, Vorprüfung (bei Verbotsverdacht, Hochrisiko oder Unklarheit Stopp und rechtliche Prüfung), Prüfkatalog mit Gates G0 bis G5, ein Mensch entscheidet, Trigger halten den Fall aktuell. Fundament: Richtlinie, Agentic Framework, Prüfkatalog.">
+</picture>
+
 Ausprobieren: `python tools/lg.py triage`
+
+Beispiel: Der [Beispielfall](examples/kundenservice-agent.md) führt einen fiktiven Agenten für
+Kundenmails durch alle fünf Schritte, von der Vorprüfung bis zu den Triggern.
+
+Aktualisierung: Wir prüfen alle Inhalte monatlich und passen sie an, wenn sich der AI Act oder
+offizielle Leitlinien ändern. Jede Änderung steht im [CHANGELOG.md](CHANGELOG.md).
 
 Als Skill für Agenten: `python tools/lg.py build` schreibt zusätzlich
 `dist/lawful-good-skill.zip`. Das Archiv lässt sich als Skill in Claude hochladen oder in
